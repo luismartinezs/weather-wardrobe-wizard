@@ -57,4 +57,5 @@ const getClothingSuggestions = (weatherData: WeatherData) => {
   return clothing;
 };
 
+
 export { getClothingSuggestions }

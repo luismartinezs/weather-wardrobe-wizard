@@ -1,8 +1,19 @@
+import { useState } from "react";
 import Head from "next/head";
+import { Button, Flex, Text } from "@chakra-ui/react";
 
-import SearchInput from "@/components/SearchInput";
+import { LocationSuggestion } from "@/types/weatherApi";
+import SelectLocation from "@/components/SelectLocation";
 
 export default function Home() {
+  const [selectedLocation, setSelectedLocation] =
+    useState<LocationSuggestion | null>(null);
+  const [showWeather, setShowWeather] = useState(false);
+
+  function handleGetWeather() {
+    setShowWeather(true);
+  }
+
   return (
     <>
       <Head>
@@ -11,7 +22,18 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <SearchInput />
+      <Flex flexDirection="column" gap={2}>
+        <SelectLocation
+          onChange={setSelectedLocation}
+          currentSelectedLocation={selectedLocation}
+        />
+        <Button isDisabled={!selectedLocation} onClick={handleGetWeather}>
+          Get weather
+        </Button>
+      </Flex>
+      {showWeather && (
+        <Text fontSize="xl">Weather in {selectedLocation?.name}!</Text>
+      )}
     </>
   );
 }

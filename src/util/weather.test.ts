@@ -1,4 +1,4 @@
-import { getClothingSuggestions, type WeatherData } from '.';
+import { getClothingSuggestions, type WeatherData } from './weather';
 
 type RecursivePartial<T> = {
   [P in keyof T]?:
