@@ -18,6 +18,8 @@ pnpm dev
 - Chakra UI / NextJS setup reference https://chakra-ui.com/getting-started/nextjs-guide
 - Figma board: https://www.figma.com/file/5xJJxyBBjKqJpycZRNJ4tF/Weather-app?node-id=0%3A1&t=UW37yMJfACT8f4FK-0
 
+### Stateless components
+
 ## Dev tasks
 
 MVP:
@@ -30,11 +32,14 @@ MVP:
     - [ ] Determine a general visual direction
     - [ ] beautiful layout / UI for components
 - [ ] User can search for a location by name in a search input, and receives autosuggestions of specific places that he needs to select
-  - [ ] Style input
-  - [ ] Search autosuggestions endpoint
-  - [ ] Typing on input shows autosuggestions. User picks one
-  - [ ] Style dropdown (?)
-  - [ ] On clicking a button, location is selected and "submitted"
+  - [x] Style input
+  - [x] Search autosuggestions endpoint
+  - [x] Typing on input shows autosuggestions. User picks one
+  - [x] Style dropdown (?)
+  - [x] On clicking a button, location is selected
+  - [ ] Input shows currently selected location
+  - [ ] Input has close button
+  - [ ] User clicks on "Get weather" button
   - [ ] Style button
   - [ ] Loading state
   - [ ] Error state
