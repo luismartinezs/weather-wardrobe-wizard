@@ -19,7 +19,7 @@ import { CloseIcon } from "@chakra-ui/icons";
 import { useQuery } from "react-query";
 import debounce from "lodash.debounce";
 
-import { useId, useWatch } from "@/util/hooks";
+import { useId } from "@/util/hooks";
 import { LocationSuggestion } from "@/types/weatherApi";
 import ErrorMessage from "@/components/ErrorMessage";
 import { fetchErrorHandler } from "@/util/dataFetch";
@@ -35,10 +35,8 @@ function fetchLocationSuggestions(
 
 const SelectLocation = ({
   onChange,
-  currentSelectedLocation,
 }: {
   onChange: (value: LocationSuggestion) => void;
-  currentSelectedLocation: LocationSuggestion | null;
 }): JSX.Element => {
   const [locationQuery, setLocationQuery] = useState("");
   const {
@@ -71,9 +69,6 @@ const SelectLocation = ({
       retry: false,
     }
   );
-
-  useWatch(locationSuggestions);
-  useWatch(isSuccess);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setIsSelected(false);
@@ -171,7 +166,7 @@ const SelectLocation = ({
       </HStack>
       {isError && isVisible && (
         <Box mt={2}>
-          <ErrorMessage id={errorId} error={error} onClose={onClose} />
+          <ErrorMessage id={errorId} error={error} onClose={onClose} closable />
         </Box>
       )}
     </FormControl>
