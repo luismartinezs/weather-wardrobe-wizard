@@ -7,13 +7,15 @@ import {
 } from "@chakra-ui/react";
 
 const ErrorMessage = ({
+  error,
   id,
   onClose,
-  error,
+  closable,
 }: {
-  id: string;
-  onClose: () => void;
   error: Error;
+  id?: string;
+  onClose?: () => void;
+  closable?: boolean;
 }): JSX.Element => {
   return (
     <Alert status="error" id={id}>
@@ -21,13 +23,15 @@ const ErrorMessage = ({
         <AlertIcon />
         <AlertDescription>{error?.message}</AlertDescription>
       </HStack>
-      <CloseButton
-        alignSelf="flex-start"
-        position="relative"
-        right={-1}
-        top={-1}
-        onClick={onClose}
-      />
+      {closable && (
+        <CloseButton
+          alignSelf="flex-start"
+          position="relative"
+          right={-1}
+          top={-1}
+          onClick={onClose}
+        />
+      )}
     </Alert>
   );
 };
