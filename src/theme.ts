@@ -9,11 +9,12 @@ const config: ThemeConfig = {
 
 const theme = extendTheme({
   config, colors: {
-    primary: baseTheme.colors.blue
+    primary: baseTheme.colors.blue,
+    secondary: baseTheme.colors.cyan,
   },
 },
   withDefaultColorScheme({
-    colorScheme: 'primary'
+    colorScheme: 'primary',
   }),);
 
 export default theme;

@@ -1,33 +1,4 @@
-import type { WeatherDataItem } from '@/types/weatherApi';
 import { format } from 'date-fns';
-
-const getClothingSuggestions = (weatherData: WeatherDataItem) => {
-  const { temp, feels_like, humidity } = weatherData.main;
-  const { description } = weatherData.weather[0];
-  const clothing: string[] = [];
-  if (temp >= 80) {
-    clothing.push("light t-shirt", "shorts");
-  } else if (temp >= 60 && temp < 80) {
-    clothing.push("t-shirt", "jeans");
-  } else if (temp >= 40 && temp < 60) {
-    clothing.push("long-sleeved shirt", "jacket", "jeans");
-  } else if (temp >= 20 && temp < 40) {
-    clothing.push("heavy coat", "scarf", "hat", "gloves", "boots");
-  } else {
-    clothing.push("heavy coat", "scarf", "hat", "gloves", "boots");
-  }
-  if (description.includes("rain")) {
-    clothing.push("raincoat");
-  }
-  if (description.includes("snow")) {
-    clothing.push("snow boots");
-  }
-  return clothing;
-};
-
-function parseTemp(temp: number) {
-  return Math.round(temp);
-}
 
 export interface WeatherForecast {
   date: string,
@@ -39,10 +10,110 @@ export interface WeatherForecast {
   weatherType: string
 }
 
+function areArraysOverlapping<T>(arr1: T[], arr2: T[]) {
+  const set = new Set(arr1);
+
+  for (let i = 0; i < arr2.length; i++) {
+    if (set.has(arr2[i])) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+
+/**
+ * Inclusive max, exclusive min
+ */
+function between(x: number, ...ranges: [number, number]) {
+  const min = Math.min(...ranges);
+  const max = Math.max(...ranges);
+
+  return x > min && x <= max;
+}
+
+function getClothingForTemperature(minT: number, maxT: number): string[] {
+  const layers = [];
+
+  layers.push("T-shirt");
+
+  if (minT > 25) {
+    layers.push("Shorts");
+  }
+  if (between(minT, 13, 25)) {
+    layers.push("Jeans");
+  }
+  if (minT <= 13) {
+    layers.push("Warm pants");
+  }
+  if (between(minT, 13, 20)) {
+    layers.push("Sweater");
+  }
+  if (between(minT, 7, 13)) {
+    layers.push("Jacket");
+  }
+  if (between(minT, -10, 7)) {
+    layers.push("Sweater", "Jacket", "Beanie", "Gloves", "Scarf", "Leggings");
+  }
+  if (minT <= -10) {
+    layers.push("Fleece sweater", "Jacket", "Monkey Cap", "Thin Gloves", "Thick Gloves", "Scarf", "Fleece pants", "Thermal underwear", "Fleece pants", "Thermal socks");
+  }
+
+  if (maxT > 25) {
+    layers.push('Shorts')
+  }
+
+  return [...new Set(layers)];
+}
+
+function getClothingForWeather(weatherTypes: string[]): string[] {
+  const clothing = []
+
+  if (areArraysOverlapping(weatherTypes, ['Rain', 'Thunderstorm', 'Drizzle'])) {
+    clothing.push("Raincoat", "Water-proof shoes");
+  }
+  if (weatherTypes.includes("Snow")) {
+    clothing.push("Snow boots");
+  }
+  if (
+    areArraysOverlapping(weatherTypes, ['Smoke',
+      'Dust', 'Sand', 'Ash'
+    ])
+  ) {
+    clothing.push("Face Mask");
+  }
+  if (weatherTypes.includes("Clear")) {
+    clothing.push("Sunglasses");
+  }
+
+  return clothing;
+}
+
+
+const getClothingSuggestions = (forecast: WeatherForecast[]): string[] => {
+  const { minTemp, maxTemp, weatherTypes } = forecast.reduce((acc, day) => {
+    return {
+      minTemp: Math.min(acc.minTemp, day.minTemp),
+      maxTemp: Math.max(acc.maxTemp, day.maxTemp),
+      weatherTypes: new Set([...acc.weatherTypes, day.weatherType])
+    }
+  }, {
+    minTemp: Number.MAX_VALUE,
+    maxTemp: Number.MIN_VALUE,
+    weatherTypes: new Set<string>()
+  });
+
+  return [...getClothingForTemperature(minTemp, maxTemp), ...getClothingForWeather([...weatherTypes])].sort()
+};
+
+function parseTemp(temp: number) {
+  return Math.round(temp);
+}
+
 function getFiveDayForecast(data: any): WeatherForecast[] {
   const forecasts: any[] = data.list;
   const dailyForecasts: WeatherForecast[] = [];
-  // get date as 2021-03-01
   const today = format(new Date(), 'yyyy-MM-dd')
 
   let currentDay: string = '';

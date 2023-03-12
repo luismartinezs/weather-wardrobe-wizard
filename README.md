@@ -37,29 +37,33 @@ MVP:
   - [x] Typing on input shows autosuggestions. User picks one
   - [x] Style dropdown (?)
   - [x] On clicking a button, location is selected
-  - [ ] Input shows currently selected location
-  - [ ] Input has close button
-  - [ ] User clicks on "Get weather" button
-  - [ ] Style button
+  - [x] Input shows currently selected location
+  - [x] Input has close button
+  - [x] User clicks on "Get weather" button
+  - [x] Style button
   - [ ] Loading state
   - [ ] Error state
   - [ ] Responsive
 - [ ] Given a location, user gets:
-  - [ ] Weather forecast for the next 5 days
-    - [ ] Day card
-      - [ ] daily av. temperature, min T and max T
+  - [x] Weather forecast for the next 5 days
+    - [x] Day card
+      - [x] daily av. temperature, min T and max T
       - [ ] User can toggle between metric and imperial units
         - [ ] styled switch
         - [ ] compute units based on context value
-      - [ ] weather for each day (rain, sunny, cloudy, etc)
+      - [x] weather for each day (rain, sunny, cloudy, etc)
       - [ ] Show icon with weather forecast for that day
       - [ ] Styled card layout
   - [ ] Cards form a responsive layout
   - [ ] List of recommended clothing to pack for those 5 days
-    - [ ] Logic to generate clothing "tokens" from weather report
+    - [x] Logic to generate clothing "tokens" from weather report
     - [ ] Convert clothing "tokens" into a list of items that is visually meaningful and readable
     - [ ] Responsive
     - [ ] Style list
+- [ ] ci/cd pipeline that checks
+  - [ ] Unused imports and exports
+  - [ ] typescript errors
+- [ ] Turn it into a PWA
 
 Nice extras
 

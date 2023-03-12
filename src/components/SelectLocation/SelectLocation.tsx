@@ -155,7 +155,7 @@ const SelectLocation = ({
                   >
                     <Text color="gray.400">{item.name}&nbsp;</Text>
                     <Text color="gray.500" fontSize="sm" as="span">
-                      ({item.lat}, {item.lon})
+                      ({[item.state, item.country].filter(Boolean).join(", ")})
                     </Text>
                   </Button>
                 </Box>
