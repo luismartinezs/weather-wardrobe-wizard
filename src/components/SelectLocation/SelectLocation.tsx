@@ -29,7 +29,7 @@ function fetchLocationSuggestions(
 ): Promise<LocationSuggestion[]> {
   return fetchErrorHandler(
     `/api/geocoding?query=${query}`,
-    "There was an error trying to fetch location suggestions"
+    "There was an error trying to get location suggestions. Try again."
   );
 }
 
@@ -55,7 +55,6 @@ const SelectLocation = ({
     isError,
     error,
     refetch,
-    isSuccess,
   } = useQuery<LocationSuggestion[], Error>(
     ["getLocationSuggestions", locationQuery],
     () => {
@@ -128,7 +127,7 @@ const SelectLocation = ({
             zIndex={2}
           >
             {isLoading ? (
-              <Spinner color="gray.400" my={2} />
+              <Spinner color="gray.400" my={4} />
             ) : (
               !isSelected &&
               locationSuggestions &&

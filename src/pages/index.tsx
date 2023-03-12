@@ -22,7 +22,14 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Heading as="h1">Weather Wardrobe Wizard</Heading>
+      <Heading
+        as="h1"
+        bgGradient="linear(160deg, tertiary.500, secondary.500)"
+        bgClip="text"
+        width="fit-content"
+      >
+        Weather Wardrobe Wizard
+      </Heading>
       <Text mt={2}>
         Get suggestions of clothes to pack based on the weather forecast for the
         next 5 days

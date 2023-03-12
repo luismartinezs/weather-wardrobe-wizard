@@ -41,8 +41,8 @@ MVP:
   - [x] Input has close button
   - [x] User clicks on "Get weather" button
   - [x] Style button
-  - [ ] Loading state
-  - [ ] Error state
+  - [x] Loading state
+  - [x] Error state
   - [ ] Responsive
 - [ ] Given a location, user gets:
   - [x] Weather forecast for the next 5 days
@@ -64,6 +64,10 @@ MVP:
   - [ ] Unused imports and exports
   - [ ] typescript errors
 - [ ] Turn it into a PWA
+- [ ] Emulate max calls to openweather API
+- [ ] Footer
+  - [ ] Feature request
+  - [ ] Report issue
 
 Nice extras
 
