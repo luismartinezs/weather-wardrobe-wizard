@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Head from "next/head";
-import { Box, Container, Divider, Flex, Heading, Text } from "@chakra-ui/react";
+import { Box, Container, Divider, Heading, Text } from "@chakra-ui/react";
 
 import { LocationSuggestion } from "@/types/weatherApi";
 import SelectLocation from "@/components/SelectLocation";

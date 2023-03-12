@@ -12,13 +12,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return
   }
 
-  const url = `http://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${OPEN_WEATHER_API_KEY}`
+  const url = `http://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=8&appid=${OPEN_WEATHER_API_KEY}`
   try {
     const response = await fetch(url)
     const data = (await response.json()).map((el: LocationSuggestion) => ({
       name: el.name,
       lat: el.lat,
-      lon: el.lon
+      lon: el.lon,
+      country: el.country,
+      state: el.state,
     }))
 
     res.status(200).json(data)

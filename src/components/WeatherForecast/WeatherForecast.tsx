@@ -6,12 +6,14 @@ import {
   Container,
   Heading,
   OrderedList,
-  Spinner,
+  Text,
 } from "@chakra-ui/react";
 import { useQuery } from "react-query";
 import ErrorMessage from "@/components/ErrorMessage";
 import { getFiveDayForecast } from "@/util/weather";
 import ForecastListItem from "@/components/ForecastListItem";
+import ClothingSuggestions from "../ClothingSuggestions";
+import { format } from "date-fns";
 
 function fetchWeatherForecast(
   location: LocationSuggestion | null
@@ -34,7 +36,7 @@ const WeatherForecast = ({
     any,
     Error
   >(
-    ["getWeatherForecase", location],
+    ["getWeatherForecast", location + format(new Date(), "MM/dd/yyyy")],
     () => {
       return fetchWeatherForecast(location);
     },
@@ -48,10 +50,6 @@ const WeatherForecast = ({
 
   let content = <></>;
 
-  if (isLoading) {
-    content = <Spinner color="gray.400" my={2} />;
-  }
-
   if (isError) {
     content = <ErrorMessage error={error} />;
   }
@@ -62,7 +60,12 @@ const WeatherForecast = ({
     content = (
       <>
         <Heading as="h2" fontSize="lg" fontWeight="normal">
-          Weather forecast in {location.name} for the next 5 days:
+          Weather forecast in{" "}
+          <Text as="span" color="primary.200" fontWeight="semibold">
+            {location.name} (
+            {[location.state, location.country].filter(Boolean).join(", ")})
+          </Text>{" "}
+          for the next 5 days:
         </Heading>
         <OrderedList
           styleType="none"
@@ -77,6 +80,9 @@ const WeatherForecast = ({
             <ForecastListItem dayForecast={day} key={day.date} />
           ))}
         </OrderedList>
+        <Box mt={4}>
+          <ClothingSuggestions forecast={forecast} />
+        </Box>
       </>
     );
   }
@@ -84,7 +90,17 @@ const WeatherForecast = ({
   return (
     <>
       <Container>
-        <Button isDisabled={!location} onClick={() => refetch()} w="100%">
+        <Button
+          isDisabled={!location}
+          onClick={() => refetch()}
+          w="100%"
+          isLoading={isLoading}
+          loadingText="Fetching weather..."
+          bgGradient="linear(160deg, secondary.500, primary.500)"
+          _hover={{
+            bgGradient: "linear(160deg, secondary.600, primary.600)",
+          }}
+        >
           Get weather
         </Button>
       </Container>
