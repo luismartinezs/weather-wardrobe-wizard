@@ -16,7 +16,7 @@ const ForecastListItem = ({
 }): JSX.Element => {
   return (
     <ListItem key={dayForecast.date} my={2} flexGrow={1} flexShrink={1}>
-      <Card>
+      <Card borderRadius="2xl">
         <CardHeader pb={0}>
           <Heading as="h3" fontSize="md">
             {format(new Date(dayForecast.date), "MM/dd/yyyy")}

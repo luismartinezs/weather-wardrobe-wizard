@@ -26,6 +26,7 @@ const ErrorMessage = ({
       {closable && (
         <CloseButton
           alignSelf="flex-start"
+          ml="auto"
           position="relative"
           right={-1}
           top={-1}

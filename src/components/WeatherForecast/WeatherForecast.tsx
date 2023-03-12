@@ -75,6 +75,7 @@ const WeatherForecast = ({
           flexWrap="wrap"
           gap={4}
           mx="auto"
+          mt={2}
         >
           {forecast.map((day) => (
             <ForecastListItem dayForecast={day} key={day.date} />
@@ -101,10 +102,12 @@ const WeatherForecast = ({
             bgGradient: "linear(160deg, secondary.600, primary.600)",
           }}
         >
-          Get weather
+          {location
+            ? `Get weather in ${location.name}`
+            : "You didn't select a location"}
         </Button>
       </Container>
-      <Box mt={4}>{content}</Box>
+      <Box mt={8}>{content}</Box>
     </>
   );
 };
