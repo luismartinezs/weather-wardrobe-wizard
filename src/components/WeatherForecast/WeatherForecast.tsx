@@ -14,6 +14,7 @@ import { getFiveDayForecast } from "@/util/weather";
 import ForecastListItem from "@/components/ForecastListItem";
 import ClothingSuggestions from "../ClothingSuggestions";
 import { format } from "date-fns";
+import UnitSwitch from "@/components/UnitSwitch";
 
 function fetchWeatherForecast(
   location: LocationSuggestion | null
@@ -67,6 +68,7 @@ const WeatherForecast = ({
           </Text>{" "}
           for the next 5 days:
         </Heading>
+        <UnitSwitch />
         <OrderedList
           styleType="none"
           display="flex"
