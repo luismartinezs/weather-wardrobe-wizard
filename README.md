@@ -31,7 +31,7 @@ MVP:
     - [x] Compile inspirational designs from dribbble and midjourney in Figma board
     - [ ] Determine a general visual direction
     - [ ] beautiful layout / UI for components
-- [ ] User can search for a location by name in a search input, and receives autosuggestions of specific places that he needs to select
+- [x] User can search for a location by name in a search input, and receives autosuggestions of specific places that he needs to select
   - [x] Style input
   - [x] Search autosuggestions endpoint
   - [x] Typing on input shows autosuggestions. User picks one
@@ -43,7 +43,7 @@ MVP:
   - [x] Style button
   - [x] Loading state
   - [x] Error state
-  - [ ] Responsive
+  - [x] Responsive
 - [ ] Given a location, user gets:
   - [x] Weather forecast for the next 5 days
     - [x] Day card
@@ -68,6 +68,7 @@ MVP:
 - [ ] Footer
   - [ ] Feature request
   - [ ] Report issue
+- [ ] Implement CORS (https://github.com/vercel/next.js/blob/canary/examples/api-routes-cors/pages/api/cors.ts)
 
 Nice extras
 
@@ -77,3 +78,4 @@ Nice extras
   - [ ] Show T point with relative position based on value
   - [ ] Beautiful icon generated with midjourney
   - [ ] Beautiful background matching weather, generated with midjourney
+- [ ] Premium version with more features (because the weather API is not free)

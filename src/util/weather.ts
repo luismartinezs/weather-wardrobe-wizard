@@ -1,5 +1,7 @@
 import { format } from 'date-fns';
 
+import { areArraysOverlapping, between } from '@/util/util';
+
 export interface WeatherForecast {
   date: string,
   avgTemp: number,
@@ -8,29 +10,6 @@ export interface WeatherForecast {
   minTempHour: string,
   maxTempHour: string,
   weatherType: string
-}
-
-function areArraysOverlapping<T>(arr1: T[], arr2: T[]) {
-  const set = new Set(arr1);
-
-  for (let i = 0; i < arr2.length; i++) {
-    if (set.has(arr2[i])) {
-      return true;
-    }
-  }
-
-  return false;
-}
-
-
-/**
- * Inclusive max, exclusive min
- */
-function between(x: number, ...ranges: [number, number]) {
-  const min = Math.min(...ranges);
-  const max = Math.max(...ranges);
-
-  return x > min && x <= max;
 }
 
 function getClothingForTemperature(minT: number, maxT: number): string[] {
