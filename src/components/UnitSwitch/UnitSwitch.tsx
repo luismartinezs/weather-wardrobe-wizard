@@ -1,14 +1,27 @@
 import useStore from "@/store";
-import { FormControl, Switch, Text } from "@chakra-ui/react";
+import { FormControl, Show, Switch, Text } from "@chakra-ui/react";
 
 const UnitSwitch = (): JSX.Element => {
   const { units, setUnits } = useStore();
 
   return (
-    <FormControl display="flex" alignItems="center">
-      <Text as="span" color={units === "metric" ? "white" : "gray.500"}>
-        Metric
-      </Text>
+    <FormControl
+      display="flex"
+      flexDirection={{ base: "column", md: "row" }}
+      alignItems="center"
+      w="fit-content"
+      minW="60px"
+    >
+      <Show above="md">
+        <Text as="span" color={units === "metric" ? "white" : "gray.500"}>
+          Metric
+        </Text>
+      </Show>
+      <Show below="md">
+        <Text as="span" color="gray.400" fontSize="sm">
+          {units.replace(/^\w/, (c) => c.toUpperCase())}
+        </Text>
+      </Show>
       <Switch
         id="unitSwitch"
         mx={1}
@@ -21,9 +34,11 @@ const UnitSwitch = (): JSX.Element => {
         }}
         isChecked={units === "imperial"}
       />
-      <Text as="span" color={units === "imperial" ? "white" : "gray.500"}>
-        Imperial
-      </Text>
+      <Show above="md">
+        <Text as="span" color={units === "imperial" ? "white" : "gray.500"}>
+          Imperial
+        </Text>
+      </Show>
     </FormControl>
   );
 };

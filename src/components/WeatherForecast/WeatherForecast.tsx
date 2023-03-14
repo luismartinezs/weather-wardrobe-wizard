@@ -1,20 +1,12 @@
 import { LocationSuggestion } from "@/types/weatherApi";
 import { fetchErrorHandler } from "@/util/dataFetch";
-import {
-  Box,
-  Button,
-  Container,
-  Heading,
-  OrderedList,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Button, Container } from "@chakra-ui/react";
 import { useQuery } from "react-query";
 import ErrorMessage from "@/components/ErrorMessage";
 import { getFiveDayForecast } from "@/util/weather";
-import ForecastListItem from "@/components/ForecastListItem";
 import ClothingSuggestions from "../ClothingSuggestions";
 import { format } from "date-fns";
-import UnitSwitch from "@/components/UnitSwitch";
+import ForecastCard from "@/components/ForecastCard";
 
 function fetchWeatherForecast(
   location: LocationSuggestion | null
@@ -60,29 +52,7 @@ const WeatherForecast = ({
 
     content = (
       <>
-        <Heading as="h2" fontSize="lg" fontWeight="normal">
-          Weather forecast in{" "}
-          <Text as="span" color="primary.200" fontWeight="semibold">
-            {location.name} (
-            {[location.state, location.country].filter(Boolean).join(", ")})
-          </Text>{" "}
-          for the next 5 days:
-        </Heading>
-        <UnitSwitch />
-        <OrderedList
-          styleType="none"
-          display="flex"
-          alignItems="center"
-          justifyContent="space-between"
-          flexWrap="wrap"
-          gap={4}
-          mx="auto"
-          mt={2}
-        >
-          {forecast.map((day) => (
-            <ForecastListItem dayForecast={day} key={day.date} />
-          ))}
-        </OrderedList>
+        <ForecastCard location={location} forecast={forecast} />
         <Box mt={4}>
           <ClothingSuggestions forecast={forecast} />
         </Box>

@@ -10,6 +10,7 @@ export interface WeatherForecast {
   minTempHour: string,
   maxTempHour: string,
   weatherType: string
+  weatherIcon: string
 }
 
 function getClothingForTemperature(minT: number, maxT: number): string[] {
@@ -103,6 +104,7 @@ function getFiveDayForecast(data: any): WeatherForecast[] {
   let hourOfMinTemp: string = '';
   let count: number = 0;
   let weatherType = 'Clear';
+  let weatherIcon = '01d';
 
   forecasts.forEach(forecast => {
     const date = forecast.dt_txt.substring(0, 10);
@@ -117,7 +119,8 @@ function getFiveDayForecast(data: any): WeatherForecast[] {
           maxTemp: parseTemp(maxTemp),
           minTempHour: hourOfMinTemp,
           maxTempHour: hourOfMaxTemp,
-          weatherType: weatherType
+          weatherType: weatherType,
+          weatherIcon: weatherIcon
         });
       }
 
@@ -129,6 +132,7 @@ function getFiveDayForecast(data: any): WeatherForecast[] {
       hourOfMinTemp = hourOfMaxTemp;
       count = 1;
       weatherType = forecast.weather[0].main;
+      weatherIcon = forecast.weather[0].icon;
     } else {
       tempSum += forecast.main.temp;
       count++;
@@ -161,7 +165,8 @@ function getFiveDayForecast(data: any): WeatherForecast[] {
     maxTemp: parseTemp(maxTemp),
     minTempHour: hourOfMinTemp,
     maxTempHour: hourOfMaxTemp,
-    weatherType: weatherType
+    weatherType: weatherType,
+    weatherIcon: weatherIcon
   });
 
   return dailyForecasts;

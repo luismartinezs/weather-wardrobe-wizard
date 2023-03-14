@@ -29,7 +29,7 @@ MVP:
 - [ ] User should find widget visually appealing and beautiful
   - [x] Create mood dashboard figma
     - [x] Compile inspirational designs from dribbble and midjourney in Figma board
-    - [ ] Determine a general visual direction
+    - [x] Determine a general visual direction
     - [ ] beautiful layout / UI for components
 - [x] User can search for a location by name in a search input, and receives autosuggestions of specific places that he needs to select
   - [x] Style input
@@ -48,13 +48,13 @@ MVP:
   - [x] Weather forecast for the next 5 days
     - [x] Day card
       - [x] daily av. temperature, min T and max T
-      - [ ] User can toggle between metric and imperial units
-        - [ ] styled switch
-        - [ ] compute units based on context value
+      - [x] User can toggle between metric and imperial units
+        - [x] styled switch
+        - [x] compute units based on context value
       - [x] weather for each day (rain, sunny, cloudy, etc)
-      - [ ] Show icon with weather forecast for that day
-      - [ ] Styled card layout
-  - [ ] Cards form a responsive layout
+      - [x] Show icon with weather forecast for that day
+      - [x] Styled card layout
+  - [x] Cards form a responsive layout
   - [ ] List of recommended clothing to pack for those 5 days
     - [x] Logic to generate clothing "tokens" from weather report
     - [ ] Convert clothing "tokens" into a list of items that is visually meaningful and readable
