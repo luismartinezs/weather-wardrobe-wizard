@@ -1,7 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
-// import { WeatherData } from '@/types/weatherApi'
-
 const OPEN_WEATHER_API_KEY = process.env.OPEN_WEATHER_API_KEY
 
 

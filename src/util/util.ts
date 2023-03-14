@@ -26,10 +26,16 @@ function cToF(temp: number) {
   return Math.round((temp * 9) / 5 + 32);
 }
 
+function getTStr(temp: number, units = 'metric'): string {
+  const symbol = units === "metric" ? "°C" : "°F";
+  const t = units === "metric" ? temp : cToF(temp);
+  return `${t}${symbol}`;
+}
+
 function convertHour(timeString: string) {
   const time = new Date(`2000-01-01T${timeString}:00`);
   const formattedTime = format(time, "h aa");
   return formattedTime;
 }
 
-export { between, areArraysOverlapping, cToF, convertHour };
+export { between, areArraysOverlapping, cToF, convertHour, getTStr };
