@@ -41,7 +41,7 @@ const TemperatureChart = ({
           animationDuration={300}
           type="monotone"
           dataKey="maxTemp"
-          stroke="#ffef92"
+          stroke="#dfaa6e"
           dot={false}
           label={({ value, x, y, stroke = "white" }) => {
             return (
@@ -62,7 +62,7 @@ const TemperatureChart = ({
           animationDuration={300}
           type="monotone"
           dataKey="minTemp"
-          stroke="#74c7ff"
+          stroke="#61a4d1"
           dot={false}
           label={({ value, x, y, stroke = "white" }) => {
             return (
