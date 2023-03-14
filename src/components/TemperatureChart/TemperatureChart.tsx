@@ -14,7 +14,8 @@ const TemperatureChart = ({
   return (
     <Box mx="auto">
       <LineChart
-        width={data.length * pointWidth * 1.065}
+        // I had to add a magic factor here because I don't understand how the size of the LineChart is calculated
+        width={data.length * pointWidth * 1.09}
         height={250}
         data={data}
         margin={{

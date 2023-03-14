@@ -13,9 +13,9 @@ import {
 import { type WeatherForecast } from "@/util/weather";
 import UnitSwitch from "../UnitSwitch";
 import ForecastListItem from "@/components/ForecastListItem";
-import TemperatureChart from "../TemperatureChart";
+import TemperatureChart from "@/components/TemperatureChart";
 
-const itemWidth = 200;
+const itemWidth = 150;
 
 const ForecastCard = ({
   location,
