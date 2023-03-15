@@ -75,7 +75,8 @@ Nice extras
 - [ ] Weather card shows
   - [ ] av. wind force each day
   - [ ] av. humidity each day
-  - [ ] Show T point with relative position based on value
+  - [x] Show T point with relative position based on value
+  - [ ] T line fades at the sides
   - [ ] Beautiful icon generated with midjourney
   - [ ] Beautiful background matching weather, generated with midjourney
 - [ ] Premium version with more features (because the weather API is not free)

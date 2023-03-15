@@ -100,11 +100,11 @@ function getFiveDayForecast(data: any): WeatherForecast[] {
   let tempSum: number = 0;
   let minTemp: number = Number.MAX_VALUE;
   let maxTemp: number = Number.MIN_VALUE;
-  let hourOfMaxTemp: string = '';
-  let hourOfMinTemp: string = '';
+  let maxTempHour: string = '';
+  let minTempHour: string = '';
   let count: number = 0;
-  let weatherType = 'Clear';
-  let weatherIcon = '01d';
+  let weatherType: string = 'Clear';
+  let weatherIcon: string = '01d';
 
   forecasts.forEach(forecast => {
     const date = forecast.dt_txt.substring(0, 10);
@@ -117,8 +117,8 @@ function getFiveDayForecast(data: any): WeatherForecast[] {
           avgTemp: parseTemp(avgTemp),
           minTemp: parseTemp(minTemp),
           maxTemp: parseTemp(maxTemp),
-          minTempHour: hourOfMinTemp,
-          maxTempHour: hourOfMaxTemp,
+          minTempHour: minTempHour,
+          maxTempHour: maxTempHour,
           weatherType: weatherType,
           weatherIcon: weatherIcon
         });
@@ -128,8 +128,8 @@ function getFiveDayForecast(data: any): WeatherForecast[] {
       tempSum = forecast.main.temp;
       minTemp = forecast.main.temp_min;
       maxTemp = forecast.main.temp_max;
-      hourOfMaxTemp = forecast.dt_txt.substring(11, 16);
-      hourOfMinTemp = hourOfMaxTemp;
+      maxTempHour = forecast.dt_txt.substring(11, 16);
+      minTempHour = maxTempHour;
       count = 1;
       weatherType = forecast.weather[0].main;
       weatherIcon = forecast.weather[0].icon;
@@ -139,19 +139,19 @@ function getFiveDayForecast(data: any): WeatherForecast[] {
 
       if (forecast.main.temp_min < minTemp) {
         minTemp = forecast.main.temp_min;
-        hourOfMinTemp = forecast.dt_txt.substring(11, 16);
+        minTempHour = forecast.dt_txt.substring(11, 16);
       }
 
       if (forecast.main.temp_max > maxTemp) {
         maxTemp = forecast.main.temp_max;
-        hourOfMaxTemp = forecast.dt_txt.substring(11, 16);
+        maxTempHour = forecast.dt_txt.substring(11, 16);
       }
 
       const newWeatherType = forecast.weather[0].main;
-      if (newWeatherType === 'Rain' || newWeatherType === 'Snow') {
+
+      if (newWeatherType === 'Rain' || newWeatherType === 'Snow' || (newWeatherType !== 'Clear' && weatherType === 'Clear')) {
         weatherType = newWeatherType;
-      } else if (newWeatherType !== 'Clear' && weatherType === 'Clear') {
-        weatherType = newWeatherType;
+        weatherIcon = forecast.weather[0].icon;
       }
     }
   });
@@ -163,10 +163,10 @@ function getFiveDayForecast(data: any): WeatherForecast[] {
     avgTemp: parseTemp(avgTemp),
     minTemp: parseTemp(minTemp),
     maxTemp: parseTemp(maxTemp),
-    minTempHour: hourOfMinTemp,
-    maxTempHour: hourOfMaxTemp,
-    weatherType: weatherType,
-    weatherIcon: weatherIcon
+    minTempHour,
+    maxTempHour,
+    weatherType,
+    weatherIcon
   });
 
   return dailyForecasts;
