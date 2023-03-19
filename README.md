@@ -55,11 +55,16 @@ MVP:
       - [x] Show icon with weather forecast for that day
       - [x] Styled card layout
   - [x] Cards form a responsive layout
-  - [ ] List of recommended clothing to pack for those 5 days
+  - [x] List of recommended clothing to pack for those 5 days
     - [x] Logic to generate clothing "tokens" from weather report
-    - [ ] Convert clothing "tokens" into a list of items that is visually meaningful and readable
-    - [ ] Responsive
-    - [ ] Style list
+    - [x] Convert clothing "tokens" into a list of items that is visually meaningful and readable
+    - [x] Responsive
+    - [x] Style list
+    - [x] Filters
+      - [x] Add clothing id to each clothing item
+      - [x] Store array of checked ids rather than array of booleans
+      - [x] Use id to determine what to filter
+- [ ] Move all state to store so that components are completely presentational and no prop drilling is needed
 - [ ] ci/cd pipeline that checks
   - [ ] Unused imports and exports
   - [ ] typescript errors

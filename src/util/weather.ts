@@ -1,7 +1,5 @@
 import { format } from 'date-fns';
 
-import { areArraysOverlapping, between } from '@/util/util';
-
 export interface WeatherForecast {
   date: string,
   avgTemp: number,
@@ -12,80 +10,6 @@ export interface WeatherForecast {
   weatherType: string
   weatherIcon: string
 }
-
-function getClothingForTemperature(minT: number, maxT: number): string[] {
-  const layers = [];
-
-  layers.push("T-shirt");
-
-  if (minT > 25) {
-    layers.push("Shorts");
-  }
-  if (between(minT, 13, 25)) {
-    layers.push("Jeans");
-  }
-  if (minT <= 13) {
-    layers.push("Warm pants");
-  }
-  if (between(minT, 13, 20)) {
-    layers.push("Sweater");
-  }
-  if (between(minT, 7, 13)) {
-    layers.push("Jacket");
-  }
-  if (between(minT, -10, 7)) {
-    layers.push("Sweater", "Jacket", "Beanie", "Gloves", "Scarf", "Leggings");
-  }
-  if (minT <= -10) {
-    layers.push("Fleece sweater", "Jacket", "Monkey Cap", "Thin Gloves", "Thick Gloves", "Scarf", "Fleece pants", "Thermal underwear", "Fleece pants", "Thermal socks");
-  }
-
-  if (maxT > 25) {
-    layers.push('Shorts')
-  }
-
-  return [...new Set(layers)];
-}
-
-function getClothingForWeather(weatherTypes: string[]): string[] {
-  const clothing = []
-
-  if (areArraysOverlapping(weatherTypes, ['Rain', 'Thunderstorm', 'Drizzle'])) {
-    clothing.push("Raincoat", "Water-proof shoes");
-  }
-  if (weatherTypes.includes("Snow")) {
-    clothing.push("Snow boots");
-  }
-  if (
-    areArraysOverlapping(weatherTypes, ['Smoke',
-      'Dust', 'Sand', 'Ash'
-    ])
-  ) {
-    clothing.push("Face Mask");
-  }
-  if (weatherTypes.includes("Clear")) {
-    clothing.push("Sunglasses");
-  }
-
-  return clothing;
-}
-
-
-const getClothingSuggestions = (forecast: WeatherForecast[]): string[] => {
-  const { minTemp, maxTemp, weatherTypes } = forecast.reduce((acc, day) => {
-    return {
-      minTemp: Math.min(acc.minTemp, day.minTemp),
-      maxTemp: Math.max(acc.maxTemp, day.maxTemp),
-      weatherTypes: new Set([...acc.weatherTypes, day.weatherType])
-    }
-  }, {
-    minTemp: Number.MAX_VALUE,
-    maxTemp: Number.MIN_VALUE,
-    weatherTypes: new Set<string>()
-  });
-
-  return [...getClothingForTemperature(minTemp, maxTemp), ...getClothingForWeather([...weatherTypes])].sort()
-};
 
 function parseTemp(temp: number) {
   return Math.round(temp);
@@ -173,4 +97,4 @@ function getFiveDayForecast(data: any): WeatherForecast[] {
 }
 
 
-export { getClothingSuggestions, getFiveDayForecast }
+export { getFiveDayForecast }

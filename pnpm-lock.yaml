@@ -14,11 +14,13 @@ specifiers:
   '@types/react': 18.0.27
   '@types/react-dom': 18.0.10
   '@types/uuid': ^9.0.0
+  classnames: ^2.3.2
   date-fns: ^2.29.3
   eslint: 8.33.0
   eslint-config-next: 13.1.6
   eslint-config-prettier: ^8.6.0
   framer-motion: ^9.0.1
+  immer: ^9.0.19
   jest: ^29.4.1
   jest-environment-jsdom: ^29.4.1
   lodash.debounce: ^4.0.8
@@ -42,10 +44,12 @@ dependencies:
   '@types/node': 18.11.19
   '@types/react': 18.0.27
   '@types/react-dom': 18.0.10
+  classnames: 2.3.2
   date-fns: 2.29.3
   eslint: 8.33.0
   eslint-config-next: 13.1.6_4vsywjlpuriuw3tl5oq6zy5a64
   framer-motion: 9.0.1_biqbaboplfbrettd7655fr4n2y
+  immer: 9.0.19
   lodash.debounce: 4.0.8
   next: 13.1.6_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
@@ -54,7 +58,7 @@ dependencies:
   recharts: 2.4.3_biqbaboplfbrettd7655fr4n2y
   typescript: 4.9.5
   uuid: 9.0.0
-  zustand: 4.3.6_react@18.2.0
+  zustand: 4.3.6_immer@9.0.19+react@18.2.0
 
 devDependencies:
   '@testing-library/jest-dom': 5.16.5
@@ -4364,6 +4368,10 @@ packages:
     resolution: {integrity: sha512-MAb38BcSbH0eHNBxn7ql2NH/kX33OkB3lZ1BNdh7ENeRChHTYsTvWrMubiIAMNS2llXEEgZ1MUOBtXChP3kaFQ==}
     engines: {node: '>= 4'}
 
+  /immer/9.0.19:
+    resolution: {integrity: sha512-eY+Y0qcsB4TZKwgQzLaE/lqYMlKhv5J9dyd2RhhtGhNo2njPXDqU9XPfcNfa3MIDsdtZt5KlkIsirlo4dHsWdQ==}
+    dev: false
+
   /import-fresh/3.3.0:
     resolution: {integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==}
     engines: {node: '>=6'}
@@ -7105,7 +7113,7 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
 
-  /zustand/4.3.6_react@18.2.0:
+  /zustand/4.3.6_immer@9.0.19+react@18.2.0:
     resolution: {integrity: sha512-6J5zDxjxLE+yukC2XZWf/IyWVKnXT9b9HUv09VJ/bwGCpKNcaTqp7Ws28Xr8jnbvnZcdRaidztAPsXFBIqufiw==}
     engines: {node: '>=12.7.0'}
     peerDependencies:
@@ -7117,6 +7125,7 @@ packages:
       react:
         optional: true
     dependencies:
+      immer: 9.0.19
       react: 18.2.0
       use-sync-external-store: 1.2.0_react@18.2.0
     dev: false
