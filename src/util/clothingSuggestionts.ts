@@ -20,6 +20,16 @@ export const clothingMap = {
   "thermalUnderwear": { label: "Thermal underwear", imageUrl: "https://res.cloudinary.com/dicyllvry/image/upload/v1679218075/weather-wardrobe-wizard/41vokZ7PeYL._AC_SX425__n4v0wg.jpg", url: "https://www.amazon.com/s?k=thermal+underwear&i=apparel&ref=nb_sb_noss_2" },
   "thermalSocks": { label: "Thermal socks", imageUrl: "https://res.cloudinary.com/dicyllvry/image/upload/v1679218115/weather-wardrobe-wizard/saito200_A_captivating_product_photograph_showcasing_a_pair_of__867f3ddb-6e3b-4c01-bd71-ddb3346ac799_zbhxq5.png", url: "https://www.amazon.com/s?k=thermal+socks&i=apparel&ref=nb_sb_noss_2" },
   "raincoat": { label: "Raincoat", imageUrl: "https://res.cloudinary.com/dicyllvry/image/upload/v1679218108/weather-wardrobe-wizard/saito200_A_striking_product_photo_of_a_practical_raincoat_highl_bfdd86c7-c9c1-4f39-ac06-7f332d872027_cjm6w6.png", url: "https://www.amazon.com/s?k=raincoat&i=apparel&ref=nb_sb_noss_2" },
+  "waterProofShoes": {
+    label: "Waterproof shoes",
+    imageUrl: "https://res.cloudinary.com/dicyllvry/image/upload/v1679223144/weather-wardrobe-wizard/saito200_A_compelling_product_photo_featuring_a_pair_of_waterpr_60b2a044-f698-49af-b008-09f8a7bfb516_ub8gd8.png",
+    url: "https://www.amazon.com/s?k=waterproof+shoes&i=apparel&ref=nb_sb_noss_2"
+  },
+  "snowBoots": {
+    label: "Snow boots",
+    imageUrl: "https://res.cloudinary.com/dicyllvry/image/upload/v1679223339/weather-wardrobe-wizard/0_3_lowg7j.png",
+    url: "https://www.amazon.com/s?k=snow+boots&i=apparel&ref=nb_sb_noss_2"
+  }
 }
 
 function getClothingForTemperature(minT: number, maxT: number): string[] {
@@ -42,11 +52,17 @@ function getClothingForTemperature(minT: number, maxT: number): string[] {
   if (between(minT, 7, 13)) {
     layers.push("jacket");
   }
+  if (between(minT, 0, 7)) {
+    layers.push("gloves");
+  }
+  if (minT <= 0) {
+    layers.push("thinGloves", "thickGloves");
+  }
   if (between(minT, -10, 7)) {
-    layers.push("sweater", "jacket", "beanie", "gloves", "scarf", "leggings");
+    layers.push("sweater", "jacket", "beanie", "scarf", "leggings");
   }
   if (minT <= -10) {
-    layers.push("fleeceSweater", "jacket", "monkeyCap", "thinGloves", "thickGloves", "scarf", "fleecePants", "thermalUnderwear", "fleecePants", "thermalSocks");
+    layers.push("fleeceSweater", "jacket", "monkeyCap", "scarf", "fleecePants", "thermalUnderwear", "fleecePants", "thermalSocks");
   }
 
   if (maxT > 25) {
@@ -60,7 +76,10 @@ function getClothingForWeather(weatherTypes: string[]): string[] {
   const clothing = []
 
   if (areArraysOverlapping(weatherTypes, ['Rain', 'Thunderstorm', 'Drizzle'])) {
-    clothing.push("raincoat", "waterProofShoes");
+    clothing.push("raincoat");
+  }
+  if (weatherTypes.includes("Rain") && !weatherTypes.includes("Snow")) {
+    clothing.push("waterProofShoes");
   }
   if (weatherTypes.includes("Snow")) {
     clothing.push("snowBoots");
