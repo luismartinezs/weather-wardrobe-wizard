@@ -1,20 +1,12 @@
-import { create, type StateCreator } from 'zustand'
+import { create, StateCreator } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
+import { UnitsState, unitsSlice } from './units'
+import { clothingSuggestionsSlice, ClothingSuggestionsState } from './clothingSuggestions'
 
-type Units = 'metric' | 'imperial'
+const store: StateCreator<UnitsState & ClothingSuggestionsState> = (...a) => ({ ...unitsSlice(...a), ...clothingSuggestionsSlice(...a) })
 
-interface State {
-  units: Units
-  setUnits: (units: Units) => void
-}
-
-const store: StateCreator<State> = (set) => ({
-  units: 'metric',
-  setUnits: (units: Units) => set({ units }),
-})
-
-const useStore = create<State>()(devtools(persist(store, {
-  name: 'unit-storage',
+const useStore = create(devtools(persist(store, {
+  name: 'weather-wardrobe-wizard-store',
 })))
 
 export default useStore

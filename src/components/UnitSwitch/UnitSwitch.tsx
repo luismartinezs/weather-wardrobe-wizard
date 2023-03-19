@@ -2,7 +2,8 @@ import useStore from "@/store";
 import { FormControl, Show, Switch, Text } from "@chakra-ui/react";
 
 const UnitSwitch = (): JSX.Element => {
-  const { units, setUnits } = useStore();
+  const units = useStore((state) => state.units);
+  const setUnits = useStore((state) => state.setUnits);
 
   return (
     <FormControl

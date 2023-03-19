@@ -53,7 +53,7 @@ const WeatherForecast = ({
     content = (
       <>
         <ForecastCard location={location} forecast={forecast} />
-        <Box mt={4}>
+        <Box mt={8}>
           <ClothingSuggestions forecast={forecast} />
         </Box>
       </>

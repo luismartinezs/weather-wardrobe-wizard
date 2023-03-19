@@ -16,8 +16,7 @@ export default function Home() {
         <title>Weather Wardrobe Wizard</title>
         <meta
           name="description"
-          content="Get suggestions of clothes to pack based on the weather forecast for the
-        next 5 days"
+          content="Get suggestions of clothes to pack based on the weather forecast for the next 5 days"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
@@ -30,9 +29,8 @@ export default function Home() {
       >
         Weather Wardrobe Wizard
       </Heading>
-      <Text mt={2}>
-        Get suggestions of clothes to pack based on the weather forecast for the
-        next 5 days
+      <Text mt={2} fontSize="lg">
+        I will help you decide what clothes to pack for your trip
       </Text>
       <Divider my={4} />
       <Container>
