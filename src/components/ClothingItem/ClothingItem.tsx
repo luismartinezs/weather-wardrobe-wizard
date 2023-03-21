@@ -9,6 +9,8 @@ import {
 } from "@chakra-ui/react";
 import Image from "next/image";
 import AmazonLink from "@/components/AmazonLink";
+import type { ClothingId } from "@/util/clothingSuggestions";
+import useStore from "@/store";
 
 const size = {
   w: "340px",
@@ -16,18 +18,18 @@ const size = {
 
 const ClothingItem = ({
   item,
-  onChange,
-  checked,
 }: {
   item: {
     label: string;
     url: string;
     imageUrl: string;
-    id: string;
+    id: ClothingId;
   };
-  onChange: () => void;
-  checked: boolean;
 }): JSX.Element => {
+  const checked = useStore((state) => state.checkedClothingItems).includes(
+    item.id
+  );
+  const checkClothingItem = useStore((state) => state.checkClothingItem);
   const labelId = useId();
 
   return (
@@ -35,7 +37,7 @@ const ClothingItem = ({
       <CardBody>
         <Checkbox
           isChecked={checked}
-          onChange={onChange}
+          onChange={() => checkClothingItem(item.id)}
           aria-labelledby={labelId}
           size="lg"
           display="flex"

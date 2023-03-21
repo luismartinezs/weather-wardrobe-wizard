@@ -1,47 +1,36 @@
-import { type WeatherForecast } from "@/util/weather";
-import { getClothingSuggestions } from "@/util/clothingSuggestionts";
+import { ClothingId } from "@/util/clothingSuggestions";
 import { baseTheme, Button, Flex, Heading, HStack } from "@chakra-ui/react";
 import ClothingItem from "@/components/ClothingItem";
-import { useEffect, useState } from "react";
-import produce from "immer";
 import useStore from "@/store";
-import { useFilteredClothingSuggestions } from "@/store/clothingSuggestions";
+import { useClothingSuggestions } from "@/hooks/useClothingSuggestions";
+import { useFilteredClothingItems } from "@/hooks/useFilteredClothingItems";
 
 type FilterType = "all" | "checked" | "unchecked";
 
-const ClothingSuggestions = ({
-  forecast,
-}: {
-  forecast: WeatherForecast[] | null;
-}): JSX.Element => {
-  const suggestions = useStore((state) => state.clothingSuggestions);
-  const setSuggestions = useStore((state) => state.setClothingSuggestions);
-  const checkedItems = useStore((state) => state.checkedClothingSuggestions);
-  const setCheckedItems = useStore(
-    (state) => state.setCheckedClothingSuggestions
-  );
-  const checkClothingSuggestion = useStore(
-    (state) => state.checkClothingSuggestion
-  );
+const buttonStaticProps = {
+  variant: "ghost",
+  size: "sm",
+  fontWeight: "thin",
+};
+
+const ClothingSuggestions = (): JSX.Element => {
+  const suggestions = useClothingSuggestions();
+  const setCheckedItems = useStore((state) => state.setCheckedClothingItems);
   const filter = useStore((state) => state.filter);
   const setFilter = useStore((state) => state.setFilter);
-  const filteredItems = useFilteredClothingSuggestions();
-
-  useEffect(() => {
-    if (forecast) {
-      setSuggestions(getClothingSuggestions(forecast));
-    }
-  }, [forecast, setSuggestions]);
-
-  const handleCheckboxChange = (index: string) => {
-    checkClothingSuggestion(index);
-  };
+  const filteredItems = useFilteredClothingItems();
 
   const handleFilterChange = (filterType: FilterType) => {
     setFilter(filterType);
   };
 
-  if (!forecast) {
+  const buttonProps = (_filter: FilterType) => ({
+    onClick: () => handleFilterChange(_filter),
+    textDecor: filter === _filter ? "underline" : "none",
+    ...buttonStaticProps,
+  });
+
+  if (!filteredItems) {
     return <></>;
   }
 
@@ -57,39 +46,10 @@ const ClothingSuggestions = ({
         Suggested clothing
       </Heading>
       <HStack my={1}>
-        <Button
-          onClick={() => handleFilterChange("all")}
-          variant="ghost"
-          size="sm"
-          fontWeight="thin"
-          textDecor={filter === "all" ? "underline" : "none"}
-        >
-          Show All
-        </Button>
-        <Button
-          onClick={() => handleFilterChange("checked")}
-          variant="ghost"
-          size="sm"
-          fontWeight="thin"
-          textDecor={filter === "checked" ? "underline" : "none"}
-        >
-          Show Checked
-        </Button>
-        <Button
-          onClick={() => handleFilterChange("unchecked")}
-          variant="ghost"
-          size="sm"
-          fontWeight="thin"
-          textDecor={filter === "unchecked" ? "underline" : "none"}
-        >
-          Show Unchecked
-        </Button>
-        <Button
-          variant="ghost"
-          size="sm"
-          fontWeight="thin"
-          onClick={() => setCheckedItems([])}
-        >
+        <Button {...buttonProps("all")}>Show All</Button>
+        <Button {...buttonProps("checked")}>Show Checked</Button>
+        <Button {...buttonProps("unchecked")}>Show Unchecked</Button>
+        <Button onClick={() => setCheckedItems([])} {...buttonStaticProps}>
           Uncheck all
         </Button>
       </HStack>
@@ -125,12 +85,7 @@ const ClothingSuggestions = ({
         }}
       >
         {filteredItems.map((item) => (
-          <ClothingItem
-            key={item.id}
-            item={item}
-            checked={checkedItems.includes(item.id)}
-            onChange={() => handleCheckboxChange(item.id)}
-          />
+          <ClothingItem key={item.id} item={item} />
         ))}
       </Flex>
     </>

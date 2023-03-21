@@ -7,39 +7,29 @@ import { getFiveDayForecast } from "@/util/weather";
 import ClothingSuggestions from "../ClothingSuggestions";
 import { format } from "date-fns";
 import ForecastCard from "@/components/ForecastCard";
+import useStore from "@/store";
+import { useEffect, useState } from "react";
+import { useWeatherForecast } from "@/hooks/useWeatherForecast";
+import { type StoreState } from "@/store";
 
-function fetchWeatherForecast(
-  location: LocationSuggestion | null
-): Promise<any> | undefined {
-  if (!location) {
-    return;
-  }
-  return fetchErrorHandler(
-    `/api/weather-forecast?lat=${location.lat}&lon=${location.lon}`,
-    "There was an error trying to fetch weather report"
+function useButtonLabel(selectedLocation: StoreState["selectedLocation"]) {
+  const [buttonLabel, setButtonLabel] = useState(
+    "You didn't select a location"
   );
+
+  useEffect(() => {
+    if (selectedLocation) {
+      setButtonLabel(`Get weather in ${selectedLocation.name}`);
+    }
+  }, [selectedLocation]);
+
+  return buttonLabel;
 }
 
-const WeatherForecast = ({
-  location,
-}: {
-  location: LocationSuggestion | null;
-}): JSX.Element => {
-  const { data, isLoading, isError, error, refetch, isSuccess } = useQuery<
-    any,
-    Error
-  >(
-    ["getWeatherForecast", location + format(new Date(), "MM/dd/yyyy")],
-    () => {
-      return fetchWeatherForecast(location);
-    },
-    {
-      enabled: false,
-      staleTime: Infinity,
-      refetchOnWindowFocus: false,
-      retry: false,
-    }
-  );
+const WeatherForecast = (): JSX.Element => {
+  const selectedLocation = useStore((state) => state.selectedLocation);
+  const buttonLabel = useButtonLabel(selectedLocation);
+  const { forecast, isLoading, isError, error, refetch } = useWeatherForecast();
 
   let content = <></>;
 
@@ -47,24 +37,15 @@ const WeatherForecast = ({
     content = <ErrorMessage error={error} />;
   }
 
-  if (location && isSuccess && data) {
-    const forecast = getFiveDayForecast(data);
-
-    content = (
-      <>
-        <ForecastCard location={location} forecast={forecast} />
-        <Box mt={8}>
-          <ClothingSuggestions forecast={forecast} />
-        </Box>
-      </>
-    );
+  if (selectedLocation && forecast) {
+    content = <ForecastCard />;
   }
 
   return (
     <>
       <Container>
         <Button
-          isDisabled={!location}
+          isDisabled={!selectedLocation}
           onClick={() => refetch()}
           w="100%"
           isLoading={isLoading}
@@ -74,9 +55,7 @@ const WeatherForecast = ({
             bgGradient: "linear(160deg, secondary.600, primary.600)",
           }}
         >
-          {location
-            ? `Get weather in ${location.name}`
-            : "You didn't select a location"}
+          {buttonLabel}
         </Button>
       </Container>
       <Box mt={8}>{content}</Box>

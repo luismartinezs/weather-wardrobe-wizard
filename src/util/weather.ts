@@ -15,7 +15,10 @@ function parseTemp(temp: number) {
   return Math.round(temp);
 }
 
-function getFiveDayForecast(data: any): WeatherForecast[] {
+function getFiveDayForecast(data: any): WeatherForecast[] | null {
+  if (!data || !data.list) {
+    return null;
+  }
   const forecasts: any[] = data.list;
   const dailyForecasts: WeatherForecast[] = [];
   const today = format(new Date(), 'yyyy-MM-dd')

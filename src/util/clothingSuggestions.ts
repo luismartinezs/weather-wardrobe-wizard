@@ -1,7 +1,13 @@
 import { areArraysOverlapping, between } from '@/util/util';
 import { WeatherForecast } from '@/util/weather';
 
-export const clothingMap = {
+export type ClothingSuggestion = {
+  label: string;
+  imageUrl: string;
+  url: string;
+}
+
+export const clothingMap: { [index: string]: ClothingSuggestion } = {
   "tShirt": { label: "T-shirt", imageUrl: "https://res.cloudinary.com/dicyllvry/image/upload/v1679218724/weather-wardrobe-wizard/saito200_A_high-quality_eye-catching_product_photo_featuring_a__ce73d608-106b-44a3-b188-3c80412e030a_atr9mv.png", url: "https://www.amazon.com/s?k=t-shirt&i=apparel&ref=nb_sb_noss_2" },
   "shorts": { label: "Shorts", imageUrl: "https://res.cloudinary.com/dicyllvry/image/upload/v1679218414/weather-wardrobe-wizard/saito200_An_appealing_product_photograph_showcasing_a_stylish_p_6863fa13-dd75-48fa-9de4-d2a603b15dd8_afd3sy.png", url: "https://www.amazon.com/s?k=shorts&i=apparel&ref=nb_sb_noss_2" },
   "jeans": { label: "Jeans", imageUrl: "https://res.cloudinary.com/dicyllvry/image/upload/v1679216035/weather-wardrobe-wizard/saito200_jeans_d5113a74-a8f5-4397-8548-b4c4800ed702_nwctcn.png", url: "https://www.amazon.com/s?k=jeans&i=apparel&ref=nb_sb_noss_2" },
@@ -98,10 +104,13 @@ function getClothingForWeather(weatherTypes: string[]): string[] {
   return clothing;
 }
 
-export type ClothingSuggestion = typeof clothingMap[keyof typeof clothingMap] & { id: keyof typeof clothingMap }
+export type ClothingId = keyof typeof clothingMap;
+export type ClothingSuggestionWithId = ClothingSuggestion & { id: ClothingId }
 
-
-export const getClothingSuggestions = (forecast: WeatherForecast[]): ClothingSuggestion[] => {
+export const getClothingSuggestions = (forecast: WeatherForecast[] | null): ClothingSuggestionWithId[] | null => {
+  if (!forecast) {
+    return null
+  }
   const { minTemp, maxTemp, weatherTypes } = forecast.reduce((acc, day) => {
     return {
       minTemp: Math.min(acc.minTemp, day.minTemp),

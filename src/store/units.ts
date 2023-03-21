@@ -1,15 +1,14 @@
-import { StateCreator } from "zustand"
-import type { Immutable } from 'immer'
-import type { ClothingSuggestionsState } from "./clothingSuggestions";
+import { Immutable } from "immer";
+import { StateCreator } from "zustand";
 
-type Units = 'metric' | 'imperial'
+export type Units = 'metric' | 'imperial'
 
 export type UnitsState = Immutable<{
   units: Units
   setUnits: (units: Units) => void
 }>
 
-export const unitsSlice: StateCreator<UnitsState & ClothingSuggestionsState, [], [], UnitsState> = (set) => ({
+export const unitsSlice: StateCreator<UnitsState> = (set) => ({
   units: 'metric',
   setUnits: (units: Units) => set({ units }),
 })
