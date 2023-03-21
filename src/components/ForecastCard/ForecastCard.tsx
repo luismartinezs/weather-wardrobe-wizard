@@ -1,4 +1,3 @@
-import { LocationSuggestion } from "@/types/weatherApi";
 import {
   Card,
   CardBody,
@@ -10,20 +9,22 @@ import {
   baseTheme,
   Flex,
 } from "@chakra-ui/react";
-import { type WeatherForecast } from "@/util/weather";
 import UnitSwitch from "../UnitSwitch";
 import ForecastListItem from "@/components/ForecastListItem";
 import TemperatureChart from "@/components/TemperatureChart";
+import useStore from "@/store";
+import { useWeatherForecast } from "@/hooks/useWeatherForecast";
 
 const itemWidth = 150;
 
-const ForecastCard = ({
-  location,
-  forecast,
-}: {
-  location: LocationSuggestion;
-  forecast: WeatherForecast[];
-}): JSX.Element => {
+const ForecastCard = (): JSX.Element => {
+  const { forecast } = useWeatherForecast();
+  const selectedLocation = useStore((state) => state.selectedLocation);
+
+  if (!selectedLocation || !forecast) {
+    return <></>;
+  }
+
   return (
     <Card>
       <CardHeader pb={2}>
@@ -42,7 +43,7 @@ const ForecastCard = ({
           >
             Daily forecast for{" "}
             <Text as="span" color="primary.200">
-              {location.name}
+              {selectedLocation.name}
             </Text>
           </Heading>
           <UnitSwitch />

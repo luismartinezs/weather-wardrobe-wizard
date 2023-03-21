@@ -16,29 +16,29 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
-import { useQuery } from "react-query";
 import debounce from "lodash.debounce";
 
 import { useId } from "@/util/hooks";
 import { LocationSuggestion } from "@/types/weatherApi";
 import ErrorMessage from "@/components/ErrorMessage";
-import { fetchErrorHandler } from "@/util/dataFetch";
+import useStore from "@/store";
+import { useLocation } from "@/hooks/useLocation";
 
-function fetchLocationSuggestions(
-  query: string
-): Promise<LocationSuggestion[]> {
-  return fetchErrorHandler(
-    `/api/geocoding?query=${query}`,
-    "There was an error trying to get location suggestions. Try again."
+const SelectLocation = (): JSX.Element => {
+  const selectedLocation = useStore((state) => state.selectedLocation);
+  const setSelectedLocation = useStore((state) => state.setSelectedLocation);
+
+  const [locationQuery, setLocationQuery] = useState(
+    selectedLocation?.name || ""
   );
-}
+  const {
+    data: locationSuggestions,
+    isLoading,
+    refetch,
+    isError,
+    error,
+  } = useLocation({ locationQuery });
 
-const SelectLocation = ({
-  onChange,
-}: {
-  onChange: (value: LocationSuggestion) => void;
-}): JSX.Element => {
-  const [locationQuery, setLocationQuery] = useState("");
   const {
     isOpen: isVisible,
     onClose,
@@ -47,27 +47,7 @@ const SelectLocation = ({
     defaultIsOpen: false,
   });
   const errorId = useId();
-  const [isSelected, setIsSelected] = useState(false);
-
-  const {
-    data: locationSuggestions,
-    isLoading,
-    isError,
-    error,
-    refetch,
-  } = useQuery<LocationSuggestion[], Error>(
-    ["getLocationSuggestions", locationQuery],
-    () => {
-      onOpen();
-      return fetchLocationSuggestions(locationQuery);
-    },
-    {
-      enabled: false,
-      staleTime: Infinity,
-      refetchOnWindowFocus: false,
-      retry: false,
-    }
-  );
+  const [isSelected, setIsSelected] = useState(!!selectedLocation);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setIsSelected(false);
@@ -76,13 +56,16 @@ const SelectLocation = ({
     if (!_locationQuery || _locationQuery.length < 2) {
       return;
     }
-    debounce(() => refetch({ cancelRefetch: true }), 500)();
+    debounce(() => {
+      onOpen();
+      refetch({ cancelRefetch: true });
+    }, 500)();
   }
 
   function handleLocationSuggestionClick(item: LocationSuggestion) {
     setLocationQuery(item.name);
     setIsSelected(true);
-    onChange(item);
+    setSelectedLocation(item);
   }
 
   return (

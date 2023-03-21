@@ -11,6 +11,7 @@ const TemperatureChart = ({
   pointWidth: number;
 }): JSX.Element => {
   const { units } = useStore();
+
   return (
     <Box mx="auto">
       <LineChart

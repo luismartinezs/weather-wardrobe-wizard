@@ -2,7 +2,6 @@ import { NextApiRequest, NextApiResponse } from 'next'
 
 const OPEN_WEATHER_API_KEY = process.env.OPEN_WEATHER_API_KEY
 
-
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { lat, lon } = req.query
   if (!lat || !lon) {

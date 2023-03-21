@@ -5,11 +5,9 @@ import { Box, Container, Divider, Heading, Text } from "@chakra-ui/react";
 import { LocationSuggestion } from "@/types/weatherApi";
 import SelectLocation from "@/components/SelectLocation";
 import WeatherForecast from "@/components/WeatherForecast";
+import ClothingSuggestions from "@/components/ClothingSuggestions";
 
 export default function Home() {
-  const [selectedLocation, setSelectedLocation] =
-    useState<LocationSuggestion | null>(null);
-
   return (
     <>
       <Head>
@@ -34,10 +32,13 @@ export default function Home() {
       </Text>
       <Divider my={4} />
       <Container>
-        <SelectLocation onChange={setSelectedLocation} />
+        <SelectLocation />
       </Container>
       <Box mt={2}>
-        <WeatherForecast location={selectedLocation} />
+        <WeatherForecast />
+      </Box>
+      <Box mt={8}>
+        <ClothingSuggestions />
       </Box>
     </>
   );

@@ -64,12 +64,22 @@ MVP:
       - [x] Add clothing id to each clothing item
       - [x] Store array of checked ids rather than array of booleans
       - [x] Use id to determine what to filter
-- [ ] Move all state to store so that components are completely presentational and no prop drilling is needed
+- [x] Move all state to store so that components are completely presentational and no prop drilling is needed
+  - [x] App state (zustand)
+    - [x] units
+    - [x] selected location
+    - [x] checked clothing items + filter
+  - [x] Server state (react-query)
+    - [x] forecast
+    - [x] location
+  - [x] Computed state
+    - [x] clothing suggestions
+- [ ] Reusable component that takes care of loading and error states
 - [ ] ci/cd pipeline that checks
   - [ ] Unused imports and exports
   - [ ] typescript errors
 - [ ] Turn it into a PWA
-- [ ] Emulate max calls to openweather API
+- [ ] Emulate max calls to openweather API and handle this case
 - [ ] Footer
   - [ ] Feature request
   - [ ] Report issue
