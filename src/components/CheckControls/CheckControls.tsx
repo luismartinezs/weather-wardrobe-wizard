@@ -1,6 +1,6 @@
 import useStore from "@/store";
 import type { FilterType } from "@/store/checkedClothingItems";
-import { Button, HStack } from "@chakra-ui/react";
+import { Button, Flex } from "@chakra-ui/react";
 
 const buttonStaticProps = {
   variant: "ghost",
@@ -26,7 +26,7 @@ const CheckControls = (): JSX.Element => {
   });
 
   return (
-    <HStack my={1}>
+    <Flex my={1} flexWrap="wrap">
       <Button {...buttonProps("all")}>Show All</Button>
       <Button {...buttonProps("checked")}>Show Checked</Button>
       <Button {...buttonProps("unchecked")}>Show Unchecked</Button>
@@ -36,7 +36,7 @@ const CheckControls = (): JSX.Element => {
       >
         Uncheck all
       </Button>
-    </HStack>
+    </Flex>
   );
 };
 
