@@ -4,7 +4,7 @@ import { StateCreator } from 'zustand';
 import { LocationSuggestion } from '@/types/weatherApi';
 
 export type SelectedLocationState = Immutable<{
-  selectedLocation: LocationSuggestion | null
+  selectedLocation: LocationSuggestion
   setSelectedLocation: (location: LocationSuggestion) => void
 }>
 
