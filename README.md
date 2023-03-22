@@ -86,6 +86,8 @@ MVP:
 - [ ] Implement CORS (https://github.com/vercel/next.js/blob/canary/examples/api-routes-cors/pages/api/cors.ts)
 - [ ] Nicer icons: those look really good: https://www.figma.com/file/sz4DRhCqCRfbBCbhkRfcjy/Frosted-Glass-Weather-Icons-(Community)?node-id=2-2&t=4j1KNueeupVcUdaQ-0
 
+<!-- test pipeline -->
+
 Nice extras
 
 - [ ] Weather card shows
