@@ -75,15 +75,18 @@ MVP:
   - [x] Computed state
     - [x] clothing suggestions
 - [x] Reusable component that takes care of loading and error states
-- [ ] ci/cd pipeline that checks
-  - [ ] Unused imports and exports
-  - [ ] typescript errors
+- [x] ci/cd pipeline that checks
+  - [x] Unused imports and exports
+  - [x] typescript errors
 - [ ] Turn it into a PWA
 - [ ] Emulate max calls to openweather API and handle this case
 - [ ] Footer
   - [ ] Feature request
   - [ ] Report issue
 - [ ] Implement CORS (https://github.com/vercel/next.js/blob/canary/examples/api-routes-cors/pages/api/cors.ts)
+- [ ] Nicer icons: those look really good: https://www.figma.com/file/sz4DRhCqCRfbBCbhkRfcjy/Frosted-Glass-Weather-Icons-(Community)?node-id=2-2&t=4j1KNueeupVcUdaQ-0
+
+<!-- test pipeline -->
 
 Nice extras
 
