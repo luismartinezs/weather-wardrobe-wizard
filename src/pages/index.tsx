@@ -1,11 +1,10 @@
-import { useState } from "react";
 import Head from "next/head";
 import { Box, Container, Divider, Heading, Text } from "@chakra-ui/react";
 
-import { LocationSuggestion } from "@/types/weatherApi";
 import SelectLocation from "@/components/SelectLocation";
 import WeatherForecast from "@/components/WeatherForecast";
 import ClothingSuggestions from "@/components/ClothingSuggestions";
+import LocationButton from "@/components/LocationButton";
 
 export default function Home() {
   return (
@@ -33,8 +32,11 @@ export default function Home() {
       <Divider my={4} />
       <Container>
         <SelectLocation />
+        <Box mt={2}>
+          <LocationButton />
+        </Box>
       </Container>
-      <Box mt={2}>
+      <Box mt={8}>
         <WeatherForecast />
       </Box>
       <Box mt={8}>

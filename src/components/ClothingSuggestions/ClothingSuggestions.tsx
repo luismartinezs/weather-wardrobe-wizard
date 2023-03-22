@@ -1,41 +1,19 @@
-import { ClothingId } from "@/util/clothingSuggestions";
-import { baseTheme, Button, Flex, Heading, HStack } from "@chakra-ui/react";
+import { baseTheme, Flex, Heading } from "@chakra-ui/react";
 import ClothingItem from "@/components/ClothingItem";
-import useStore from "@/store";
-import { useClothingSuggestions } from "@/hooks/useClothingSuggestions";
 import { useFilteredClothingItems } from "@/hooks/useFilteredClothingItems";
-
-type FilterType = "all" | "checked" | "unchecked";
-
-const buttonStaticProps = {
-  variant: "ghost",
-  size: "sm",
-  fontWeight: "thin",
-};
+import ServerStateDisplayWrapper from "@/components/ServerStateDisplayWrapper";
+import CheckControls from "@/components/CheckControls";
 
 const ClothingSuggestions = (): JSX.Element => {
-  const suggestions = useClothingSuggestions();
-  const setCheckedItems = useStore((state) => state.setCheckedClothingItems);
-  const filter = useStore((state) => state.filter);
-  const setFilter = useStore((state) => state.setFilter);
-  const filteredItems = useFilteredClothingItems();
-
-  const handleFilterChange = (filterType: FilterType) => {
-    setFilter(filterType);
-  };
-
-  const buttonProps = (_filter: FilterType) => ({
-    onClick: () => handleFilterChange(_filter),
-    textDecor: filter === _filter ? "underline" : "none",
-    ...buttonStaticProps,
-  });
-
-  if (!filteredItems) {
-    return <></>;
-  }
+  const { filteredClothingItems, isLoading } = useFilteredClothingItems();
 
   return (
-    <>
+    <ServerStateDisplayWrapper
+      isLoading={isLoading}
+      data={filteredClothingItems}
+      disableError
+      disableLoading
+    >
       <Heading
         as="h2"
         fontSize="lg"
@@ -45,14 +23,7 @@ const ClothingSuggestions = (): JSX.Element => {
       >
         Suggested clothing
       </Heading>
-      <HStack my={1}>
-        <Button {...buttonProps("all")}>Show All</Button>
-        <Button {...buttonProps("checked")}>Show Checked</Button>
-        <Button {...buttonProps("unchecked")}>Show Unchecked</Button>
-        <Button onClick={() => setCheckedItems([])} {...buttonStaticProps}>
-          Uncheck all
-        </Button>
-      </HStack>
+      <CheckControls />
       <Flex
         mt={2}
         gap={2}
@@ -84,11 +55,11 @@ const ClothingSuggestions = (): JSX.Element => {
           scrollbarColor: `${baseTheme.colors.gray[600]} ${baseTheme.colors.gray[700]}`,
         }}
       >
-        {filteredItems.map((item) => (
+        {filteredClothingItems?.map((item) => (
           <ClothingItem key={item.id} item={item} />
         ))}
       </Flex>
-    </>
+    </ServerStateDisplayWrapper>
   );
 };
 

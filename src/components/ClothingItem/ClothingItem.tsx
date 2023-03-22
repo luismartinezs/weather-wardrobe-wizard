@@ -8,7 +8,7 @@ import {
   AspectRatio,
 } from "@chakra-ui/react";
 import Image from "next/image";
-import AmazonLink from "@/components/AmazonLink";
+// import AmazonLink from "@/components/AmazonLink";
 import type { ClothingId } from "@/util/clothingSuggestions";
 import useStore from "@/store";
 

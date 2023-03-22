@@ -2,7 +2,7 @@ import produce, { Immutable } from "immer"
 import type { ClothingId } from "@/util/clothingSuggestions"
 import { StateCreator } from "zustand";
 
-type FilterType = "all" | "checked" | "unchecked";
+export type FilterType = "all" | "checked" | "unchecked";
 
 export type ClothingItemsState = Immutable<{
   checkedClothingItems: ClothingId[]

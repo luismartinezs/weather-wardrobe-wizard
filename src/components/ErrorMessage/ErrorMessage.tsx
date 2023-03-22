@@ -6,22 +6,26 @@ import {
   HStack,
 } from "@chakra-ui/react";
 
-const ErrorMessage = ({
+interface ErrorMessageProps<ErrorType extends Error = Error> {
+  error: ErrorType | string;
+  id?: string;
+  onClose?: () => void;
+  closable?: boolean;
+}
+
+function ErrorMessage<ErrorType extends Error>({
   error,
   id,
   onClose,
   closable,
-}: {
-  error: Error;
-  id?: string;
-  onClose?: () => void;
-  closable?: boolean;
-}): JSX.Element => {
+}: ErrorMessageProps<ErrorType>): JSX.Element {
   return (
     <Alert status="error" id={id}>
       <HStack>
         <AlertIcon />
-        <AlertDescription>{error?.message}</AlertDescription>
+        <AlertDescription>
+          {typeof error === "string" ? error : error?.message}
+        </AlertDescription>
       </HStack>
       {closable && (
         <CloseButton
@@ -35,6 +39,6 @@ const ErrorMessage = ({
       )}
     </Alert>
   );
-};
+}
 
 export default ErrorMessage;
