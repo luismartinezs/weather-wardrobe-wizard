@@ -49,8 +49,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - run: pnpm build --if-present
-
       - name: Run tests
         run: pnpm test:ci
 
