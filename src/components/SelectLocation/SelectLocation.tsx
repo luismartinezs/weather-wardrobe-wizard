@@ -9,7 +9,6 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  Spinner,
   Text,
   useDisclosure,
   VStack,
@@ -23,6 +22,7 @@ import { LocationSuggestion } from "@/types/weatherApi";
 import ErrorMessage from "@/components/ErrorMessage";
 import useStore from "@/store";
 import { useLocation } from "@/hooks/useLocation";
+import ServerStateDisplayWrapper from "@/components/ServerStateDisplayWrapper";
 
 const SelectLocation = (): JSX.Element => {
   const selectedLocation = useStore((state) => state.selectedLocation);
@@ -109,40 +109,42 @@ const SelectLocation = (): JSX.Element => {
             id="location-suggestions"
             zIndex={2}
           >
-            {isLoading ? (
-              <Spinner color="gray.400" my={4} />
-            ) : (
-              !isSelected &&
-              locationSuggestions &&
-              locationSuggestions?.map((item, idx) => (
-                <Box
-                  key={`${item.lat}${item.lon}`}
-                  width="100%"
-                  borderBottom={
-                    idx < locationSuggestions.length - 1 ? "1px" : 0
-                  }
-                  borderColor="gray.600"
-                >
-                  <Button
-                    onClick={() => handleLocationSuggestionClick(item)}
-                    variant="ghost"
+            <ServerStateDisplayWrapper
+              data={locationSuggestions}
+              isLoading={isLoading}
+              disableError
+            >
+              {!isSelected &&
+                locationSuggestions?.map((item, idx) => (
+                  <Box
+                    key={`${item.lat}${item.lon}`}
                     width="100%"
-                    borderRadius={0}
-                    justifyContent="flex-start"
-                    py={6}
-                    px={6}
-                    color="gray.300"
-                    role="option"
-                    fontWeight="light"
+                    borderBottom={
+                      idx < locationSuggestions.length - 1 ? "1px" : 0
+                    }
+                    borderColor="gray.600"
                   >
-                    <Text color="gray.400">{item.name}&nbsp;</Text>
-                    <Text color="gray.500" fontSize="sm" as="span">
-                      ({[item.state, item.country].filter(Boolean).join(", ")})
-                    </Text>
-                  </Button>
-                </Box>
-              ))
-            )}
+                    <Button
+                      onClick={() => handleLocationSuggestionClick(item)}
+                      variant="ghost"
+                      width="100%"
+                      borderRadius={0}
+                      justifyContent="flex-start"
+                      py={6}
+                      px={6}
+                      color="gray.300"
+                      role="option"
+                      fontWeight="light"
+                    >
+                      <Text color="gray.400">{item.name}&nbsp;</Text>
+                      <Text color="gray.500" fontSize="sm" as="span">
+                        ({[item.state, item.country].filter(Boolean).join(", ")}
+                        )
+                      </Text>
+                    </Button>
+                  </Box>
+                ))}
+            </ServerStateDisplayWrapper>
           </VStack>
         </Box>
       </HStack>

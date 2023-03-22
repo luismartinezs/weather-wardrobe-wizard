@@ -44,7 +44,7 @@ MVP:
   - [x] Loading state
   - [x] Error state
   - [x] Responsive
-- [ ] Given a location, user gets:
+- [x] Given a location, user gets:
   - [x] Weather forecast for the next 5 days
     - [x] Day card
       - [x] daily av. temperature, min T and max T
@@ -74,7 +74,7 @@ MVP:
     - [x] location
   - [x] Computed state
     - [x] clothing suggestions
-- [ ] Reusable component that takes care of loading and error states
+- [x] Reusable component that takes care of loading and error states
 - [ ] ci/cd pipeline that checks
   - [ ] Unused imports and exports
   - [ ] typescript errors

@@ -1,7 +1,7 @@
-import { WeatherForecast } from "@/util/weather";
-import { Box, Flex, ListItem, Text } from "@chakra-ui/react";
+import { Flex, ListItem, Text } from "@chakra-ui/react";
 import { format, isTomorrow } from "date-fns";
-import useStore from "@/store";
+
+import { WeatherForecast } from "@/util/weather";
 import WeatherIcon from "@/components/WeatherIcon";
 
 function getWeekDay(dateString: string) {
