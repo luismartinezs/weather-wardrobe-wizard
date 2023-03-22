@@ -10,8 +10,9 @@
     "clean": "rm -rf node_modules pnpm-lock.yaml",
     "clean-cache": "rm -rf .next",
     "plop": "plop  --plopfile ./generators/plopfile.mjs",
-    "test": "jest --watch",
-    "test:ci": "jest --ci",
+    "test": "jest --passWithNoTests",
+    "test:watch": "jest --watch",
+    "test:ci": "jest --ci --passWithNoTests",
     "typecheck": "tsc --project tsconfig.json --noEmit"
   },
   "dependencies": {
