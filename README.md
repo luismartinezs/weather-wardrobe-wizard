@@ -75,9 +75,9 @@ MVP:
   - [x] Computed state
     - [x] clothing suggestions
 - [x] Reusable component that takes care of loading and error states
-- [ ] ci/cd pipeline that checks
-  - [ ] Unused imports and exports
-  - [ ] typescript errors
+- [x] ci/cd pipeline that checks
+  - [x] Unused imports and exports
+  - [x] typescript errors
 - [ ] Turn it into a PWA
 - [ ] Emulate max calls to openweather API and handle this case
 - [ ] Footer
