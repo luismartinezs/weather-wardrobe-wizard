@@ -78,7 +78,7 @@ MVP:
 - [x] ci/cd pipeline that checks
   - [x] Unused imports and exports
   - [x] typescript errors
-- [ ] Turn it into a PWA
+- [x] Turn it into a PWA
 - [ ] Emulate max calls to openweather API and handle this case
 - [ ] Footer
   - [ ] Feature request
