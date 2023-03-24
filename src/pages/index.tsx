@@ -16,7 +16,6 @@ export default function Home() {
           content="Get suggestions of clothes to pack based on the weather forecast for the next 5 days"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <Heading
         as="h1"
