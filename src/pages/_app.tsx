@@ -17,7 +17,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <Head>
         <meta
           name="viewport"
-          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover"
         />
         <meta
           name="description"
@@ -28,6 +28,13 @@ export default function App({ Component, pageProps }: AppProps) {
           content="weather, wardrobe, wizard, clothing, forecast, outfit, recommendation, app, location-based, fashion, temperature, rain, sunshine, local, dressing, attire, style, adaptive"
         />
         <title>Weather Wardrobe Wizard</title>
+        <meta name="application-name" content="Weather Wardrobe Wizard" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta
+          name="apple-mobile-web-app-title"
+          content="Weather Wardrobe Wizard"
+        />
 
         <link rel="manifest" href="/manifest.json" />
         <link
@@ -55,6 +62,29 @@ export default function App({ Component, pageProps }: AppProps) {
         />
         <meta name="msapplication-TileColor" content="#603cba" />
         <meta name="theme-color" content="#317EFB" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="msapplication-config" content="/browserconfig.xml" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:url" content="https://weatherwardrobewizard.com" />
+        <meta name="twitter:title" content="Weather Wardrobe Wizard" />
+        <meta name="twitter:description" content="Weather Wardrobe Wizard" />
+        <meta
+          name="twitter:image"
+          content="https://weatherwardrobewizard.com/icons/android-chrome-192x192.png"
+        />
+        <meta name="twitter:creator" content="@LuisMartinezSu2" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Weather Wardrobe Wizard" />
+        <meta property="og:description" content="Weather Wardrobe Wizard" />
+        <meta property="og:site_name" content="Weather Wardrobe Wizard" />
+        <meta property="og:url" content="https://weatherwardrobewizard.com" />
+        <meta
+          property="og:image"
+          content="https://weatherwardrobewizard.com/icons/apple-touch-icon.png"
+        />
       </Head>
       <QueryClientProvider client={queryClient}>
         <ChakraProvider theme={theme}>
