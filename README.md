@@ -26,11 +26,11 @@ MVP:
 
 - [x] Write down user stories
 - [x] Determine dev tasks from user stories (planning dev tasks)
-- [ ] User should find widget visually appealing and beautiful
+- [x] User should find widget visually appealing and beautiful
   - [x] Create mood dashboard figma
     - [x] Compile inspirational designs from dribbble and midjourney in Figma board
     - [x] Determine a general visual direction
-    - [ ] beautiful layout / UI for components
+    - [x] beautiful layout / UI for components
 - [x] User can search for a location by name in a search input, and receives autosuggestions of specific places that he needs to select
   - [x] Style input
   - [x] Search autosuggestions endpoint
@@ -80,16 +80,16 @@ MVP:
   - [x] typescript errors
 - [x] Turn it into a PWA
 - [ ] Emulate max calls to openweather API and handle this case
-- [ ] Footer
-  - [ ] Feature request
-  - [ ] Report issue
 - [ ] Implement CORS (https://github.com/vercel/next.js/blob/canary/examples/api-routes-cors/pages/api/cors.ts)
-- [ ] Nicer icons: those look really good: https://www.figma.com/file/sz4DRhCqCRfbBCbhkRfcjy/Frosted-Glass-Weather-Icons-(Community)?node-id=2-2&t=4j1KNueeupVcUdaQ-0
 
 <!-- test pipeline -->
 
 Nice extras
 
+- [ ] Footer
+  - [ ] Feature request
+  - [ ] Report issue
+- [ ] Nicer icons: those look really good: https://www.figma.com/file/sz4DRhCqCRfbBCbhkRfcjy/Frosted-Glass-Weather-Icons-(Community)?node-id=2-2&t=4j1KNueeupVcUdaQ-0
 - [ ] Weather card shows
   - [ ] av. wind force each day
   - [ ] av. humidity each day
