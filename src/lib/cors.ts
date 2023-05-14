@@ -5,7 +5,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 const cors = Cors({
   methods: ['GET', 'POST', 'HEAD'],
   ...(process.env.NODE_ENV === 'production' ? {
-    // origin: 'https://my-domain.com'
+    origin: 'https://weather-wardrobe-wizard.netlify.app'
   } : {})
 })
 
