@@ -1,6 +1,9 @@
+import { useCallback } from "react";
+
+import { Button, Flex } from "@chakra-ui/react";
+
 import useStore from "@/store";
 import type { FilterType } from "@/store/checkedClothingItems";
-import { Button, Flex } from "@chakra-ui/react";
 
 const buttonStaticProps = {
   variant: "ghost",
@@ -15,9 +18,9 @@ const CheckControls = (): JSX.Element => {
   const filter = useStore((state) => state.filter);
   const setFilter = useStore((state) => state.setFilter);
 
-  const handleFilterChange = (filterType: FilterType) => {
+  const handleFilterChange = useCallback((filterType: FilterType) => {
     setFilter(filterType);
-  };
+  }, [setFilter]);
 
   const buttonProps = (_filter: FilterType) => ({
     onClick: () => handleFilterChange(_filter),
