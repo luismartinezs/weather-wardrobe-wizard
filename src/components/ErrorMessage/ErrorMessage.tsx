@@ -7,7 +7,7 @@ import {
 } from "@chakra-ui/react";
 
 interface ErrorMessageProps<ErrorType extends Error = Error> {
-  error: ErrorType | string;
+  error: ErrorType | string | null;
   id?: string;
   onClose?: () => void;
   closable?: boolean;

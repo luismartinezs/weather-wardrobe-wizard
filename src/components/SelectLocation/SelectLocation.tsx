@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 import {
   Box,
@@ -24,6 +24,15 @@ import useStore from "@/store";
 import { useLocation } from "@/hooks/useLocation";
 import ServerStateDisplayWrapper from "@/components/ServerStateDisplayWrapper";
 
+interface UseLocationReturnType {
+  data: LocationSuggestion[] | null;
+  isLoading: boolean;
+  refetch: (options?: { cancelRefetch: boolean }) => void;
+  isError: boolean;
+  error: Error | null;
+}
+
+
 const SelectLocation = (): JSX.Element => {
   const selectedLocation = useStore((state) => state.selectedLocation);
   const setSelectedLocation = useStore((state) => state.setSelectedLocation);
@@ -37,10 +46,10 @@ const SelectLocation = (): JSX.Element => {
     refetch,
     isError,
     error,
-  } = useLocation({ locationQuery });
+  } = useLocation({ locationQuery }) as UseLocationReturnType
 
   const {
-    isOpen: isVisible,
+    isOpen: isErrorVisible,
     onClose,
     onOpen,
   } = useDisclosure({
@@ -49,6 +58,15 @@ const SelectLocation = (): JSX.Element => {
   const errorId = useId();
   const [isSelected, setIsSelected] = useState(!!selectedLocation);
 
+  const debouncedRefetch = useCallback(
+    debounce(() => {
+      onOpen();
+      refetch({ cancelRefetch: true });
+    }, 500),
+    [onOpen, refetch]
+  );
+
+
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setIsSelected(false);
     const _locationQuery = e.target.value;
@@ -56,17 +74,17 @@ const SelectLocation = (): JSX.Element => {
     if (!_locationQuery || _locationQuery.length < 2) {
       return;
     }
-    debounce(() => {
-      onOpen();
-      refetch({ cancelRefetch: true });
-    }, 500)();
+    debouncedRefetch();
   }
 
-  function handleLocationSuggestionClick(item: LocationSuggestion) {
-    setLocationQuery(item.name);
-    setIsSelected(true);
-    setSelectedLocation(item);
+  function createLocationSuggestionHandler(item: LocationSuggestion) {
+    return function handleLocationSuggestionClick() {
+      setLocationQuery(item.name);
+      setIsSelected(true);
+      setSelectedLocation(item);
+    };
   }
+
 
   return (
     <FormControl>
@@ -125,7 +143,7 @@ const SelectLocation = (): JSX.Element => {
                     borderColor="gray.600"
                   >
                     <Button
-                      onClick={() => handleLocationSuggestionClick(item)}
+                      onClick={createLocationSuggestionHandler(item)}
                       variant="ghost"
                       width="100%"
                       borderRadius={0}
@@ -148,7 +166,7 @@ const SelectLocation = (): JSX.Element => {
           </VStack>
         </Box>
       </HStack>
-      {isError && isVisible && (
+      {isError && isErrorVisible && (
         <Box mt={2}>
           <ErrorMessage id={errorId} error={error} onClose={onClose} closable />
         </Box>
