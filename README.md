@@ -84,17 +84,20 @@ MVP:
 
 <!-- test pipeline -->
 
-Nice extras
+Post MVP:
 
+- [ ] E2E / Functional Tests
+- [ ] Extended Weather Information, av.wind force, av. humidity...
+- [ ] User Profile and Personalization
+- [ ] More Detailed Clothing Suggestions: sunglasses, hats, or umbrellas, "light jeans for warm weather" or "thick jeans for cold weather", ...
+- [ ] Weather Alerts
+- [ ] Premium Paid Version That Shows Data for More Days
+- [ ] Premium Feature That Shows AI Generated Description of the Clothes to Pack
+- [ ] Advanced Search: search by zip code, autocomplete...
+- [ ] Nicer icons: those look really good: https://www.figma.com/file/sz4DRhCqCRfbBCbhkRfcjy/Frosted-Glass-Weather-Icons-(Community)?node-id=2-2&t=4j1KNueeupVcUdaQ-0
+- [ ] Localization
+- [ ] Accessibility
+- [ ] Color modes (light, dark)
 - [ ] Footer
   - [ ] Feature request
   - [ ] Report issue
-- [ ] Nicer icons: those look really good: https://www.figma.com/file/sz4DRhCqCRfbBCbhkRfcjy/Frosted-Glass-Weather-Icons-(Community)?node-id=2-2&t=4j1KNueeupVcUdaQ-0
-- [ ] Weather card shows
-  - [ ] av. wind force each day
-  - [ ] av. humidity each day
-  - [x] Show T point with relative position based on value
-  - [ ] T line fades at the sides
-  - [ ] Beautiful icon generated with midjourney
-  - [ ] Beautiful background matching weather, generated with midjourney
-- [ ] Premium version with more features (because the weather API is not free)
