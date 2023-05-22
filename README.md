@@ -79,8 +79,8 @@ MVP:
   - [x] Unused imports and exports
   - [x] typescript errors
 - [x] Turn it into a PWA
-- [ ] Emulate max calls to openweather API and handle this case
-- [ ] Implement CORS (https://github.com/vercel/next.js/blob/canary/examples/api-routes-cors/pages/api/cors.ts)
+- [-] Emulate max calls to openweather API and handle this case
+- [x] Implement CORS (https://github.com/vercel/next.js/blob/canary/examples/api-routes-cors/pages/api/cors.ts)
 
 <!-- test pipeline -->
 
