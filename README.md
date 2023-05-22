@@ -111,7 +111,7 @@ MVP:
 
 Post MVP:
 
-- [ ] E2E / Functional Tests
+- [x] E2E / Functional Tests
 - [ ] Extended Weather Information, av.wind force, av. humidity...
 - [ ] User Profile and Personalization
 - [ ] More Detailed Clothing Suggestions: sunglasses, hats, or umbrellas, "light jeans for warm weather" or "thick jeans for cold weather", ...
