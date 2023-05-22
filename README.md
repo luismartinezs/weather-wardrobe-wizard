@@ -12,6 +12,31 @@ yarn dev
 pnpm dev
 ```
 
+## Playwright
+
+```sh
+pnpm exec playwright test
+# Runs the end-to-end tests.
+
+pnpm exec playwright test --ui
+# Starts the interactive UI mode.
+
+pnpm exec playwright test --project=chromium
+# Runs the tests only on Desktop Chrome.
+
+pnpm exec playwright test example
+# Runs the tests in a specific file.
+
+pnpm exec playwright test --debug
+# Runs the tests in debug mode.
+
+pnpm exec playwright codegen
+# Auto generate tests with Codegen.
+
+npx playwright show-report
+# Shows the report of the last test run.
+```
+
 ## References
 
 - Implement react-query in NextJS: https://codesandbox.io/s/fetching-data-on-server-final-stl70?file=/pages/pokemon/%5Bid%5D.tsx
@@ -101,3 +126,19 @@ Post MVP:
 - [ ] Footer
   - [ ] Feature request
   - [ ] Report issue
+
+E2e Tests:
+
+- [x] **Input and Selection of Location**
+  - [x] Test that the user can enter a location name in the input field and that it populates a dropdown with up to 5 options.
+  - [x] Test that the dropdown options are correctly formatted as "location name (country acronym)".
+  - [x] Test that the user can select an option from the dropdown.
+  - [x] Test that the "Get weather in {location}" button becomes enabled once an option is selected.
+- [x] **Weather Forecast Widget**
+  - [x] Test that the weather forecast widget loads after the user clicks the "Get weather in {location}" button.
+  - [x] Test that the widget shows a forecast for the next 5 days.
+  - [x] Test that each day's forecast includes a day label, a date label, a weather icon, a weather text label, and two lines representing the max and min temperatures.
+  - [x] Test that the user can scroll horizontally through the forecast.
+  - [x] Test that the user can toggle between metric and imperial units and that the temperature values update accordingly.
+- [x] **Clothing Suggestions Widget**
+  - [x] Test that the clothing suggestions widget loads after the user clicks the "Get weather in {location}" button.

@@ -33,7 +33,7 @@ const ClothingItem = ({
   const labelId = useId();
 
   return (
-    <Card minW={size.w} w={size.w} maxW={size.w}>
+    <Card minW={size.w} w={size.w} maxW={size.w} data-testid="clothing-item">
       <CardBody>
         <Checkbox
           isChecked={checked}

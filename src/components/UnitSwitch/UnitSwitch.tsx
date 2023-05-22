@@ -34,6 +34,7 @@ const UnitSwitch = (): JSX.Element => {
           },
         }}
         isChecked={units === "imperial"}
+        data-testid="unit-switch"
       />
       <Show above="md">
         <Text as="span" color={units === "imperial" ? "white" : "gray.500"}>

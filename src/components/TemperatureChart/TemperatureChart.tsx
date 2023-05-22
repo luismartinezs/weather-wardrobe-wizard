@@ -54,6 +54,7 @@ const TemperatureChart = ({
                 fill={stroke}
                 fontSize={16}
                 textAnchor="middle"
+                data-testid="max-temp"
               >
                 {getTStr(value, units)}
               </text>
@@ -75,6 +76,7 @@ const TemperatureChart = ({
                 fill={stroke}
                 fontSize={16}
                 textAnchor="middle"
+                data-testid="min-temp"
               >
                 {getTStr(value, units)}
               </text>

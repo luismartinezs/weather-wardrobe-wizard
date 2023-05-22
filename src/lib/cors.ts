@@ -9,8 +9,6 @@ const cors = Cors({
   } : {})
 })
 
-console.debug(process.env.NODE_ENV)
-
 // Middleware runner
 export function runMiddleware(
   req: NextApiRequest,

@@ -34,6 +34,7 @@ const ForecastListItem = ({
       w={`${width}px`}
       maxW={`${width}px`}
       minW={`${width}px`}
+      data-testid="forecast-day"
     >
       <Text>{getWeekDay(dayForecast.date)}</Text>
       <Text color="gray.400" fontWeight="thin">

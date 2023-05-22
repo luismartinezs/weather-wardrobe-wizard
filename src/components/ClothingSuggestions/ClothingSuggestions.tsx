@@ -54,6 +54,7 @@ const ClothingSuggestions = (): JSX.Element => {
           scrollbarWidth: "auto",
           scrollbarColor: `${baseTheme.colors.gray[600]} ${baseTheme.colors.gray[700]}`,
         }}
+        data-testid="clothing-suggestions"
       >
         {filteredClothingItems?.map((item) => (
           <ClothingItem key={item.id} item={item} />
