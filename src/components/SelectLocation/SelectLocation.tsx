@@ -32,7 +32,6 @@ interface UseLocationReturnType {
   error: Error | null;
 }
 
-
 const SelectLocation = (): JSX.Element => {
   const selectedLocation = useStore((state) => state.selectedLocation);
   const setSelectedLocation = useStore((state) => state.setSelectedLocation);
@@ -46,7 +45,7 @@ const SelectLocation = (): JSX.Element => {
     refetch,
     isError,
     error,
-  } = useLocation({ locationQuery }) as UseLocationReturnType
+  } = useLocation({ locationQuery }) as UseLocationReturnType;
 
   const {
     isOpen: isErrorVisible,
@@ -58,6 +57,7 @@ const SelectLocation = (): JSX.Element => {
   const errorId = useId();
   const [isSelected, setIsSelected] = useState(!!selectedLocation);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedRefetch = useCallback(
     debounce(() => {
       onOpen();
@@ -65,7 +65,6 @@ const SelectLocation = (): JSX.Element => {
     }, 500),
     [onOpen, refetch]
   );
-
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setIsSelected(false);
@@ -84,7 +83,6 @@ const SelectLocation = (): JSX.Element => {
       setSelectedLocation(item);
     };
   }
-
 
   return (
     <FormControl>
