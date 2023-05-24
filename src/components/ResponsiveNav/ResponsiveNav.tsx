@@ -12,7 +12,6 @@ import {
   IconButton,
   Link,
   useDisclosure,
-  Text,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import Image from "next/image";

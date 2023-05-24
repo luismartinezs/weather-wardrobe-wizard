@@ -1,6 +1,6 @@
 import { AuthContext } from "@/context/AuthContext";
-import { googleSignUp, signOut } from "@/firebase/auth";
-import { useContext, useState } from "react";
+import { signOut } from "@/firebase/auth";
+import { useContext } from "react";
 import { Button, Icon, type ButtonProps } from "@chakra-ui/react";
 import { AiOutlineGoogle } from "react-icons/ai";
 import { BiLogOut } from "react-icons/bi";
