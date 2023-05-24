@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { Box, Container, Divider, Heading, Text } from "@chakra-ui/react";
+import { Box, Container } from "@chakra-ui/react";
 
 import SelectLocation from "@/components/SelectLocation";
 import WeatherForecast from "@/components/WeatherForecast";
@@ -17,18 +17,6 @@ export default function Home() {
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <Heading
-        as="h1"
-        bgGradient="linear(160deg, tertiary.500, secondary.500)"
-        bgClip="text"
-        width="fit-content"
-      >
-        Weather Wardrobe Wizard
-      </Heading>
-      <Text mt={2} fontSize="lg">
-        I will help you decide what clothes to pack for your trip
-      </Text>
-      <Divider my={4} />
       <Container>
         <SelectLocation />
         <Box mt={2}>
