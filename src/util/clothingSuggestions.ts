@@ -38,8 +38,6 @@ export const clothingMap: { [index: string]: ClothingSuggestion } = {
   }
 }
 
-console.log(Object.values(clothingMap).map(item => item.label))
-
 function getClothingForTemperature(minT: number, maxT: number): string[] {
   const layers = [];
 

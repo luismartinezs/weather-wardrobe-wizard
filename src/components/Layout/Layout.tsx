@@ -1,17 +1,21 @@
-import { Box, Container, Stack } from "@chakra-ui/react";
+import { Box, Container, Flex } from "@chakra-ui/react";
+import { SkipNavContent } from "@chakra-ui/skip-nav";
 
 import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 
 const Layout = ({ children }: { children: React.ReactNode }): JSX.Element => {
   return (
-    <Stack minH="100vh">
-      <Container maxW="container.xl" mt={6} mb={28}>
+    <Flex minH="100vh" direction="column">
+      <Header />
+      <Container as="main" maxW="container.xl" mt={6} mb={28}>
+        <SkipNavContent />
         {children}
       </Container>
-      <Box bg="gray.900" position='absolute' bottom={0} w="100%" >
+      <Box bg="gray.900" position="absolute" bottom={0} w="100%" as="footer">
         <Footer />
       </Box>
-    </Stack>
+    </Flex>
   );
 };
 

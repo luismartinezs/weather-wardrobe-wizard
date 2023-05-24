@@ -142,3 +142,9 @@ E2e Tests:
   - [x] Test that the user can toggle between metric and imperial units and that the temperature values update accordingly.
 - [x] **Clothing Suggestions Widget**
   - [x] Test that the clothing suggestions widget loads after the user clicks the "Get weather in {location}" button.
+
+## Firebase references
+
+- https://firebase.google.com/docs/auth/web/google-signin
+- https://medium.com/@monkeyscript/google-authentication-using-firebase-in-next-js-f83954b4b63d
+- https://www.freecodecamp.org/news/create-full-stack-app-with-nextjs13-and-firebase/
