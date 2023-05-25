@@ -19,17 +19,17 @@ export default function App({ Component, pageProps }: AppProps) {
       <Head>
         <MetaTags />
       </Head>
-      <AuthContextProvider>
-        <QueryClientProvider client={queryClient}>
-          <ChakraProvider theme={theme}>
+      <QueryClientProvider client={queryClient}>
+        <ChakraProvider theme={theme}>
+          <AuthContextProvider>
             <SkipNavLink>Skip to content</SkipNavLink>
             <Layout>
               <Component {...pageProps} />
             </Layout>
-          </ChakraProvider>
-          <ReactQueryDevtools initialIsOpen={false} />
-        </QueryClientProvider>
-      </AuthContextProvider>
+          </AuthContextProvider>
+        </ChakraProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
     </>
   );
 }
