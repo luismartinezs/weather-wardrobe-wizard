@@ -1,4 +1,4 @@
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, signInWithRedirect, GithubAuthProvider } from "firebase/auth";
 
 import firebase_app from "./config";
 
@@ -20,9 +20,13 @@ const signUp = withErrorHandling(createUserWithEmailAndPassword);
 
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: "select_account" });
+const githubProvider = new GithubAuthProvider();
 
 const googleSignUp = () => signInWithRedirect(auth, googleProvider);
+const githubSignUp = () => signInWithRedirect(auth, githubProvider);
 const signOut = () => auth.signOut();
+
+
 
 export {
   signIn,
@@ -30,5 +34,6 @@ export {
   googleProvider,
   googleSignUp,
   signOut,
-  auth
+  auth,
+  githubSignUp
 }

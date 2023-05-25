@@ -15,7 +15,7 @@ import {
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import Image from "next/image";
-import GoogleSigninButton from "../GoogleSigninButton";
+import SigninButtons from "@/components/SigninButtons";
 
 const links: Array<{
   label: string;
@@ -51,7 +51,7 @@ const ResponsiveNav = (): JSX.Element => {
       >
         <Flex align="center" gap="5">
           <Links />
-          <GoogleSigninButton size="md" />
+          <SigninButtons direction="row" />
         </Flex>
       </Box>
       <Drawer
@@ -83,7 +83,7 @@ const ResponsiveNav = (): JSX.Element => {
               px={6}
             >
               <Links />
-              <GoogleSigninButton size="lg" />
+              <SigninButtons direction="column" />
             </Flex>
           </DrawerBody>
 
