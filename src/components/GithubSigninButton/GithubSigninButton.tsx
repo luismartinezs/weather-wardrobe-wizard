@@ -1,22 +1,22 @@
-import { AiOutlineGoogle } from "react-icons/ai";
+import { AiOutlineGithub } from "react-icons/ai";
 import ButtonWithIcon, {
   type ButtonWithIconProps,
 } from "@/components/ButtonWithIcon";
 
-import { useGoogleSignin } from "./useGoogleSignin";
+import { useGithubSignin } from "./useGithubSignin";
 
 const GoogleSigninButton = ({
   size = "md",
 }: Pick<ButtonWithIconProps, "size">): JSX.Element => {
-  const { handleGoogleSignUp, loading } = useGoogleSignin();
+  const { handleGithubSignUp, loading } = useGithubSignin();
   return (
     <ButtonWithIcon
       size={size}
-      onClick={handleGoogleSignUp}
-      icon={AiOutlineGoogle}
+      onClick={handleGithubSignUp}
+      icon={AiOutlineGithub}
       isLoading={loading}
     >
-      Sign in with Google
+      Sign in with Github
     </ButtonWithIcon>
   );
 };
