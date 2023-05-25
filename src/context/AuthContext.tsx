@@ -1,7 +1,6 @@
 import React from "react";
 import { type User } from "firebase/auth";
 import { useAuthUser } from "@/hooks/useAuthUser";
-import LoadingSpinner from "@/components/LoadingSpinner";
 import { Flex, Spinner } from "@chakra-ui/react";
 
 export const AuthContext = React.createContext<{
