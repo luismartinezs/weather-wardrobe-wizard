@@ -13,7 +13,11 @@
     "test": "jest --passWithNoTests",
     "test:watch": "jest --watch",
     "test:ci": "jest --ci --passWithNoTests",
-    "typecheck": "tsc --project tsconfig.json --noEmit"
+    "typecheck": "tsc --project tsconfig.json --noEmit",
+    "emu:clean": "rm -rf emu-data",
+    "emu:dev": "cross-env NEXT_PUBLIC_FIREBASE_EMULATOR=true next dev",
+    "emu:start": "firebase emulators:start --import=./emu-data --export-on-exit",
+    "firebase:deploy": "firebase deploy"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.17",
@@ -60,6 +64,7 @@
     "jest": "^29.4.1",
     "jest-environment-jsdom": "^29.4.1",
     "plop": "^3.1.1",
-    "prettier": "2.8.3"
+    "prettier": "2.8.3",
+    "cross-env": "^7.0.3"
   }
 }

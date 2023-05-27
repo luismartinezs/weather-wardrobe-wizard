@@ -1,8 +1,11 @@
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, signInWithRedirect, GithubAuthProvider } from "firebase/auth";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, signInWithRedirect, GithubAuthProvider, connectAuthEmulator } from "firebase/auth";
 
-import firebase_app from "./config";
+import firebase_app from "@/firebase/config";
 
 const auth = getAuth(firebase_app);
+if (process.env.NEXT_PUBLIC_FIREBASE_EMULATOR !== undefined && process.env.NEXT_PUBLIC_FIREBASE_EMULATOR === 'true') {
+  connectAuthEmulator(auth, 'http://localhost:9099');
+}
 
 type AsyncFunction<T extends any[], R> = (...args: T) => Promise<R>;
 

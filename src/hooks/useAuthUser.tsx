@@ -1,5 +1,6 @@
 import React from "react";
-import { onAuthStateChanged, getAuth, type User } from "firebase/auth";
+import { onAuthStateChanged, getAuth, User } from "firebase/auth";
+import { getUserDocument } from "@/firebase/firestore";
 
 import firebase_app from "@/firebase/config";
 
@@ -10,9 +11,10 @@ function useAuthUser() {
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user);
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      if (firebaseUser) {
+        const userData = await getUserDocument(firebaseUser);
+        setUser({ ...firebaseUser, ...userData });
       } else {
         setUser(null);
       }
