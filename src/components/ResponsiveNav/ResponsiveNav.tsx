@@ -12,10 +12,13 @@ import {
   IconButton,
   Link,
   useDisclosure,
+  Text,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import Image from "next/image";
 import SigninButtons from "@/components/SigninButtons";
+import { useAuthContext } from "@/context/AuthContext";
+import ProfileLink from "@/components/ProfileLink";
 
 const links: Array<{
   label: string;
@@ -34,6 +37,7 @@ const Links = () => (
 
 const ResponsiveNav = (): JSX.Element => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { user } = useAuthContext();
 
   return (
     <>
@@ -51,6 +55,7 @@ const ResponsiveNav = (): JSX.Element => {
       >
         <Flex align="center" gap="5">
           <Links />
+          {user && <ProfileLink user={user} />}
           <SigninButtons direction="row" />
         </Flex>
       </Box>
@@ -72,6 +77,11 @@ const ResponsiveNav = (): JSX.Element => {
                 height={150}
               />
             </Flex>
+            {user && (
+              <Text fontWeight="normal" fontSize="md" align="center">
+                Welcome {user.displayName}!
+              </Text>
+            )}
           </DrawerHeader>
 
           <DrawerBody>
@@ -83,6 +93,7 @@ const ResponsiveNav = (): JSX.Element => {
               px={6}
             >
               <Links />
+              {user && <ProfileLink user={user} />}
               <SigninButtons direction="column" />
             </Flex>
           </DrawerBody>
