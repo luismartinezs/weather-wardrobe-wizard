@@ -1,26 +1,30 @@
 import { Text, Link } from "@chakra-ui/react";
-import { signIn } from "@/firebase/auth";
+import { signUp } from "@/firebase/auth";
 import NextLink from "next/link";
 import SigninRegister from "@/components/SigninRegister";
 import AuthForm, { type FormData } from "@/components/AuthForm";
 import { useAuthRedirect } from "@/hooks/useAuthRedirect";
 
-function SignIn() {
+function Register() {
   useAuthRedirect();
 
   const onSubmit = (data: FormData) => {
-    signIn(data.email, data.password);
+    signUp(data.email, data.password);
   };
 
   return (
     <SigninRegister
       form={
-        <AuthForm onSubmit={onSubmit} buttonText="Sign in" title="Sign in" />
+        <AuthForm
+          onSubmit={onSubmit}
+          buttonText="Create new user"
+          title="Register"
+        />
       }
       afterFormLink={
-        <Link as={NextLink} mt="4" href="/register">
+        <Link as={NextLink} mt="4" href="/signin">
           <Text align="center" color="gray.400" fontSize="sm" mt={2}>
-            Or register as a new user
+            Or sign in as an existing user
           </Text>
         </Link>
       }
@@ -28,4 +32,4 @@ function SignIn() {
   );
 }
 
-export default SignIn;
+export default Register;
