@@ -14,20 +14,28 @@ import {
 export type FormData = {
   email: string;
   password: string;
+  displayName?: string;
 };
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
   password: yup.string().required(),
+  displayName: yup.string(),
 });
 
 interface AuthFormProps {
   onSubmit: (data: FormData) => void;
   buttonText: string;
   title: string;
+  type: "register" | "signin";
 }
 
-function AuthForm({ onSubmit, buttonText, title }: AuthFormProps) {
+function AuthForm({
+  onSubmit,
+  buttonText,
+  title,
+  type = "signin",
+}: AuthFormProps) {
   const {
     register,
     handleSubmit,
@@ -46,13 +54,20 @@ function AuthForm({ onSubmit, buttonText, title }: AuthFormProps) {
       <Heading as="h1" size="lg" textAlign="center">
         {title}
       </Heading>
+      {type === "register" && (
+        <FormControl isInvalid={!!errors.displayName}>
+          <FormLabel htmlFor="displayName">Display Name</FormLabel>
+          <Input id="displayName" {...register("displayName")} />
+          <FormErrorMessage>{errors.displayName?.message}</FormErrorMessage>
+        </FormControl>
+      )}
       <FormControl isInvalid={!!errors.email}>
-        <FormLabel htmlFor="email">Email</FormLabel>
+        <FormLabel htmlFor="email">Email (required)</FormLabel>
         <Input id="email" {...register("email")} />
         <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
       </FormControl>
       <FormControl isInvalid={!!errors.password}>
-        <FormLabel htmlFor="password">Password</FormLabel>
+        <FormLabel htmlFor="password">Password (required)</FormLabel>
         <Input id="password" type="password" {...register("password")} />
         <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
       </FormControl>

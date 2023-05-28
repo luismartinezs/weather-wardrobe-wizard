@@ -9,7 +9,7 @@ function Register() {
   useAuthRedirect();
 
   const onSubmit = (data: FormData) => {
-    signUp(data.email, data.password);
+    signUp(data.email, data.password, data.displayName);
   };
 
   return (
@@ -19,6 +19,7 @@ function Register() {
           onSubmit={onSubmit}
           buttonText="Create new user"
           title="Register"
+          type="register"
         />
       }
       afterFormLink={

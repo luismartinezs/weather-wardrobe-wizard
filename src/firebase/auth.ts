@@ -1,4 +1,4 @@
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, signInWithRedirect, GithubAuthProvider, connectAuthEmulator } from "firebase/auth";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, signInWithRedirect, GithubAuthProvider, connectAuthEmulator, updateProfile } from "firebase/auth";
 
 import firebase_app from "@/firebase/config";
 
@@ -19,7 +19,13 @@ const withErrorHandling = <T extends any[], R>(fn: AsyncFunction<T, R>) => async
 };
 
 const signIn = withErrorHandling((email, password) => signInWithEmailAndPassword(auth, email, password));
-const signUp = withErrorHandling((email, password) => createUserWithEmailAndPassword(auth, email, password));
+const signUp = withErrorHandling(async (email, password, displayName) => {
+  const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+  if (displayName) {
+    await updateProfile(userCredential.user, { displayName });
+  }
+  return userCredential;
+});
 
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: "select_account" });
