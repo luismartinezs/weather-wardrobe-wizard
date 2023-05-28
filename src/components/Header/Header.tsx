@@ -7,7 +7,7 @@ const Header = () => {
     <>
       <Flex
         as="header"
-        align="center"
+        align={{ base: "start", lg: "center" }}
         justify="space-between"
         wrap="nowrap"
         padding="1rem"

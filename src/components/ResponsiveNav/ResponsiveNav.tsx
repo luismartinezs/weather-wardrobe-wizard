@@ -12,10 +12,15 @@ import {
   IconButton,
   Link,
   useDisclosure,
+  Text,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import Image from "next/image";
 import SigninButtons from "@/components/SigninButtons";
+import { useAuthContext } from "@/context/AuthContext";
+import ProfileLink from "@/components/ProfileLink";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 const links: Array<{
   label: string;
@@ -32,8 +37,26 @@ const Links = () => (
   </>
 );
 
+const useRouteChange = (callback: () => void, deps: Array<unknown>) => {
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleRouteChange = () => {
+      callback();
+    };
+
+    router.events.on("routeChangeStart", handleRouteChange);
+
+    return () => {
+      router.events.off("routeChangeStart", handleRouteChange);
+    };
+  }, [...deps, callback, router.events]);
+};
+
 const ResponsiveNav = (): JSX.Element => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { user } = useAuthContext();
+  useRouteChange(() => isOpen && onClose(), [isOpen, onClose]);
 
   return (
     <>
@@ -51,6 +74,7 @@ const ResponsiveNav = (): JSX.Element => {
       >
         <Flex align="center" gap="5">
           <Links />
+          {user && <ProfileLink user={user} />}
           <SigninButtons direction="row" />
         </Flex>
       </Box>
@@ -72,6 +96,11 @@ const ResponsiveNav = (): JSX.Element => {
                 height={150}
               />
             </Flex>
+            {user && (
+              <Text fontWeight="normal" fontSize="md" align="center">
+                Welcome {user.displayName}!
+              </Text>
+            )}
           </DrawerHeader>
 
           <DrawerBody>
@@ -83,6 +112,7 @@ const ResponsiveNav = (): JSX.Element => {
               px={6}
             >
               <Links />
+              {user && <ProfileLink user={user} />}
               <SigninButtons direction="column" />
             </Flex>
           </DrawerBody>
