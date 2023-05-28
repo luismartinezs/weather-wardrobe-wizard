@@ -56,26 +56,38 @@ function AuthForm({
       </Heading>
       {type === "register" && (
         <FormControl isInvalid={!!errors.displayName}>
-          <FormLabel htmlFor="displayName">Display Name</FormLabel>
+          <FormLabel htmlFor="displayName">Name (optional)</FormLabel>
           <Input id="displayName" {...register("displayName")} />
-          <FormErrorMessage>{errors.displayName?.message}</FormErrorMessage>
+          <FormErrorMessage aria-live="polite">
+            {errors.displayName?.message}
+          </FormErrorMessage>
         </FormControl>
       )}
       <FormControl isInvalid={!!errors.email}>
         <FormLabel htmlFor="email">Email (required)</FormLabel>
-        <Input id="email" {...register("email")} />
-        <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
+        <Input id="email" aria-required {...register("email")} />
+        <FormErrorMessage aria-live="polite">
+          {errors.email?.message}
+        </FormErrorMessage>
       </FormControl>
       <FormControl isInvalid={!!errors.password}>
         <FormLabel htmlFor="password">Password (required)</FormLabel>
-        <Input id="password" type="password" {...register("password")} />
-        <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
+        <Input
+          id="password"
+          type="password"
+          aria-required
+          {...register("password")}
+        />
+        <FormErrorMessage aria-live="polite">
+          {errors.password?.message}
+        </FormErrorMessage>
       </FormControl>
       <Button
         w="100%"
         colorScheme="primary"
         type="submit"
         isLoading={isSubmitting}
+        aria-disabled={isSubmitting}
       >
         {buttonText}
       </Button>
