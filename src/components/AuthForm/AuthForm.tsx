@@ -1,0 +1,126 @@
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import {
+  FormControl,
+  FormLabel,
+  Input,
+  FormErrorMessage,
+  Button,
+  Flex,
+  Heading,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+} from "@chakra-ui/react";
+import { useState } from "react";
+
+export type FormData = {
+  email: string;
+  password: string;
+  displayName?: string;
+};
+
+const schema = yup.object().shape({
+  email: yup.string().email().required(),
+  password: yup.string().required(),
+  displayName: yup.string(),
+});
+
+interface AuthFormProps {
+  onSubmit: (data: FormData) => void;
+  buttonText: string;
+  title: string;
+  type?: "register" | "signin";
+}
+
+function AuthForm({
+  onSubmit,
+  buttonText,
+  title,
+  type = "signin",
+}: AuthFormProps) {
+  const [serverError, setServerError] = useState<string | null>(null);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<FormData>({
+    resolver: yupResolver(schema),
+  });
+
+  const onSubmitHandler = async (data: FormData) => {
+    setServerError(null);
+    try {
+      await onSubmit(data);
+    } catch (error) {
+      if (error instanceof Error) {
+        setServerError(error.message);
+      }
+    }
+  };
+
+  return (
+    <Flex
+      as="form"
+      onSubmit={handleSubmit(onSubmitHandler)}
+      direction="column"
+      gap={4}
+    >
+      <Heading as="h1" size="lg" textAlign="center">
+        {title}
+      </Heading>
+      {serverError && (
+        <Alert status="error" variant="left-accent">
+          <AlertIcon />
+          <Flex direction="column">
+            <AlertTitle>{serverError}</AlertTitle>
+            <AlertDescription>
+              Check your internet connection or try again later.
+            </AlertDescription>
+          </Flex>
+        </Alert>
+      )}
+      {type === "register" && (
+        <FormControl isInvalid={!!errors.displayName}>
+          <FormLabel htmlFor="displayName">Name (optional)</FormLabel>
+          <Input id="displayName" {...register("displayName")} />
+          <FormErrorMessage aria-live="polite">
+            {errors.displayName?.message}
+          </FormErrorMessage>
+        </FormControl>
+      )}
+      <FormControl isInvalid={!!errors.email}>
+        <FormLabel htmlFor="email">Email (required)</FormLabel>
+        <Input id="email" aria-required="true" {...register("email")} />
+        <FormErrorMessage aria-live="polite">
+          {errors.email?.message}
+        </FormErrorMessage>
+      </FormControl>
+      <FormControl isInvalid={!!errors.password}>
+        <FormLabel htmlFor="password">Password (required)</FormLabel>
+        <Input
+          id="password"
+          type="password"
+          aria-required="true"
+          {...register("password")}
+        />
+        <FormErrorMessage aria-live="polite">
+          {errors.password?.message}
+        </FormErrorMessage>
+      </FormControl>
+      <Button
+        w="100%"
+        colorScheme="primary"
+        type="submit"
+        isLoading={isSubmitting}
+        aria-disabled={isSubmitting}
+      >
+        {buttonText}
+      </Button>
+    </Flex>
+  );
+}
+
+export default AuthForm;

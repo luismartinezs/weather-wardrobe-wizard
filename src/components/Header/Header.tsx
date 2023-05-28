@@ -1,6 +1,7 @@
-import { Box, Flex, Heading, Text } from "@chakra-ui/react";
+import { Flex, Heading, Link, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import ResponsiveNav from "@/components/ResponsiveNav";
+import NextLink from "next/link";
 
 const Header = () => {
   return (
@@ -14,24 +15,34 @@ const Header = () => {
         color="white"
       >
         <Flex align="center">
-          <Box display={{ base: "none", lg: "block" }}>
+          <Link as={NextLink} href="/" display={{ base: "none", lg: "block" }}>
             <Image
               src="https://res.cloudinary.com/dicyllvry/image/upload/a_hflip/v1684923223/weather-wardrobe-wizard/cute-seal-wizard_xpxfvw.png"
               alt="Cute wizard seal"
               width={150}
               height={150}
             />
-          </Box>
+          </Link>
           <Flex align="start" flexDirection="column" mr={5}>
-            <Heading
-              as="h1"
-              bgGradient="linear(160deg, tertiary.500, secondary.500)"
-              bgClip="text"
-              width="fit-content"
-              fontSize={{ base: "2xl", md: "5xl" }}
+            <Link
+              as={NextLink}
+              href="/"
+              sx={{
+                _hover: {
+                  textDecoration: "none",
+                },
+              }}
             >
-              Weather Wardrobe Wizard
-            </Heading>
+              <Heading
+                as="h1"
+                bgGradient="linear(160deg, tertiary.500, secondary.500)"
+                bgClip="text"
+                width="fit-content"
+                fontSize={{ base: "2xl", md: "5xl" }}
+              >
+                Weather Wardrobe Wizard
+              </Heading>
+            </Link>
             <Text mt={2} fontSize="lg" color="gray.400">
               I will help you decide what clothes to pack for your trip
             </Text>
