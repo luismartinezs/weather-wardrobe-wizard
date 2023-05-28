@@ -19,38 +19,42 @@ import Image from "next/image";
 import SigninButtons from "@/components/SigninButtons";
 import { useAuthContext } from "@/context/AuthContext";
 import ProfileLink from "@/components/ProfileLink";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useRouteChange } from "@/hooks/useRouteChange";
 
 const links: Array<{
   label: string;
   href: string;
-}> = [];
+  requireGuest?: boolean;
+}> = [
+  {
+    label: "Home",
+    href: "/",
+  },
+  {
+    label: "Sign in",
+    href: "/signin",
+    requireGuest: true,
+  },
+];
 
-const Links = () => (
-  <>
-    {links.map(({ label, href }) => (
-      <Link as={NextLink} href={href} key={href}>
-        {label}
-      </Link>
-    ))}
-  </>
-);
-
-const useRouteChange = (callback: () => void, deps: Array<unknown>) => {
-  const router = useRouter();
-
-  useEffect(() => {
-    const handleRouteChange = () => {
-      callback();
-    };
-
-    router.events.on("routeChangeStart", handleRouteChange);
-
-    return () => {
-      router.events.off("routeChangeStart", handleRouteChange);
-    };
-  }, [...deps, callback, router.events]);
+const Links = () => {
+  const { user } = useAuthContext();
+  return (
+    <>
+      {links
+        .filter(({ requireGuest }) => {
+          if (requireGuest && user) {
+            return false;
+          }
+          return true;
+        })
+        .map(({ label, href }) => (
+          <Link as={NextLink} href={href} key={href}>
+            {label}
+          </Link>
+        ))}
+    </>
+  );
 };
 
 const ResponsiveNav = (): JSX.Element => {
@@ -75,7 +79,6 @@ const ResponsiveNav = (): JSX.Element => {
         <Flex align="center" gap="5">
           <Links />
           {user && <ProfileLink user={user} />}
-          <SigninButtons direction="row" />
         </Flex>
       </Box>
       <Drawer

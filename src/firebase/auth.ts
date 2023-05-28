@@ -18,8 +18,8 @@ const withErrorHandling = <T extends any[], R>(fn: AsyncFunction<T, R>) => async
   }
 };
 
-const signIn = withErrorHandling(signInWithEmailAndPassword);
-const signUp = withErrorHandling(createUserWithEmailAndPassword);
+const signIn = withErrorHandling((name, password) => signInWithEmailAndPassword(auth, name, password));
+const signUp = withErrorHandling((name, password) => createUserWithEmailAndPassword(auth, name, password));
 
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: "select_account" });
@@ -28,8 +28,6 @@ const githubProvider = new GithubAuthProvider();
 const googleSignUp = () => signInWithRedirect(auth, googleProvider);
 const githubSignUp = () => signInWithRedirect(auth, githubProvider);
 const signOut = () => auth.signOut();
-
-
 
 export {
   signIn,
