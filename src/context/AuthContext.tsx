@@ -1,15 +1,15 @@
-import React from "react";
+import React, { createContext, useContext } from "react";
 import { type User } from "firebase/auth";
 import { useAuthUser } from "@/hooks/useAuthUser";
 import { Flex, Spinner } from "@chakra-ui/react";
 
-export const AuthContext = React.createContext<{
+export const AuthContext = createContext<{
   user: User | null;
 }>({
   user: null,
 });
 
-export const useAuthContext = () => React.useContext(AuthContext);
+export const useAuthContext = () => useContext(AuthContext);
 
 export const AuthContextProvider = ({
   children,

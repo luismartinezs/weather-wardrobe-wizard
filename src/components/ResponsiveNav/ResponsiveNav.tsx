@@ -16,7 +16,6 @@ import {
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import Image from "next/image";
-import SigninButtons from "@/components/SigninButtons";
 import { useAuthContext } from "@/context/AuthContext";
 import ProfileLink from "@/components/ProfileLink";
 import { useRouteChange } from "@/hooks/useRouteChange";
@@ -126,7 +125,6 @@ const ResponsiveNav = (): JSX.Element => {
             >
               <Links />
               {user && <ProfileLink user={user} />}
-              <SigninButtons direction="column" />
             </Flex>
           </DrawerBody>
 
