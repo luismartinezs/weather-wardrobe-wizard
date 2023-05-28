@@ -111,7 +111,7 @@ const ResponsiveNav = (): JSX.Element => {
             </Flex>
             {user && (
               <Text fontWeight="normal" fontSize="md" align="center">
-                Welcome {user.displayName}!
+                Welcome {user.displayName || user.email}!
               </Text>
             )}
           </DrawerHeader>

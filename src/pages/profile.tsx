@@ -1,6 +1,6 @@
 import SignoutButton from "@/components/SignoutButton";
 import { useAuthContext } from "@/context/AuthContext";
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Heading, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
 export default function Profile() {
@@ -13,7 +13,12 @@ export default function Profile() {
 
   return (
     <Box>
-      <Text fontSize="xl">Hello {user?.displayName || user?.email}!</Text>
+      <Heading as="h1" size="lg">
+        Profile
+      </Heading>
+      <Text fontSize="xl" mt={4}>
+        Hello {user?.displayName || user?.email}!
+      </Text>
       <Box mt={2}>
         <SignoutButton />
       </Box>
