@@ -1,4 +1,4 @@
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, signInWithRedirect, GithubAuthProvider, connectAuthEmulator, updateProfile } from "firebase/auth";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, signInWithRedirect, GithubAuthProvider, connectAuthEmulator, updateProfile, EmailAuthProvider, reauthenticateWithCredential, type User, updateEmail, updatePassword } from "firebase/auth";
 
 import firebase_app from "@/firebase/config";
 
@@ -35,6 +35,38 @@ const googleSignUp = () => signInWithRedirect(auth, googleProvider);
 const githubSignUp = () => signInWithRedirect(auth, githubProvider);
 const signOut = () => auth.signOut();
 
+const editProfile = withErrorHandling(async (user: User, { email, displayName }: {
+  email: string,
+  displayName?: string
+}) => {
+  if (displayName && displayName !== user.displayName) {
+    console.log('update name')
+    await updateProfile(user, {
+      displayName: displayName,
+    });
+  }
+
+  console.log(email, user.email)
+  if (email && email !== user.email) {
+    await updateEmail(user, email);
+  }
+})
+
+const editPassword = withErrorHandling(async (user: User, { password, newPassword }: {
+  password: string
+  newPassword: string
+}) => {
+  if (!user.email) {
+    return
+  }
+  const credential = EmailAuthProvider.credential(
+    user.email,
+    password
+  );
+  await reauthenticateWithCredential(user, credential);
+  await updatePassword(user, newPassword);
+})
+
 export {
   signIn,
   signUp,
@@ -42,5 +74,7 @@ export {
   googleSignUp,
   signOut,
   auth,
-  githubSignUp
+  githubSignUp,
+  editProfile,
+  editPassword
 }

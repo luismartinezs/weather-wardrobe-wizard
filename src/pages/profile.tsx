@@ -1,6 +1,7 @@
+import EditProfile from "@/components/EditProfile";
 import SignoutButton from "@/components/SignoutButton";
 import { useAuthContext } from "@/context/AuthContext";
-import { Box, Heading, Text } from "@chakra-ui/react";
+import { Box, Divider, Heading, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
 export default function Profile() {
@@ -22,6 +23,8 @@ export default function Profile() {
       <Box mt={2}>
         <SignoutButton />
       </Box>
+      <Divider my={4} />
+      <EditProfile />
     </Box>
   );
 }

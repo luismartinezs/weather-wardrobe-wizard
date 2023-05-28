@@ -9,12 +9,9 @@ import {
   Button,
   Flex,
   Heading,
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  AlertDescription,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import ServerErrorAlert from "@/components/ServerErrorAlert";
+import { useServerError } from "@/hooks/useServerError";
 
 export type FormData = {
   email: string;
@@ -41,7 +38,6 @@ function AuthForm({
   title,
   type = "signin",
 }: AuthFormProps) {
-  const [serverError, setServerError] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
@@ -51,37 +47,23 @@ function AuthForm({
   });
 
   const onSubmitHandler = async (data: FormData) => {
-    setServerError(null);
-    try {
-      await onSubmit(data);
-    } catch (error) {
-      if (error instanceof Error) {
-        setServerError(error.message);
-      }
-    }
+    onSubmit(data);
   };
+
+  const [handleSubmitWithServerError, serverError] =
+    useServerError(onSubmitHandler);
 
   return (
     <Flex
       as="form"
-      onSubmit={handleSubmit(onSubmitHandler)}
+      onSubmit={handleSubmit(handleSubmitWithServerError)}
       direction="column"
       gap={4}
     >
       <Heading as="h1" size="lg" textAlign="center">
         {title}
       </Heading>
-      {serverError && (
-        <Alert status="error" variant="left-accent">
-          <AlertIcon />
-          <Flex direction="column">
-            <AlertTitle>{serverError}</AlertTitle>
-            <AlertDescription>
-              Check your internet connection or try again later.
-            </AlertDescription>
-          </Flex>
-        </Alert>
-      )}
+      {serverError && <ServerErrorAlert serverError={serverError} />}
       {type === "register" && (
         <FormControl isInvalid={!!errors.displayName}>
           <FormLabel htmlFor="displayName">Name (optional)</FormLabel>
