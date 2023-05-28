@@ -19,18 +19,30 @@ import { signIn } from "@/firebase/auth";
 import NextLink from "next/link";
 import GoogleSigninButton from "@/components/GoogleSigninButton";
 import GithubSigninButton from "@/components/GithubSigninButton";
+import { useRouter } from "next/router";
+import { useAuthContext } from "@/context/AuthContext";
 
 type FormData = {
-  name: string;
+  email: string;
   password: string;
 };
 
 const schema = yup.object().shape({
-  name: yup.string().required(),
+  email: yup.string().email().required(),
   password: yup.string().required(),
 });
 
 function SignIn() {
+  const router = useRouter();
+  const { user } = useAuthContext();
+
+  if (user) {
+    const { redirect } = router.query;
+    const _redirect = Array.isArray(redirect) ? redirect[0] : redirect;
+
+    router.push(_redirect || "/");
+  }
+
   const {
     register,
     handleSubmit,
@@ -39,8 +51,8 @@ function SignIn() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = handleSubmit((data) => {
-    signIn(data.name, data.password);
+  const onSubmit = handleSubmit(async (data) => {
+    await signIn(data.email, data.password);
   });
 
   return (
@@ -55,10 +67,10 @@ function SignIn() {
         <Heading as="h1" size="lg" textAlign="center">
           Sign In
         </Heading>
-        <FormControl isInvalid={!!errors.name}>
-          <FormLabel htmlFor="name">Name</FormLabel>
-          <Input id="name" {...register("name")} />
-          <FormErrorMessage>{errors.name?.message}</FormErrorMessage>
+        <FormControl isInvalid={!!errors.email}>
+          <FormLabel htmlFor="email">Email</FormLabel>
+          <Input id="email" {...register("email")} />
+          <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
         </FormControl>
         <FormControl isInvalid={!!errors.password}>
           <FormLabel htmlFor="password">Password</FormLabel>

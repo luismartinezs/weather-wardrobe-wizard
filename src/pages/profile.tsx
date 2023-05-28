@@ -1,3 +1,22 @@
+import SignoutButton from "@/components/SignoutButton";
+import { useAuthContext } from "@/context/AuthContext";
+import { Box, Text } from "@chakra-ui/react";
+import { useRouter } from "next/router";
+
 export default function Profile() {
-  return <h1>Profile</h1>;
+  const router = useRouter();
+  const { user } = useAuthContext();
+
+  if (!user) {
+    router.push("/signin");
+  }
+
+  return (
+    <Box>
+      <Text fontSize="xl">Hello {user?.displayName}!</Text>
+      <Box mt={2}>
+        <SignoutButton />
+      </Box>
+    </Box>
+  );
 }

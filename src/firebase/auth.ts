@@ -18,8 +18,8 @@ const withErrorHandling = <T extends any[], R>(fn: AsyncFunction<T, R>) => async
   }
 };
 
-const signIn = withErrorHandling((name, password) => signInWithEmailAndPassword(auth, name, password));
-const signUp = withErrorHandling((name, password) => createUserWithEmailAndPassword(auth, name, password));
+const signIn = withErrorHandling((email, password) => signInWithEmailAndPassword(auth, email, password));
+const signUp = withErrorHandling((email, password) => createUserWithEmailAndPassword(auth, email, password));
 
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: "select_account" });

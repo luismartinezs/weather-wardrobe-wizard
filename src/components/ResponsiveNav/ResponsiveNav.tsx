@@ -20,11 +20,13 @@ import SigninButtons from "@/components/SigninButtons";
 import { useAuthContext } from "@/context/AuthContext";
 import ProfileLink from "@/components/ProfileLink";
 import { useRouteChange } from "@/hooks/useRouteChange";
+import { useRouter } from "next/router";
 
 const links: Array<{
   label: string;
   href: string;
   requireGuest?: boolean;
+  redirect?: boolean;
 }> = [
   {
     label: "Home",
@@ -34,11 +36,13 @@ const links: Array<{
     label: "Sign in",
     href: "/signin",
     requireGuest: true,
+    redirect: true,
   },
 ];
 
 const Links = () => {
   const { user } = useAuthContext();
+  const { pathname } = useRouter();
   return (
     <>
       {links
@@ -48,11 +52,17 @@ const Links = () => {
           }
           return true;
         })
-        .map(({ label, href }) => (
-          <Link as={NextLink} href={href} key={href}>
-            {label}
-          </Link>
-        ))}
+        .map(({ label, href, redirect }) => {
+          let _href = href;
+          if (redirect && pathname !== href) {
+            _href = `${_href}?redirect=${pathname}`;
+          }
+          return (
+            <Link as={NextLink} href={_href} key={href}>
+              {label}
+            </Link>
+          );
+        })}
     </>
   );
 };
