@@ -8,7 +8,7 @@ const ProfileLink = ({ user }: { user: User }): JSX.Element => {
     <Link as={NextLink} href="/profile">
       <Flex align="center" gap="2" mr="4">
         <Icon as={BiUserCircle} boxSize={6} />
-        <Text>{user.displayName}</Text>
+        <Text>{user.displayName || "Anonymous"}</Text>
       </Flex>
     </Link>
   );

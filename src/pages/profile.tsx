@@ -13,7 +13,7 @@ export default function Profile() {
 
   return (
     <Box>
-      <Text fontSize="xl">Hello {user?.displayName}!</Text>
+      <Text fontSize="xl">Hello {user?.displayName || "Anonymous"}!</Text>
       <Box mt={2}>
         <SignoutButton />
       </Box>
