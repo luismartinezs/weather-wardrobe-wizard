@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { onAuthStateChanged, getAuth, User } from "firebase/auth";
 import { getUserDocument } from "@/firebase/firestore";
 
@@ -7,10 +7,10 @@ import firebase_app from "@/firebase/config";
 const auth = getAuth(firebase_app);
 
 function useAuthUser() {
-  const [user, setUser] = React.useState<User | null>(null);
-  const [loading, setLoading] = React.useState(true);
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
         const userData = await getUserDocument(firebaseUser);
