@@ -9,7 +9,6 @@ if (process.env.NEXT_PUBLIC_FIREBASE_EMULATOR !== undefined && process.env.NEXT_
 }
 
 interface UserData {
-  name: string;
   uid: string;
 }
 
@@ -19,7 +18,6 @@ export async function getUserDocument(user: User): Promise<UserData> {
 
   if (!userDocSnap.exists()) {
     await setDoc(userDocRef, {
-      name: user.displayName || user.email,
       uid: user.uid
     });
   }
