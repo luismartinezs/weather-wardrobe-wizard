@@ -1,10 +1,8 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useRouter } from "next/router";
 import {
   Container,
-  Box,
   Input,
   Button,
   Text,
@@ -18,7 +16,6 @@ import {
   Heading,
 } from "@chakra-ui/react";
 import { signIn } from "@/firebase/auth";
-import { useState } from "react";
 import NextLink from "next/link";
 import GoogleSigninButton from "@/components/GoogleSigninButton";
 import GithubSigninButton from "@/components/GithubSigninButton";
