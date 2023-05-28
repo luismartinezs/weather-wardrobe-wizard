@@ -9,7 +9,12 @@ import {
   Button,
   Flex,
   Heading,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
 } from "@chakra-ui/react";
+import { useState } from "react";
 
 export type FormData = {
   email: string;
@@ -27,7 +32,7 @@ interface AuthFormProps {
   onSubmit: (data: FormData) => void;
   buttonText: string;
   title: string;
-  type: "register" | "signin";
+  type?: "register" | "signin";
 }
 
 function AuthForm({
@@ -36,6 +41,7 @@ function AuthForm({
   title,
   type = "signin",
 }: AuthFormProps) {
+  const [serverError, setServerError] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
@@ -44,16 +50,38 @@ function AuthForm({
     resolver: yupResolver(schema),
   });
 
+  const onSubmitHandler = async (data: FormData) => {
+    setServerError(null);
+    try {
+      await onSubmit(data);
+    } catch (error) {
+      if (error instanceof Error) {
+        setServerError(error.message);
+      }
+    }
+  };
+
   return (
     <Flex
       as="form"
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(onSubmitHandler)}
       direction="column"
       gap={4}
     >
       <Heading as="h1" size="lg" textAlign="center">
         {title}
       </Heading>
+      {serverError && (
+        <Alert status="error" variant="left-accent">
+          <AlertIcon />
+          <Flex direction="column">
+            <AlertTitle>{serverError}</AlertTitle>
+            <AlertDescription>
+              Check your internet connection or try again later.
+            </AlertDescription>
+          </Flex>
+        </Alert>
+      )}
       {type === "register" && (
         <FormControl isInvalid={!!errors.displayName}>
           <FormLabel htmlFor="displayName">Name (optional)</FormLabel>
@@ -65,7 +93,7 @@ function AuthForm({
       )}
       <FormControl isInvalid={!!errors.email}>
         <FormLabel htmlFor="email">Email (required)</FormLabel>
-        <Input id="email" aria-required {...register("email")} />
+        <Input id="email" aria-required="true" {...register("email")} />
         <FormErrorMessage aria-live="polite">
           {errors.email?.message}
         </FormErrorMessage>
@@ -75,7 +103,7 @@ function AuthForm({
         <Input
           id="password"
           type="password"
-          aria-required
+          aria-required="true"
           {...register("password")}
         />
         <FormErrorMessage aria-live="polite">
