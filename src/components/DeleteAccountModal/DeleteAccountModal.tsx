@@ -20,7 +20,6 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { deleteAccount } from "@/firebase/auth";
 import useStore from "@/store";
-import { useRouter } from "next/router";
 import { getAuthError } from "@/firebase/util";
 
 type FormData = {
@@ -36,7 +35,6 @@ const DeleteAccountModal = ({
 }): JSX.Element => {
   const toast = useToast();
   const { user } = useStore();
-  const router = useRouter();
   const isPasswordProvider = useStore(
     (state) => state.user?.providerData[0]?.providerId === "password"
   );

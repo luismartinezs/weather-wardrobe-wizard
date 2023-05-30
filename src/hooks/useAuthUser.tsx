@@ -25,7 +25,7 @@ function useAuthUser() {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [setUser, setUserData]);
 
   const refreshUser = async () => {
     const firebaseUser = auth.currentUser;
