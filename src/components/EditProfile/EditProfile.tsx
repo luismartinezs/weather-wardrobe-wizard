@@ -18,6 +18,7 @@ import { useAuthContext } from "@/context/AuthContext";
 import ServerErrorAlert from "@/components/ServerErrorAlert";
 import { useServerError } from "@/hooks/useServerError";
 import ConfirmModal from "@/components/ConfirmModal";
+import { getAuthError } from "@/firebase/util";
 
 type FormData = {
   email: string;
@@ -56,8 +57,9 @@ const EditProfile = (): JSX.Element => {
       await refreshUser();
     }
     toast({
-      title: error ? "There was an error" : "Profile updated",
+      title: error ? "Oops!" : "Profile updated",
       status: error ? "error" : "success",
+      description: getAuthError(error),
       duration: 5000,
       isClosable: true,
     });

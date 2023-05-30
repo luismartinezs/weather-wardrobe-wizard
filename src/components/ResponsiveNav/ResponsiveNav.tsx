@@ -124,7 +124,7 @@ const ResponsiveNav = (): JSX.Element => {
               px={6}
             >
               <Links />
-              {user && <ProfileLink user={user} />}
+              {user && <ProfileLink user={user} label="Profile" />}
             </Flex>
           </DrawerBody>
 

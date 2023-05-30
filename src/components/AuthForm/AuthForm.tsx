@@ -15,6 +15,7 @@ import { useServerError } from "@/hooks/useServerError";
 import { type WithErrorHandling } from "@/firebase/auth";
 import { useEffect, useState } from "react";
 import ErrorMessage from "../ErrorMessage";
+import { getAuthError } from "@/firebase/util";
 
 export type FormData = {
   email: string;
@@ -117,7 +118,7 @@ function AuthForm({
       >
         {buttonText}
       </Button>
-      {error && <ErrorMessage error={error} />}
+      {error && <ErrorMessage error={getAuthError(error)} />}
     </Flex>
   );
 }
