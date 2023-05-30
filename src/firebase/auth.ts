@@ -1,4 +1,19 @@
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, signInWithRedirect, GithubAuthProvider, connectAuthEmulator, updateProfile, EmailAuthProvider, reauthenticateWithCredential, type User, updateEmail, updatePassword } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  getAuth,
+  GoogleAuthProvider,
+  signInWithRedirect,
+  GithubAuthProvider,
+  connectAuthEmulator,
+  updateProfile,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+  type User,
+  updateEmail,
+  updatePassword,
+  deleteUser,
+} from "firebase/auth";
 
 import firebase_app from "@/firebase/config";
 
@@ -70,6 +85,26 @@ const editPassword = withErrorHandling(async (user: User, { password, newPasswor
   await updatePassword(user, newPassword);
 })
 
+const deleteAccount = withErrorHandling(async (user: User, { password }: {
+  password?: string
+} = {}) => {
+  const providerId = user.providerData[0]?.providerId;
+
+  if (!providerId) {
+    return;
+  }
+
+  if (providerId === "password" && user.email && password) {
+    const credential = EmailAuthProvider.credential(
+      user.email,
+      password
+    );
+    await reauthenticateWithCredential(user, credential);
+  }
+
+  await deleteUser(user);
+})
+
 export {
   signIn,
   signUp,
@@ -79,5 +114,6 @@ export {
   auth,
   githubSignUp,
   editProfile,
-  editPassword
+  editPassword,
+  deleteAccount
 }
