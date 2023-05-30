@@ -14,7 +14,7 @@ function useAuthUser() {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
         const userData = await getUserDocument(firebaseUser);
-        setUser({ ...firebaseUser, ...userData });
+        setUser(Object.assign(firebaseUser, userData));
       } else {
         setUser(null);
       }

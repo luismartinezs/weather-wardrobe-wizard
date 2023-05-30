@@ -40,9 +40,8 @@ const editProfile = withErrorHandling(async (user: User, { email, displayName }:
   displayName?: string
 }) => {
   if (displayName && displayName !== user.displayName) {
-    console.log('update name')
     await updateProfile(user, {
-      displayName: displayName,
+      displayName,
     });
   }
 

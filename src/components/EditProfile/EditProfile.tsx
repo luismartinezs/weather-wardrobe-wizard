@@ -44,7 +44,8 @@ const EditProfile = (): JSX.Element => {
     if (!user) {
       return;
     }
-    return editProfile(user, data);
+    await editProfile(user, data);
+    return;
   };
 
   const [handleSubmitWithServerError, serverError] =
