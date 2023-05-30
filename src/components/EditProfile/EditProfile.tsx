@@ -10,11 +10,13 @@ import {
   Button,
   Heading,
   useToast,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { editProfile } from "@/firebase/auth";
 import { useAuthContext } from "@/context/AuthContext";
 import ServerErrorAlert from "@/components/ServerErrorAlert";
 import { useServerError } from "@/hooks/useServerError";
+import ConfirmModal from "../ConfirmModal";
 
 type FormData = {
   email: string;
@@ -27,6 +29,7 @@ const schema = yup.object().shape({
 });
 
 const EditProfile = (): JSX.Element => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { user, refreshUser } = useAuthContext();
   const toast = useToast();
 
@@ -42,11 +45,8 @@ const EditProfile = (): JSX.Element => {
     },
   });
 
-  const onSubmitHandler = async (data: FormData) => {
+  const handleEditProfile = async (data: FormData) => {
     if (!user) {
-      return;
-    }
-    if (data.email === user.email && data.displayName === user.displayName) {
       return;
     }
     const { error } = await editProfile(user, data);
@@ -59,7 +59,20 @@ const EditProfile = (): JSX.Element => {
       duration: 5000,
       isClosable: true,
     });
-    return;
+  };
+
+  const onSubmitHandler = async (data: FormData) => {
+    if (!user) {
+      return;
+    }
+    if (data.email === user.email && data.displayName === user.displayName) {
+      return;
+    }
+    if (data.email !== user.email) {
+      onOpen();
+      return;
+    }
+    await handleEditProfile(data);
   };
 
   const [handleSubmitWithServerError, serverError] =
@@ -104,6 +117,14 @@ const EditProfile = (): JSX.Element => {
       >
         Update profile
       </Button>
+      <ConfirmModal
+        isOpen={isOpen}
+        title="Update email"
+        description="Are you sure you want to change the email linked to this account?"
+        confirmAction={(data: FormData) => handleEditProfile(data)}
+        cancelAction={onClose}
+        onClose={onClose}
+      />
     </Flex>
   );
 };
