@@ -45,7 +45,6 @@ const editProfile = withErrorHandling(async (user: User, { email, displayName }:
     });
   }
 
-  console.log(email, user.email)
   if (email && email !== user.email) {
     await updateEmail(user, email);
   }

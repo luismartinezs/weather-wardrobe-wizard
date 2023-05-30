@@ -27,7 +27,7 @@ const schema = yup.object().shape({
 });
 
 const EditProfile = (): JSX.Element => {
-  const { user } = useAuthContext();
+  const { user, refreshUser } = useAuthContext();
   const toast = useToast();
 
   const {
@@ -46,7 +46,13 @@ const EditProfile = (): JSX.Element => {
     if (!user) {
       return;
     }
+    if (data.email === user.email && data.displayName === user.displayName) {
+      return;
+    }
     const { error } = await editProfile(user, data);
+    if (!error) {
+      await refreshUser();
+    }
     toast({
       title: error ? "There was an error" : "Profile updated",
       status: error ? "error" : "success",

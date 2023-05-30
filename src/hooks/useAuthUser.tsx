@@ -24,7 +24,18 @@ function useAuthUser() {
     return () => unsubscribe();
   }, []);
 
-  return { user, loading };
+  const refreshUser = async () => {
+    const firebaseUser = auth.currentUser;
+    if (firebaseUser) {
+      setLoading(true);
+      await firebaseUser.reload();
+      const userData = await getUserDocument(firebaseUser);
+      setUser(Object.assign(firebaseUser, userData));
+      setLoading(false);
+    }
+  };
+
+  return { user, loading, refreshUser };
 }
 
 export { useAuthUser };
