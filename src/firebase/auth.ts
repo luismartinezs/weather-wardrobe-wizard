@@ -62,6 +62,10 @@ const editPassword = withErrorHandling(async (user: User, { password, newPasswor
     user.email,
     password
   );
+  console.log('user', user)
+  console.log('credential', credential)
+  console.log(password)
+  console.log(newPassword)
   await reauthenticateWithCredential(user, credential);
   await updatePassword(user, newPassword);
 })

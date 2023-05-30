@@ -14,11 +14,11 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { editProfile } from "@/firebase/auth";
-import { useAuthContext } from "@/context/AuthContext";
 import ServerErrorAlert from "@/components/ServerErrorAlert";
 import { useServerError } from "@/hooks/useServerError";
 import ConfirmModal from "@/components/ConfirmModal";
 import { getAuthError } from "@/firebase/util";
+import { useAuthUser } from "@/hooks/useAuthUser";
 
 type FormData = {
   email: string;
@@ -32,7 +32,7 @@ const schema = yup.object().shape({
 
 const EditProfile = (): JSX.Element => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { user, refreshUser } = useAuthContext();
+  const { user, refreshUser } = useAuthUser();
   const toast = useToast();
   const [pendingData, setPendingData] = useState<FormData | null>(null);
 

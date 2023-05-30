@@ -2,6 +2,9 @@ export function getAuthError(error: {
   code: string;
   message: string;
 } | string) {
+  if (!error) {
+    return "";
+  }
   switch (typeof error === 'string' ? error : error.code) {
     case "auth/invalid-email":
       return "Invalid email address.";

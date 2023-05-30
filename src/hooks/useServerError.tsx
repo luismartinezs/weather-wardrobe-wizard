@@ -10,6 +10,7 @@ export function useServerError<T extends (...args: any[]) => Promise<any>>(
     try {
       await asyncFunction(...args);
     } catch (error) {
+      console.log(error);
       if (error instanceof Error) {
         setServerError(error.message);
       }

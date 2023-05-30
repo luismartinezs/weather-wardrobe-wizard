@@ -8,7 +8,7 @@ if (process.env.NEXT_PUBLIC_FIREBASE_EMULATOR !== undefined && process.env.NEXT_
   connectFirestoreEmulator(db, 'localhost', 8080);
 }
 
-interface UserData {
+export type UserData = {
   uid: string;
 }
 

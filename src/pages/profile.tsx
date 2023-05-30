@@ -1,12 +1,15 @@
+import EditPassword from "@/components/EditPassword";
 import EditProfile from "@/components/EditProfile";
 import SignoutButton from "@/components/SignoutButton";
-import { useAuthContext } from "@/context/AuthContext";
+import { useAuthUser } from "@/hooks/useAuthUser";
 import { Box, Container, Divider, Heading, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
 export default function Profile() {
   const router = useRouter();
-  const { user } = useAuthContext();
+  const { user } = useAuthUser();
+
+  const providerId = user?.providerData[0]?.providerId;
 
   if (!user) {
     router.push("/signin");
@@ -23,8 +26,16 @@ export default function Profile() {
       <Box mt={2}>
         <SignoutButton />
       </Box>
-      <Divider my={4} />
-      <EditProfile />
+      {providerId === "password" ? (
+        <>
+          <Divider my={4} />
+          <EditProfile />
+          <Divider my={4} />
+          <EditPassword />
+        </>
+      ) : (
+        <Text mt={4}>You are signed in with {providerId}</Text>
+      )}
     </Container>
   );
 }
