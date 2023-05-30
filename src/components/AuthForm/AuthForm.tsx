@@ -12,6 +12,9 @@ import {
 } from "@chakra-ui/react";
 import ServerErrorAlert from "@/components/ServerErrorAlert";
 import { useServerError } from "@/hooks/useServerError";
+import { type WithErrorHandling } from "@/firebase/auth";
+import { useEffect, useState } from "react";
+import ErrorMessage from "../ErrorMessage";
 
 export type FormData = {
   email: string;
@@ -26,7 +29,7 @@ const schema = yup.object().shape({
 });
 
 interface AuthFormProps {
-  onSubmit: (data: FormData) => void;
+  onSubmit: (data: FormData) => ReturnType<ReturnType<WithErrorHandling>>;
   buttonText: string;
   title: string;
   type?: "register" | "signin";
@@ -38,16 +41,29 @@ function AuthForm({
   title,
   type = "signin",
 }: AuthFormProps) {
+  const [error, setError] = useState<string | null>(null);
+
   const {
     register,
+    watch,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
 
+  useEffect(() => {
+    const { unsubscribe } = watch((value) => {
+      setError(null);
+    });
+    return () => unsubscribe();
+  }, [watch]);
+
   const onSubmitHandler = async (data: FormData) => {
-    onSubmit(data);
+    const res = await onSubmit(data);
+    if (res?.error) {
+      setError(res.error);
+    }
   };
 
   const [handleSubmitWithServerError, serverError] =
@@ -101,6 +117,7 @@ function AuthForm({
       >
         {buttonText}
       </Button>
+      {error && <ErrorMessage error={error} />}
     </Flex>
   );
 }

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -16,7 +17,7 @@ import { editProfile } from "@/firebase/auth";
 import { useAuthContext } from "@/context/AuthContext";
 import ServerErrorAlert from "@/components/ServerErrorAlert";
 import { useServerError } from "@/hooks/useServerError";
-import ConfirmModal from "../ConfirmModal";
+import ConfirmModal from "@/components/ConfirmModal";
 
 type FormData = {
   email: string;
@@ -32,6 +33,7 @@ const EditProfile = (): JSX.Element => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { user, refreshUser } = useAuthContext();
   const toast = useToast();
+  const [pendingData, setPendingData] = useState<FormData | null>(null);
 
   const {
     register,
@@ -69,6 +71,7 @@ const EditProfile = (): JSX.Element => {
       return;
     }
     if (data.email !== user.email) {
+      setPendingData(data);
       onOpen();
       return;
     }
@@ -121,8 +124,15 @@ const EditProfile = (): JSX.Element => {
         isOpen={isOpen}
         title="Update email"
         description="Are you sure you want to change the email linked to this account?"
-        confirmAction={(data: FormData) => handleEditProfile(data)}
-        cancelAction={onClose}
+        confirmAction={() => {
+          if (pendingData) {
+            handleEditProfile(pendingData);
+          }
+        }}
+        cancelAction={() => {
+          onClose();
+          setPendingData(null);
+        }}
         onClose={onClose}
       />
     </Flex>

@@ -7,9 +7,10 @@ if (process.env.NEXT_PUBLIC_FIREBASE_EMULATOR !== undefined && process.env.NEXT_
   connectAuthEmulator(auth, 'http://localhost:9099');
 }
 
-type AsyncFunction<T extends any[], R> = (...args: T) => Promise<R>;
+type AsyncFunction<Params extends any[], Return> = (...args: Params) => Promise<Return>;
+export type WithErrorHandling = <Params extends any[], Return>(fn: AsyncFunction<Params, Return>) => (...args: Params) => Promise<{ result: Return | null, error: any | null }>;
 
-const withErrorHandling = <T extends any[], R>(fn: AsyncFunction<T, R>) => async (...args: T): Promise<{ result: R | null, error: any | null }> => {
+const withErrorHandling: WithErrorHandling = (fn) => async (...args) => {
   try {
     const result = await fn(...args);
     return { result, error: null };

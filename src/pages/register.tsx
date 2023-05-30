@@ -9,7 +9,7 @@ function Register() {
   useAuthRedirect();
 
   const onSubmit = (data: FormData) => {
-    signUp(data.email, data.password, data.displayName);
+    return signUp(data.email, data.password, data.displayName);
   };
 
   return (
