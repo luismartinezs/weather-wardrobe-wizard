@@ -9,6 +9,7 @@ import {
   Flex,
   Button,
   Heading,
+  useToast,
 } from "@chakra-ui/react";
 import { editProfile } from "@/firebase/auth";
 import { useAuthContext } from "@/context/AuthContext";
@@ -27,6 +28,7 @@ const schema = yup.object().shape({
 
 const EditProfile = (): JSX.Element => {
   const { user } = useAuthContext();
+  const toast = useToast();
 
   const {
     register,
@@ -44,7 +46,13 @@ const EditProfile = (): JSX.Element => {
     if (!user) {
       return;
     }
-    await editProfile(user, data);
+    const { error } = await editProfile(user, data);
+    toast({
+      title: error ? "There was an error" : "Profile updated",
+      status: error ? "error" : "success",
+      duration: 5000,
+      isClosable: true,
+    });
     return;
   };
 
