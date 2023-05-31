@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { onAuthStateChanged, getAuth } from "firebase/auth";
-import { getUserDocument } from "@/firebase/firestore";
+import { getUserDocument } from "@/firebase/firestore/user";
 
 import firebase_app from "@/firebase/config";
 import useStore from "@/store";

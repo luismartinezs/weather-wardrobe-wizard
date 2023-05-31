@@ -1,4 +1,4 @@
-import { UserData } from '@/firebase/firestore';
+import { UserData } from '@/firebase/firestore/user';
 import { User } from 'firebase/auth';
 import { Immutable } from 'immer';
 import { StateCreator } from 'zustand';
