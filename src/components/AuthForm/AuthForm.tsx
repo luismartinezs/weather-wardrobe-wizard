@@ -9,12 +9,13 @@ import {
   Button,
   Flex,
   Heading,
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  AlertDescription,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import ServerErrorAlert from "@/components/ServerErrorAlert";
+import { useServerError } from "@/hooks/useServerError";
+import { type WithErrorHandling } from "@/firebase/auth";
+import { useEffect, useState } from "react";
+import ErrorMessage from "../ErrorMessage";
+import { getAuthError } from "@/firebase/util";
 
 export type FormData = {
   email: string;
@@ -24,12 +25,12 @@ export type FormData = {
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
-  password: yup.string().required(),
+  password: yup.string().min(6).required(),
   displayName: yup.string(),
 });
 
 interface AuthFormProps {
-  onSubmit: (data: FormData) => void;
+  onSubmit: (data: FormData) => ReturnType<ReturnType<WithErrorHandling>>;
   buttonText: string;
   title: string;
   type?: "register" | "signin";
@@ -41,47 +42,45 @@ function AuthForm({
   title,
   type = "signin",
 }: AuthFormProps) {
-  const [serverError, setServerError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
   const {
     register,
+    watch,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<FormData>({
     resolver: yupResolver(schema),
   });
 
+  useEffect(() => {
+    const { unsubscribe } = watch((value) => {
+      setError(null);
+    });
+    return () => unsubscribe();
+  }, [watch]);
+
   const onSubmitHandler = async (data: FormData) => {
-    setServerError(null);
-    try {
-      await onSubmit(data);
-    } catch (error) {
-      if (error instanceof Error) {
-        setServerError(error.message);
-      }
+    const res = await onSubmit(data);
+    if (res?.error) {
+      setError(res.error);
     }
   };
+
+  const [handleSubmitWithServerError, serverError] =
+    useServerError(onSubmitHandler);
 
   return (
     <Flex
       as="form"
-      onSubmit={handleSubmit(onSubmitHandler)}
+      onSubmit={handleSubmit(handleSubmitWithServerError)}
       direction="column"
       gap={4}
     >
       <Heading as="h1" size="lg" textAlign="center">
         {title}
       </Heading>
-      {serverError && (
-        <Alert status="error" variant="left-accent">
-          <AlertIcon />
-          <Flex direction="column">
-            <AlertTitle>{serverError}</AlertTitle>
-            <AlertDescription>
-              Check your internet connection or try again later.
-            </AlertDescription>
-          </Flex>
-        </Alert>
-      )}
+      {serverError && <ServerErrorAlert serverError={serverError} />}
       {type === "register" && (
         <FormControl isInvalid={!!errors.displayName}>
           <FormLabel htmlFor="displayName">Name (optional)</FormLabel>
@@ -119,6 +118,7 @@ function AuthForm({
       >
         {buttonText}
       </Button>
+      {error && <ErrorMessage error={getAuthError(error)} />}
     </Flex>
   );
 }

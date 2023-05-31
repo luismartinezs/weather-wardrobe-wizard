@@ -3,12 +3,18 @@ import { type User } from "firebase/auth";
 import NextLink from "next/link";
 import { BiUserCircle } from "react-icons/bi";
 
-const ProfileLink = ({ user }: { user: User }): JSX.Element => {
+const ProfileLink = ({
+  user,
+  label,
+}: {
+  user: User;
+  label?: string;
+}): JSX.Element => {
   return (
     <Link as={NextLink} href="/profile">
       <Flex align="center" gap="2" mr="4">
         <Icon as={BiUserCircle} boxSize={6} />
-        <Text>{user.displayName || user.email}</Text>
+        <Text>{label || user.displayName || user.email}</Text>
       </Flex>
     </Link>
   );

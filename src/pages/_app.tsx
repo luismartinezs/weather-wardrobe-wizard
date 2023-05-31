@@ -2,18 +2,19 @@ import Head from "next/head";
 import type { AppProps } from "next/app";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, Flex, Spinner } from "@chakra-ui/react";
 import { SkipNavLink } from "@chakra-ui/skip-nav";
 
-import { AuthContextProvider } from "@/context/AuthContext";
 import MetaTags from "@/components/MetaTags";
 import Layout from "@/components/Layout";
 import theme from "@/theme";
 import "@/styles/globals.css";
+import { useAuthUser } from "@/hooks/useAuthUser";
 
 const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }: AppProps) {
+  const { loading } = useAuthUser();
   return (
     <>
       <Head>
@@ -21,12 +22,18 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
       <QueryClientProvider client={queryClient}>
         <ChakraProvider theme={theme}>
-          <AuthContextProvider>
-            <SkipNavLink>Skip to content</SkipNavLink>
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-          </AuthContextProvider>
+          {loading ? (
+            <Flex w="100%" justify="center" align="center" my={8}>
+              <Spinner />
+            </Flex>
+          ) : (
+            <>
+              <SkipNavLink>Skip to content</SkipNavLink>
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            </>
+          )}
         </ChakraProvider>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>

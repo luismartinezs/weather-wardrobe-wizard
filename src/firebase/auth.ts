@@ -1,4 +1,19 @@
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, signInWithRedirect, GithubAuthProvider, connectAuthEmulator, updateProfile } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  getAuth,
+  GoogleAuthProvider,
+  signInWithRedirect,
+  GithubAuthProvider,
+  connectAuthEmulator,
+  updateProfile,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+  type User,
+  updateEmail,
+  updatePassword,
+  deleteUser,
+} from "firebase/auth";
 
 import firebase_app from "@/firebase/config";
 
@@ -7,9 +22,10 @@ if (process.env.NEXT_PUBLIC_FIREBASE_EMULATOR !== undefined && process.env.NEXT_
   connectAuthEmulator(auth, 'http://localhost:9099');
 }
 
-type AsyncFunction<T extends any[], R> = (...args: T) => Promise<R>;
+type AsyncFunction<Params extends any[], Return> = (...args: Params) => Promise<Return>;
+export type WithErrorHandling = <Params extends any[], Return>(fn: AsyncFunction<Params, Return>) => (...args: Params) => Promise<{ result: Return | null, error: any | null }>;
 
-const withErrorHandling = <T extends any[], R>(fn: AsyncFunction<T, R>) => async (...args: T): Promise<{ result: R | null, error: any | null }> => {
+const withErrorHandling: WithErrorHandling = (fn) => async (...args) => {
   try {
     const result = await fn(...args);
     return { result, error: null };
@@ -35,6 +51,60 @@ const googleSignUp = () => signInWithRedirect(auth, googleProvider);
 const githubSignUp = () => signInWithRedirect(auth, githubProvider);
 const signOut = () => auth.signOut();
 
+const editProfile = withErrorHandling(async (user: User, { email, displayName }: {
+  email: string,
+  displayName?: string
+}) => {
+  if (displayName && displayName !== user.displayName) {
+    await updateProfile(user, {
+      displayName,
+    });
+  }
+
+  if (email && email !== user.email) {
+    await updateEmail(user, email);
+  }
+})
+
+const editPassword = withErrorHandling(async (user: User, { password, newPassword }: {
+  password: string
+  newPassword: string
+}) => {
+  if (!user.email) {
+    return
+  }
+  const credential = EmailAuthProvider.credential(
+    user.email,
+    password
+  );
+  console.log('user', user)
+  console.log('credential', credential)
+  console.log(password)
+  console.log(newPassword)
+  await reauthenticateWithCredential(user, credential);
+  await updatePassword(user, newPassword);
+})
+
+const deleteAccount = withErrorHandling(async (user: User, { password }: {
+  password?: string
+} = {}) => {
+  const providerId = user.providerData[0]?.providerId;
+
+  if (!providerId) {
+    return;
+  }
+
+  if (providerId === "password" && user.email && password) {
+    const credential = EmailAuthProvider.credential(
+      user.email,
+      password
+    );
+    await reauthenticateWithCredential(user, credential);
+  }
+
+  await deleteUser(user);
+})
+
 export {
   signIn,
   signUp,
@@ -42,5 +112,8 @@ export {
   googleSignUp,
   signOut,
   auth,
-  githubSignUp
+  githubSignUp,
+  editProfile,
+  editPassword,
+  deleteAccount
 }

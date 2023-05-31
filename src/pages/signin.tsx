@@ -9,7 +9,7 @@ function SignIn() {
   useAuthRedirect();
 
   const onSubmit = (data: FormData) => {
-    signIn(data.email, data.password);
+    return signIn(data.email, data.password);
   };
 
   return (

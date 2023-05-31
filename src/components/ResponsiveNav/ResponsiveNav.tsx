@@ -16,10 +16,10 @@ import {
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import Image from "next/image";
-import { useAuthContext } from "@/context/AuthContext";
 import ProfileLink from "@/components/ProfileLink";
 import { useRouteChange } from "@/hooks/useRouteChange";
 import { useRouter } from "next/router";
+import { useAuthUser } from "@/hooks/useAuthUser";
 
 const links: Array<{
   label: string;
@@ -40,7 +40,7 @@ const links: Array<{
 ];
 
 const Links = () => {
-  const { user } = useAuthContext();
+  const { user } = useAuthUser();
   const { pathname } = useRouter();
   return (
     <>
@@ -68,7 +68,7 @@ const Links = () => {
 
 const ResponsiveNav = (): JSX.Element => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { user } = useAuthContext();
+  const { user } = useAuthUser();
   useRouteChange(() => isOpen && onClose(), [isOpen, onClose]);
 
   return (
@@ -124,7 +124,7 @@ const ResponsiveNav = (): JSX.Element => {
               px={6}
             >
               <Links />
-              {user && <ProfileLink user={user} />}
+              {user && <ProfileLink user={user} label="Profile" />}
             </Flex>
           </DrawerBody>
 
