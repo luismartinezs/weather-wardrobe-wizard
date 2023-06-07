@@ -3,7 +3,6 @@ import EditPassword from "@/components/EditPassword";
 import EditProfile from "@/components/EditProfile";
 import SignoutButton from "@/components/SignoutButton";
 import { useUser } from "@/context/User";
-import useStore from "@/store";
 import {
   Box,
   Card,

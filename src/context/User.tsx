@@ -10,6 +10,7 @@ import { onAuthStateChanged, User } from "firebase/auth";
 import { handleUserDocument, type UserData } from "@/firebase/firestore/user";
 // import { useFirebase } from "@/context/Firebase";
 import { auth } from "@/firebase/app";
+import { getDocument } from "@/firebase/firestore/api";
 
 export const UserContext = createContext<{
   user: User | null;
@@ -45,14 +46,20 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      console.debug("onAuthStateChanged triggered"); // New line
-      console.debug(firebaseUser); // New line
       if (firebaseUser) {
         try {
           setLoading(true);
-          const userData = await handleUserDocument(firebaseUser);
+          console.debug("UserProvider: handling user data");
+          const userData = await getDocument<UserData>(
+            "users",
+            firebaseUser.uid
+          );
+          if (!userData) {
+            throw new Error("UserProvider: User data not found.");
+          }
+          console.debug("UserProvider: user data", userData);
           setUser(firebaseUser);
-          setUserData(userData);
+          setUserData(userData.data);
         } catch (err) {
           handleErrors(err);
         } finally {

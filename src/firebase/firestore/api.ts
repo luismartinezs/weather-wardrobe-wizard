@@ -12,17 +12,18 @@ export interface FirestoreCollection<Data = DocumentData> {
   [key: string]: Data;
 }
 
-export async function getDocument(collectionName: string, documentId: string): Promise<FirestoreDocument | null> {
+export async function getDocument<Data = DocumentData>(collectionName: string, documentId: string): Promise<FirestoreDocument<Data> | null> {
   const docRef = doc(db, collectionName, documentId);
   const docSnap = await getDoc(docRef);
 
   if (docSnap.exists()) {
-    return { id: docSnap.id, data: docSnap.data() };
+    return { id: docSnap.id, data: docSnap.data() as Data };
   } else {
     console.log(`No document with ID: ${documentId}`);
     return null;
   }
 }
+
 
 export async function getDocumentsWithQuery<Data = DocumentData>(q: Query): Promise<FirestoreDocument<Data>[] | null> {
   const querySnapshot = await getDocs(q);
@@ -42,14 +43,14 @@ export async function getDocumentsByUserUid<Data = DocumentData>(collectionName:
   return documents;
 }
 
-export async function getAllDocuments(collectionName: string): Promise<FirestoreCollection | null> {
+export async function getAllDocuments<Data = DocumentData>(collectionName: string): Promise<FirestoreCollection<Data> | null> {
   const collectionRef = collection(db, collectionName);
   const snapshot = await getDocs(collectionRef);
 
   if (!snapshot.empty) {
-    let allDocs: FirestoreCollection = {};
+    let allDocs: FirestoreCollection<Data> = {};
     snapshot.forEach(doc => {
-      allDocs[doc.id] = doc.data();
+      allDocs[doc.id] = doc.data() as Data;
     });
     return allDocs;
   } else {
@@ -58,8 +59,9 @@ export async function getAllDocuments(collectionName: string): Promise<Firestore
   }
 }
 
-export async function addDocument(collectionName: string, data: DocumentData): Promise<DocumentReference | null> {
+export async function addDocument<Data extends DocumentData = DocumentData>(collectionName: string, data: Data): Promise<DocumentReference | null> {
   try {
+    console.log(`Adding document to ${collectionName}`)
     const docRef = await addDoc(collection(db, collectionName), data);
     return docRef;
   } catch (e) {
@@ -68,7 +70,8 @@ export async function addDocument(collectionName: string, data: DocumentData): P
   }
 }
 
-export async function editDocument(collectionName: string, documentId: string, data: DocumentData): Promise<void> {
+export async function editDocument<Data extends DocumentData = DocumentData>(collectionName: string, documentId: string, data: Data): Promise<void> {
+  console.log(`Editing document ${documentId} in ${collectionName}`)
   const docRef = doc(db, collectionName, documentId);
   await updateDoc(docRef, data);
 }
