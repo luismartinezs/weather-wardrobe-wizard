@@ -8,20 +8,18 @@ import { useUser } from "@/context/userContext";
 const Layout = ({ children }: { children: React.ReactNode }): JSX.Element => {
   const { loading } = useUser();
 
-  if (loading) {
-    return (
-      <Flex w="100%" justify="center" align="center" my={8}>
-        <Spinner />
-      </Flex>
-    );
-  }
-
   return (
     <Flex minH="100vh" direction="column">
       <Header />
       <Container as="main" maxW="container.xl" mt={6} mb={28}>
         <SkipNavContent />
-        {children}
+        {loading ? (
+          <Flex w="100%" justify="center" align="center" my={8}>
+            <Spinner />
+          </Flex>
+        ) : (
+          children
+        )}
       </Container>
       <Box bg="gray.900" position="absolute" bottom={0} w="100%" as="footer">
         <Footer />
