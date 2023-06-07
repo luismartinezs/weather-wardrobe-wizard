@@ -9,7 +9,8 @@ import MetaTags from "@/components/MetaTags";
 import Layout from "@/components/Layout";
 import theme from "@/theme";
 import "@/styles/globals.css";
-import { UserProvider } from "@/context/userContext";
+import { UserProvider } from "@/context/User";
+import { FirebaseProvider } from "@/context/Firebase";
 
 const queryClient = new QueryClient();
 
@@ -19,17 +20,19 @@ export default function App({ Component, pageProps }: AppProps) {
       <Head>
         <MetaTags />
       </Head>
-      <UserProvider>
-        <QueryClientProvider client={queryClient}>
-          <ChakraProvider theme={theme}>
-            <SkipNavLink>Skip to content</SkipNavLink>
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-          </ChakraProvider>
-          <ReactQueryDevtools initialIsOpen={false} />
-        </QueryClientProvider>
-      </UserProvider>
+      <FirebaseProvider>
+        <UserProvider>
+          <QueryClientProvider client={queryClient}>
+            <ChakraProvider theme={theme}>
+              <SkipNavLink>Skip to content</SkipNavLink>
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            </ChakraProvider>
+            <ReactQueryDevtools initialIsOpen={false} />
+          </QueryClientProvider>
+        </UserProvider>
+      </FirebaseProvider>
     </>
   );
 }

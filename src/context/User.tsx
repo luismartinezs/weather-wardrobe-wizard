@@ -8,7 +8,8 @@ import React, {
 import { onAuthStateChanged, User } from "firebase/auth";
 
 import { handleUserDocument, type UserData } from "@/firebase/firestore/user";
-import { auth } from "@/firebase/auth";
+// import { useFirebase } from "@/context/Firebase";
+import { auth } from "@/firebase/app";
 
 export const UserContext = createContext<{
   user: User | null;
@@ -19,15 +20,16 @@ export const UserContext = createContext<{
 }>({
   user: null,
   userData: null,
-  loading: true,
+  loading: false,
   error: null,
   refreshUser: async () => {},
 });
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
+  // const { auth } = useFirebase();
   const [user, setUser] = useState<User | null>(null);
   const [userData, setUserData] = useState<UserData | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null | undefined>(null);
 
   const handleErrors = useCallback(
@@ -43,9 +45,11 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      console.debug("onAuthStateChanged triggered"); // New line
+      console.debug(firebaseUser); // New line
       if (firebaseUser) {
-        setLoading(true);
         try {
+          setLoading(true);
           const userData = await handleUserDocument(firebaseUser);
           setUser(firebaseUser);
           setUserData(userData);

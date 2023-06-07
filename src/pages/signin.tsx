@@ -8,8 +8,10 @@ import { useAuthRedirect } from "@/hooks/useAuthRedirect";
 function SignIn() {
   useAuthRedirect();
 
-  const onSubmit = (data: FormData) => {
-    return signIn(data.email, data.password);
+  const onSubmit = async (data: FormData) => {
+    const res = await signIn(data.email, data.password);
+    console.debug("signin", res);
+    return res;
   };
 
   return (

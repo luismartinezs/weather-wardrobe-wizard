@@ -1,15 +1,15 @@
-import { doc, getDoc, getDocs, collection, addDoc, updateDoc, deleteDoc, DocumentData, DocumentReference } from "firebase/firestore";
+import { doc, getDoc, getDocs, collection, addDoc, updateDoc, deleteDoc, DocumentData, DocumentReference, Query, where, query } from "firebase/firestore";
 
 import { db } from "@/firebase/app";
 
 
-interface FirestoreDocument {
+export interface FirestoreDocument<Data = DocumentData> {
   id: string;
-  data: DocumentData;
+  data: Data;
 }
 
-interface FirestoreCollection {
-  [key: string]: DocumentData;
+export interface FirestoreCollection<Data = DocumentData> {
+  [key: string]: Data;
 }
 
 export async function getDocument(collectionName: string, documentId: string): Promise<FirestoreDocument | null> {
@@ -22,6 +22,24 @@ export async function getDocument(collectionName: string, documentId: string): P
     console.log(`No document with ID: ${documentId}`);
     return null;
   }
+}
+
+export async function getDocumentsWithQuery<Data = DocumentData>(q: Query): Promise<FirestoreDocument<Data>[] | null> {
+  const querySnapshot = await getDocs(q);
+
+  if (!querySnapshot.empty) {
+    return querySnapshot.docs.map(doc => ({ id: doc.id, data: doc.data() as Data }));
+  } else {
+    console.log(`No documents found for the provided query.`);
+    return null;
+  }
+}
+
+export async function getDocumentsByUserUid<Data = DocumentData>(collectionName: string, userUid: string): Promise<FirestoreDocument<Data>[] | null> {
+  const q = query(collection(db, collectionName), where("userUid", "==", userUid));
+  const documents = await getDocumentsWithQuery<Data>(q);
+
+  return documents;
 }
 
 export async function getAllDocuments(collectionName: string): Promise<FirestoreCollection | null> {

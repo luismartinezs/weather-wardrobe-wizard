@@ -15,7 +15,7 @@ import ServerErrorAlert from "@/components/ServerErrorAlert";
 import { useServerError } from "@/hooks/useServerError";
 import { editPassword } from "@/firebase/auth";
 import { getAuthError } from "@/firebase/util";
-import { useUser } from "@/context/userContext";
+import { useUser } from "@/context/User";
 
 type FormData = {
   oldPassword: string;

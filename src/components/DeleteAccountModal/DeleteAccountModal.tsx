@@ -21,7 +21,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { deleteAccount } from "@/firebase/auth";
 import useStore from "@/store";
 import { getAuthError } from "@/firebase/util";
-import { useUser } from "@/context/userContext";
+import { useUser } from "@/context/User";
 
 type FormData = {
   password?: string;

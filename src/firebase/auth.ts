@@ -19,6 +19,7 @@ export type WithErrorHandling = <Params extends any[], Return>(fn: AsyncFunction
 
 const withErrorHandling: WithErrorHandling = (fn) => async (...args) => {
   try {
+    console.debug("withErrorHandling", { fn, args });
     const result = await fn(...args);
     return { result, error: null };
   } catch (error) {

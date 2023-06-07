@@ -2,7 +2,7 @@ import DeleteAccount from "@/components/DeleteAccount";
 import EditPassword from "@/components/EditPassword";
 import EditProfile from "@/components/EditProfile";
 import SignoutButton from "@/components/SignoutButton";
-import { useUser } from "@/context/userContext";
+import { useUser } from "@/context/User";
 import useStore from "@/store";
 import {
   Box,

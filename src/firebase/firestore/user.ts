@@ -1,5 +1,5 @@
 import { type User } from "firebase/auth";
-import { getDocument, addDocument, editDocument } from "@/firebase/firestore/api";
+import { getDocumentsByUserUid, addDocument, editDocument } from "@/firebase/firestore/api";
 
 export type UserData = {
   uid: string;
@@ -8,9 +8,9 @@ export type UserData = {
 const USERS = 'users';
 
 export async function handleUserDocument(user: User): Promise<UserData | null> {
-  const userData = await getDocument(USERS, user.uid);
+  const userDataDocs = await getDocumentsByUserUid(USERS, user.uid);
 
-  if (!userData) {
+  if (!userDataDocs) {
     const userDocRef = await addDocument(USERS, {
       uid: user.uid
     });
@@ -18,7 +18,11 @@ export async function handleUserDocument(user: User): Promise<UserData | null> {
     return userDocRef ? { uid: user.uid } : null;
   }
 
-  return userData.data as UserData;
+  if (userDataDocs.length > 1) {
+    console.warn(`More than one user document found for user with UID: ${user.uid}`);
+  }
+
+  return userDataDocs[0].data as UserData;
 }
 
 export async function updateUserDocument(uid: string, data: Partial<UserData>): Promise<void> {
