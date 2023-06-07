@@ -7,18 +7,19 @@ import React, {
 } from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
 
-import { handleUserDocument, type UserData } from "@/firebase/firestore/user";
-// import { useFirebase } from "@/context/Firebase";
+import { type UserData } from "@/firebase/firestore/user";
 import { auth } from "@/firebase/app";
 import { getDocument } from "@/firebase/firestore/api";
 
 export const UserContext = createContext<{
+  idle: boolean;
   user: User | null;
   userData: UserData | null;
   loading: boolean;
   error: Error | null | undefined;
   refreshUser: () => Promise<void>;
 }>({
+  idle: true,
   user: null,
   userData: null,
   loading: false,
@@ -27,11 +28,11 @@ export const UserContext = createContext<{
 });
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
-  // const { auth } = useFirebase();
   const [user, setUser] = useState<User | null>(null);
   const [userData, setUserData] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null | undefined>(null);
+  const [idle, setIdle] = useState(true);
 
   const handleErrors = useCallback(
     (err: unknown) => {
@@ -44,22 +45,23 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     [setError]
   );
 
+  const getUserData = async (user: User) => {
+    const userData = await getDocument<UserData>("users", user.uid);
+    if (!userData) {
+      throw new Error("UserProvider: User data not found.");
+    }
+
+    return userData.data;
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
         try {
           setLoading(true);
-          console.debug("UserProvider: handling user data");
-          const userData = await getDocument<UserData>(
-            "users",
-            firebaseUser.uid
-          );
-          if (!userData) {
-            throw new Error("UserProvider: User data not found.");
-          }
-          console.debug("UserProvider: user data", userData);
+          const userData = await getUserData(firebaseUser);
           setUser(firebaseUser);
-          setUserData(userData.data);
+          setUserData(userData);
         } catch (err) {
           handleErrors(err);
         } finally {
@@ -68,6 +70,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       } else {
         setUser(null);
       }
+      setIdle(false);
     });
 
     return () => unsubscribe();
@@ -79,7 +82,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       try {
         setLoading(true);
         await firebaseUser.reload();
-        const userData = await handleUserDocument(firebaseUser);
+        const userData = await getUserData(firebaseUser);
         setUser(firebaseUser);
         setUserData(userData);
       } catch (err) {
@@ -92,7 +95,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <UserContext.Provider
-      value={{ user, userData, loading, error, refreshUser }}
+      value={{ user, userData, loading, error, idle, refreshUser }}
     >
       {children}
     </UserContext.Provider>

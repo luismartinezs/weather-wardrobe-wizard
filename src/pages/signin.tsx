@@ -3,21 +3,21 @@ import { signIn } from "@/firebase/auth";
 import NextLink from "next/link";
 import SigninRegister from "@/components/SigninRegister";
 import AuthForm, { type FormData } from "@/components/AuthForm";
-import { useAuthRedirect } from "@/hooks/useAuthRedirect";
 
 function SignIn() {
-  useAuthRedirect();
-
   const onSubmit = async (data: FormData) => {
-    const res = await signIn(data.email, data.password);
-    console.debug("signin", res);
-    return res;
+    return signIn(data.email, data.password);
   };
 
   return (
     <SigninRegister
       form={
-        <AuthForm onSubmit={onSubmit} buttonText="Sign in" title="Sign in" />
+        <AuthForm
+          onSubmit={onSubmit}
+          buttonText="Sign in"
+          title="Sign in"
+          redirectOnAuth="/"
+        />
       }
       afterFormLink={
         <Link as={NextLink} mt="4" href="/register">

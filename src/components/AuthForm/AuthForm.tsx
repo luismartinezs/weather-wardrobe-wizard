@@ -16,6 +16,8 @@ import { type WithErrorHandling } from "@/firebase/auth";
 import { useEffect, useState } from "react";
 import ErrorMessage from "../ErrorMessage";
 import { getAuthError } from "@/firebase/util";
+import { useRouter } from "next/router";
+import { useUser } from "@/context/User";
 
 export type FormData = {
   email: string;
@@ -34,6 +36,7 @@ interface AuthFormProps {
   buttonText: string;
   title: string;
   type?: "register" | "signin";
+  redirectOnAuth?: string;
 }
 
 function AuthForm({
@@ -41,8 +44,17 @@ function AuthForm({
   buttonText,
   title,
   type = "signin",
+  redirectOnAuth,
 }: AuthFormProps) {
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
+  const { user, loading: userLoading, error: userError } = useUser();
+
+  useEffect(() => {
+    if (user && redirectOnAuth) {
+      router.push(redirectOnAuth);
+    }
+  }, [user, redirectOnAuth, router]);
 
   const {
     register,
@@ -81,6 +93,7 @@ function AuthForm({
         {title}
       </Heading>
       {serverError && <ServerErrorAlert serverError={serverError} />}
+      {userError && <ErrorMessage error={userError} />}
       {type === "register" && (
         <FormControl isInvalid={!!errors.displayName}>
           <FormLabel htmlFor="displayName">Name (optional)</FormLabel>
@@ -114,8 +127,8 @@ function AuthForm({
         w="100%"
         colorScheme="primary"
         type="submit"
-        isLoading={isSubmitting}
-        aria-disabled={isSubmitting}
+        isLoading={isSubmitting || userLoading}
+        aria-disabled={isSubmitting || userLoading}
       >
         {buttonText}
       </Button>
