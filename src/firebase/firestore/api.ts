@@ -1,11 +1,7 @@
-import { doc, getDoc, getDocs, collection, addDoc, updateDoc, deleteDoc, DocumentData, DocumentReference, getFirestore, connectFirestoreEmulator } from "firebase/firestore";
-import firebase_app from "@/firebase/config";
+import { doc, getDoc, getDocs, collection, addDoc, updateDoc, deleteDoc, DocumentData, DocumentReference } from "firebase/firestore";
 
-const db = getFirestore(firebase_app);
+import { db } from "@/firebase/app";
 
-if (process.env.NEXT_PUBLIC_FIREBASE_EMULATOR !== undefined && process.env.NEXT_PUBLIC_FIREBASE_EMULATOR === 'true') {
-  connectFirestoreEmulator(db, 'localhost', 8080);
-}
 
 interface FirestoreDocument {
   id: string;

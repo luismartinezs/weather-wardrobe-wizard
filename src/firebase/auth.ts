@@ -1,11 +1,9 @@
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  getAuth,
   GoogleAuthProvider,
   signInWithRedirect,
   GithubAuthProvider,
-  connectAuthEmulator,
   updateProfile,
   EmailAuthProvider,
   reauthenticateWithCredential,
@@ -14,13 +12,7 @@ import {
   updatePassword,
   deleteUser,
 } from "firebase/auth";
-
-import firebase_app from "@/firebase/config";
-
-const auth = getAuth(firebase_app);
-if (process.env.NEXT_PUBLIC_FIREBASE_EMULATOR !== undefined && process.env.NEXT_PUBLIC_FIREBASE_EMULATOR === 'true') {
-  connectAuthEmulator(auth, 'http://localhost:9099');
-}
+import { auth } from "@/firebase/app";
 
 type AsyncFunction<Params extends any[], Return> = (...args: Params) => Promise<Return>;
 export type WithErrorHandling = <Params extends any[], Return>(fn: AsyncFunction<Params, Return>) => (...args: Params) => Promise<{ result: Return | null, error: any | null }>;
