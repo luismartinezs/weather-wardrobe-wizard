@@ -1,9 +1,10 @@
 import { useRouter } from "next/router";
-import { useAuthUser } from "./useAuthUser";
+
+import useStore from "@/store";
 
 export function useAuthRedirect() {
   const router = useRouter();
-  const { user } = useAuthUser();
+  const { user } = useStore();
 
   if (user) {
     const { redirect } = router.query;

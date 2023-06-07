@@ -104,6 +104,7 @@ function AuthForm({
           type="password"
           aria-required="true"
           {...register("password")}
+          autoComplete="current-password"
         />
         <FormErrorMessage aria-live="polite">
           {errors.password?.message}

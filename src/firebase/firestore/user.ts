@@ -7,7 +7,7 @@ export type UserData = {
 
 const USERS = 'users';
 
-export async function getUserDocument(user: User): Promise<UserData | null> {
+export async function handleUserDocument(user: User): Promise<UserData | null> {
   const userData = await getDocument(USERS, user.uid);
 
   if (!userData) {

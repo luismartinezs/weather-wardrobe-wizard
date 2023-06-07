@@ -19,6 +19,7 @@ import { useServerError } from "@/hooks/useServerError";
 import ConfirmModal from "@/components/ConfirmModal";
 import { getAuthError } from "@/firebase/util";
 import { useAuthUser } from "@/hooks/useAuthUser";
+import useStore from "@/store";
 
 type FormData = {
   email: string;
@@ -32,7 +33,8 @@ const schema = yup.object().shape({
 
 const EditProfile = (): JSX.Element => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { user, refreshUser } = useAuthUser();
+  const { user } = useStore();
+  const { refreshUser } = useAuthUser();
   const toast = useToast();
   const [pendingData, setPendingData] = useState<FormData | null>(null);
 

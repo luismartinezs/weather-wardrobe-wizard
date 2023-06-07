@@ -9,12 +9,12 @@ import MetaTags from "@/components/MetaTags";
 import Layout from "@/components/Layout";
 import theme from "@/theme";
 import "@/styles/globals.css";
-import { useAuthUser } from "@/hooks/useAuthUser";
+import useStore from "@/store";
 
 const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }: AppProps) {
-  const { loading } = useAuthUser();
+  const { loading } = useStore();
   return (
     <>
       <Head>
