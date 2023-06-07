@@ -19,7 +19,7 @@ import Image from "next/image";
 import ProfileLink from "@/components/ProfileLink";
 import { useRouteChange } from "@/hooks/useRouteChange";
 import { useRouter } from "next/router";
-import useStore from "@/store";
+import { useUser } from "@/context/userContext";
 
 const links: Array<{
   label: string;
@@ -40,7 +40,7 @@ const links: Array<{
 ];
 
 const Links = () => {
-  const { user } = useStore();
+  const { user } = useUser();
   const { pathname } = useRouter();
   return (
     <>
@@ -68,7 +68,7 @@ const Links = () => {
 
 const ResponsiveNav = (): JSX.Element => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { user } = useStore();
+  const { user } = useUser();
   useRouteChange(() => isOpen && onClose(), [isOpen, onClose]);
 
   return (

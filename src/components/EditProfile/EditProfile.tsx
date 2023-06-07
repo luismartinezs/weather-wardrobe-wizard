@@ -20,6 +20,7 @@ import ConfirmModal from "@/components/ConfirmModal";
 import { getAuthError } from "@/firebase/util";
 import { useAuthUser } from "@/hooks/useAuthUser";
 import useStore from "@/store";
+import { useUser } from "@/context/userContext";
 
 type FormData = {
   email: string;
@@ -33,8 +34,8 @@ const schema = yup.object().shape({
 
 const EditProfile = (): JSX.Element => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { user } = useStore();
-  const { refreshUser } = useAuthUser();
+  const { user } = useUser();
+  const { refreshUser } = useUser();
   const toast = useToast();
   const [pendingData, setPendingData] = useState<FormData | null>(null);
 

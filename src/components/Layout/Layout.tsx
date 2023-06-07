@@ -1,10 +1,21 @@
-import { Box, Container, Flex } from "@chakra-ui/react";
+import { Box, Container, Flex, Spinner } from "@chakra-ui/react";
 import { SkipNavContent } from "@chakra-ui/skip-nav";
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import { useUser } from "@/context/userContext";
 
 const Layout = ({ children }: { children: React.ReactNode }): JSX.Element => {
+  const { loading } = useUser();
+
+  if (loading) {
+    return (
+      <Flex w="100%" justify="center" align="center" my={8}>
+        <Spinner />
+      </Flex>
+    );
+  }
+
   return (
     <Flex minH="100vh" direction="column">
       <Header />

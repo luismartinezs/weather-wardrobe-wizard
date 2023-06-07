@@ -1,11 +1,9 @@
 import { useCallback, useEffect } from "react";
-import { onAuthStateChanged, getAuth } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import { handleUserDocument } from "@/firebase/firestore/user";
 
-import firebase_app from "@/firebase/config";
+import { auth } from "@/firebase/app";
 import useStore from "@/store";
-
-const auth = getAuth(firebase_app);
 
 function useAuthUser() {
   const { setUser, setUserData, setLoading, setError } = useStore();

@@ -2,6 +2,7 @@ import DeleteAccount from "@/components/DeleteAccount";
 import EditPassword from "@/components/EditPassword";
 import EditProfile from "@/components/EditProfile";
 import SignoutButton from "@/components/SignoutButton";
+import { useUser } from "@/context/userContext";
 import useStore from "@/store";
 import {
   Box,
@@ -17,7 +18,7 @@ import { useRouter } from "next/router";
 
 export default function Profile() {
   const router = useRouter();
-  const { user } = useStore();
+  const { user } = useUser();
 
   const providerId = user?.providerData[0]?.providerId;
 
