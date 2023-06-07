@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { onAuthStateChanged, getAuth } from "firebase/auth";
 import { getUserDocument } from "@/firebase/firestore/user";
 
@@ -8,15 +8,34 @@ import useStore from "@/store";
 const auth = getAuth(firebase_app);
 
 function useAuthUser() {
-  const [loading, setLoading] = useState(true);
-  const { user, setUser, userData, setUserData } = useStore();
+  const {
+    user,
+    setUser,
+    userData,
+    setUserData,
+    loading,
+    setLoading,
+    error,
+    setError,
+  } = useStore();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
-        setUser(firebaseUser);
-        const userData = await getUserDocument(firebaseUser);
-        setUserData(userData);
+        try {
+          setLoading(true);
+          const userData = await getUserDocument(firebaseUser);
+          setUser(firebaseUser);
+          setUserData(userData);
+        } catch (err) {
+          if (err instanceof Error) {
+            setError(err);
+          } else {
+            setError(new Error("useAuthUser: An unknown error occurred."));
+          }
+        } finally {
+          setLoading(false);
+        }
       } else {
         setUser(null);
         setUserData(null);
@@ -25,21 +44,30 @@ function useAuthUser() {
     });
 
     return () => unsubscribe();
-  }, [setUser, setUserData]);
+  }, [setUser, setUserData, setError, setLoading]);
 
   const refreshUser = async () => {
     const firebaseUser = auth.currentUser;
     if (firebaseUser) {
-      setLoading(true);
-      await firebaseUser.reload();
-      const userData = await getUserDocument(firebaseUser);
-      setUser(firebaseUser);
-      setUserData(userData);
-      setLoading(false);
+      try {
+        setLoading(true);
+        await firebaseUser.reload();
+        const userData = await getUserDocument(firebaseUser);
+        setUser(firebaseUser);
+        setUserData(userData);
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err);
+        } else {
+          setError(new Error("useAuthUser: An unknown error occurred."));
+        }
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
-  return { user, userData, loading, refreshUser };
+  return { user, userData, loading, error, refreshUser };
 }
 
 export { useAuthUser };
