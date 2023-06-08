@@ -1,30 +1,53 @@
+import { useEffect, useState } from "react";
 import { LocationSuggestion } from "@/types/weatherApi";
-
-const mockLocations = [
-  {
-    id: "1",
-    name: "London",
-    country: "United Kingdom",
-    lat: 51.5085,
-    lon: -0.1257,
-    state: "England",
-  },
-  {
-    id: "2",
-    name: "New York",
-    country: "United States",
-    lat: 40.7143,
-    lon: -74.006,
-    state: "New York",
-  },
-];
+import { getUserRecentLocations } from "@/firebase/firestore/recentLocations";
+import { useUser } from "@/context/User";
+import { DocumentData, onSnapshot } from "firebase/firestore";
 
 export const useRecentLocations = (): {
   recentLocations: LocationSuggestion[];
   id: string;
 } => {
-  return {
-    recentLocations: mockLocations, //[],
-    id: "",
-  };
+  const { user } = useUser();
+
+  const [recentLocations, setRecentLocations] = useState<LocationSuggestion[]>(
+    []
+  );
+  const [id, setId] = useState("");
+
+  useEffect(() => {
+    if (!user) return;
+
+    const fetchRecentLocations = async () => {
+      const userLocations = await getUserRecentLocations(user.uid);
+
+      if (userLocations) {
+        const { doc, ref } = userLocations;
+        setRecentLocations(doc.data.locations);
+        setId(doc.id);
+
+        const unsubscribe = onSnapshot(
+          ref,
+          (docSnapshot) => {
+            if (docSnapshot.exists()) {
+              const data = docSnapshot.data() as DocumentData;
+              if (data && data.locations) {
+                setRecentLocations(data.locations);
+              }
+            }
+          },
+          (error) => {
+            console.error("Error listening for doc changes:", error);
+          }
+        );
+
+        // Detach the listener when the component unmounts
+        return () => unsubscribe();
+      }
+    };
+
+    fetchRecentLocations();
+  }, [user]);
+
+  return { recentLocations, id };
 };

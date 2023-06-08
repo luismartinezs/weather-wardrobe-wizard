@@ -14,7 +14,7 @@ const RecentLocations = (): JSX.Element => {
     //
   };
 
-  if (recentLocations.length === 0) {
+  if (!recentLocations || recentLocations.length === 0) {
     return <></>;
   }
 
