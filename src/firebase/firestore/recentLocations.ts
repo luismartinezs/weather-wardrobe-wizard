@@ -23,7 +23,10 @@ function addUniqueLocation(locations: LocationSuggestion[], newLocation: Locatio
 }
 
 export async function addRecentLocation(userUid: string, location: LocationSuggestion): Promise<void> {
+  console.debug('Adding recent location for user', userUid, location);
   const userLocations = await getUserRecentLocations(userUid);
+
+  console.debug('userLocations', userLocations);
 
   if (userLocations) {
     const { id, data: { locations } } = userLocations;

@@ -148,3 +148,8 @@ E2e Tests:
 - https://firebase.google.com/docs/auth/web/google-signin
 - https://medium.com/@monkeyscript/google-authentication-using-firebase-in-next-js-f83954b4b63d
 - https://www.freecodecamp.org/news/create-full-stack-app-with-nextjs13-and-firebase/
+
+## Development trouble shooting
+
+- Q: While emulating, firestore rules keep erroring out although they seem correct
+- A: Try restarting the emulator

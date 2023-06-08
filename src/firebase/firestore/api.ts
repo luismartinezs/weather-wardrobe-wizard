@@ -36,6 +36,7 @@ export async function getDocumentsWithQuery<Data = DocumentData>(q: Query): Prom
 }
 
 export async function getDocumentsByUserUid<Data = DocumentData>(collectionName: string, userUid: string): Promise<FirestoreDocument<Data>[] | null> {
+  console.debug(`Getting documents from ${collectionName} for user with UID: ${userUid}`);
   const q = query(collection(db, collectionName), where("userUid", "==", userUid));
   const documents = await getDocumentsWithQuery<Data>(q);
 
@@ -62,6 +63,7 @@ export async function addDocument<Data extends DocumentData = DocumentData>(coll
   try {
     console.log(`Adding document to ${collectionName}`)
     const docRef = await addDoc(collection(db, collectionName), data);
+    console.debug(`Document added with ID: ${docRef.id}`);
     return docRef;
   } catch (e) {
     console.error(`Error adding document to ${collectionName}: `, e);

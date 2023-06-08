@@ -1,3 +1,5 @@
+import { useUser } from "@/context/User";
+import { addRecentLocation } from "@/firebase/firestore/recentLocations";
 import { useWeatherForecast } from "@/hooks/useWeatherForecast";
 import useStore, { type StoreState } from "@/store";
 import { Button } from "@chakra-ui/react";
@@ -21,11 +23,19 @@ const LocationButton = (): JSX.Element => {
   const selectedLocation = useStore((state) => state.selectedLocation);
   const buttonLabel = useButtonLabel(selectedLocation);
   const { isLoading, refetch } = useWeatherForecast();
+  const { user } = useUser();
+
+  const handleClick = () => {
+    if (user?.uid && selectedLocation) {
+      addRecentLocation(user?.uid, selectedLocation);
+    }
+    refetch();
+  };
 
   return (
     <Button
       isDisabled={!selectedLocation}
-      onClick={() => refetch()}
+      onClick={handleClick}
       w="100%"
       isLoading={isLoading}
       loadingText="Fetching weather..."
