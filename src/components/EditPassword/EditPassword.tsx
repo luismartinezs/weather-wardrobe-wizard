@@ -15,7 +15,7 @@ import ServerErrorAlert from "@/components/ServerErrorAlert";
 import { useServerError } from "@/hooks/useServerError";
 import { editPassword } from "@/firebase/auth";
 import { getAuthError } from "@/firebase/util";
-import { useAuthUser } from "@/hooks/useAuthUser";
+import { useUser } from "@/context/User";
 
 type FormData = {
   oldPassword: string;
@@ -33,7 +33,7 @@ const schema = yup.object().shape({
 });
 
 const EditPassword = (): JSX.Element => {
-  const { user } = useAuthUser();
+  const { user } = useUser();
   const toast = useToast();
 
   const {

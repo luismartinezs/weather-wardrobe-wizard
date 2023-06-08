@@ -3,12 +3,9 @@ import { signUp } from "@/firebase/auth";
 import NextLink from "next/link";
 import SigninRegister from "@/components/SigninRegister";
 import AuthForm, { type FormData } from "@/components/AuthForm";
-import { useAuthRedirect } from "@/hooks/useAuthRedirect";
 
 function Register() {
-  useAuthRedirect();
-
-  const onSubmit = (data: FormData) => {
+  const onSubmit = async (data: FormData) => {
     return signUp(data.email, data.password, data.displayName);
   };
 
@@ -20,6 +17,7 @@ function Register() {
           buttonText="Create new user"
           title="Register"
           type="register"
+          redirectOnAuth="/"
         />
       }
       afterFormLink={

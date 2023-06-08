@@ -1,7 +1,7 @@
-import useStore from "@/store";
 import { Line, LineChart, ReferenceLine, YAxis } from "recharts";
 import { getTStr } from "@/util/util";
 import { baseTheme, Box } from "@chakra-ui/react";
+import useStore from "@/store";
 
 const TemperatureChart = ({
   data,
