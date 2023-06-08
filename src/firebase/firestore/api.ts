@@ -2,7 +2,6 @@ import { doc, getDoc, getDocs, collection, addDoc, updateDoc, deleteDoc, Documen
 
 import { db } from "@/firebase/app";
 
-
 export interface FirestoreDocument<Data = DocumentData> {
   id: string;
   data: Data;
