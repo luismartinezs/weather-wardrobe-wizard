@@ -6,6 +6,7 @@ import React, {
   useCallback,
 } from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
+import pRetry, { AbortError } from "p-retry";
 
 import { type UserData } from "@/firebase/firestore/user";
 import { auth } from "@/firebase/app";
@@ -46,7 +47,11 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   );
 
   const getUserData = async (user: User) => {
-    const userData = await getDocument<UserData>("users", user.uid);
+    // NOTE user data is generated on user creation by firebase cloud function using extension rowy/firestore-user-document, retrieval of userData is retried to allow time for the function to complete
+    const userData = await pRetry(
+      () => getDocument<UserData>("users", user.uid),
+      { retries: 3 }
+    );
     if (!userData) {
       throw new Error("UserProvider: User data not found.");
     }
