@@ -67,7 +67,5 @@ export async function removeRecentLocation(userUid: string, locationIndex: numbe
     console.log('removing', updatedLocations)
 
     await editDocument(COLLECTION_NAME, id, { locations: updatedLocations });
-  } else {
-    console.log(`No locations found for user with UID: ${userUid}`);
   }
 }

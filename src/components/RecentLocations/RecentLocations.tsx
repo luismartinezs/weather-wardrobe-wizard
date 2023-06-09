@@ -3,18 +3,22 @@ import { Heading, Wrap, WrapItem } from "@chakra-ui/react";
 import RecentLocationItem from "@/components/RecentLocationItem";
 import { useRecentLocations } from "@/hooks/useRecentLocations";
 import { useUpdateLocationAndRefetchWeather } from "@/hooks/useUpdateLocationAndRefetchWeather";
+import { useUser } from "@/context/User";
+import { removeRecentLocation } from "@/firebase/firestore/recentLocations";
 
 const RecentLocations = (): JSX.Element => {
-  const { recentLocations } = useRecentLocations();
+  const { recentLocations, loading, error } = useRecentLocations();
   const { updateLocationAndRefetchWeather } =
     useUpdateLocationAndRefetchWeather();
+  const { user } = useUser();
 
   const onLocationClick = async (location: any) => {
     updateLocationAndRefetchWeather(location);
   };
 
   const onLocationRemove = (index: number) => {
-    //
+    if (!user?.uid) return;
+    removeRecentLocation(user?.uid, index);
   };
 
   if (!recentLocations || recentLocations.length === 0) {
