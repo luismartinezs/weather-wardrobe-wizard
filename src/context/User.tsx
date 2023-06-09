@@ -6,7 +6,7 @@ import React, {
   useCallback,
 } from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
-import pRetry, { AbortError } from "p-retry";
+import pRetry from "p-retry";
 
 import { type UserData } from "@/firebase/firestore/user";
 import { auth } from "@/firebase/app";
