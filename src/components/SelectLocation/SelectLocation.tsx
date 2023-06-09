@@ -18,27 +18,22 @@ import { useId } from "@/util/hooks";
 import { LocationSuggestion } from "@/types/weatherApi";
 import ErrorMessage from "@/components/ErrorMessage";
 import ServerStateDisplayWrapper from "@/components/ServerStateDisplayWrapper";
-import { useSelectLocation } from "@/hooks/useSelectedLocation";
+import { useSelectLocation } from "@/hooks/useSelectLocation";
 
 const SelectLocation = (): JSX.Element => {
   const {
     locationQuery,
     locationSuggestions,
     isLoading,
-    isSelected,
+    isLocationSelected,
     handleLocationChange,
     handleLocationSelection,
     isError,
     error,
-    setLocationQuery,
-    setIsSelected,
+    handleClearSelectedLocation,
   } = useSelectLocation();
 
-  const {
-    isOpen: isErrorVisible,
-    onClose,
-    onOpen,
-  } = useDisclosure({
+  const { isOpen: isErrorVisible, onClose } = useDisclosure({
     defaultIsOpen: false,
   });
   const errorId = useId();
@@ -61,7 +56,7 @@ const SelectLocation = (): JSX.Element => {
               placeholder="Enter a location, e.g. Hanoi"
               size="lg"
               value={locationQuery}
-              onChange={handleLocationChange}
+              onChange={(event) => handleLocationChange(event.target.value)}
               list="location-suggestions"
               aria-describedby={errorId}
             />
@@ -71,10 +66,7 @@ const SelectLocation = (): JSX.Element => {
                 aria-label="Clear input"
                 variant="ghost"
                 icon={<CloseIcon />}
-                onClick={() => {
-                  setIsSelected(false);
-                  setLocationQuery("");
-                }}
+                onClick={handleClearSelectedLocation}
               />
             </InputRightElement>
           </InputGroup>
@@ -93,7 +85,7 @@ const SelectLocation = (): JSX.Element => {
               isLoading={isLoading}
               disableError
             >
-              {!isSelected &&
+              {!isLocationSelected &&
                 locationSuggestions?.map((item, idx) => (
                   <Box
                     key={`${item.lat}${item.lon}`}
