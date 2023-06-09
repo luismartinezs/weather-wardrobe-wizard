@@ -15,8 +15,9 @@ const RecentLocationItem = ({
     <Badge
       variant="outline"
       colorScheme="primary"
-      pl={2}
-      pr={1}
+      borderRadius="md"
+      pl={3}
+      pr={2}
       sx={{
         "&:hover": {
           backgroundColor: "primary.900",
@@ -28,16 +29,16 @@ const RecentLocationItem = ({
           variant="unstyled"
           onClick={onClick}
           height="fit-content"
-          py={1}
+          py={2}
         >
-          <Text fontSize="sm" fontWeight="normal">
+          <Text fontSize="medium" fontWeight="normal">
             {location.name}
           </Text>
         </Button>
         <IconButton
           height="fit-content"
           py={1}
-          size="xs"
+          size="sm"
           variant="unstyled"
           onClick={onClose}
           aria-label={`Remove ${location.name}`}

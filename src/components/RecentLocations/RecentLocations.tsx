@@ -24,10 +24,10 @@ const RecentLocations = (): JSX.Element => {
 
   const content = (
     <>
-      <Heading as="h2" size="sm" fontWeight="normal" mb={2}>
+      <Heading as="h2" fontSize="medium" fontWeight="normal" mb={4}>
         Recent locations:
       </Heading>
-      <Wrap>
+      <Wrap spacing={3}>
         {recentLocations.map((location, index) => (
           <WrapItem key={`${location.lat}-${location.lon}`}>
             <RecentLocationItem
