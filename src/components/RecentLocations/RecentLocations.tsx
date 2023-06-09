@@ -1,10 +1,11 @@
-import { Heading, Wrap, WrapItem } from "@chakra-ui/react";
+import { Heading, Skeleton, Wrap, WrapItem } from "@chakra-ui/react";
 
 import RecentLocationItem from "@/components/RecentLocationItem";
 import { useRecentLocations } from "@/hooks/useRecentLocations";
 import { useUpdateLocationAndRefetchWeather } from "@/hooks/useUpdateLocationAndRefetchWeather";
 import { useUser } from "@/context/User";
 import { removeRecentLocation } from "@/firebase/firestore/recentLocations";
+import ServerStateDisplayWrapper from "../ServerStateDisplayWrapper";
 
 const RecentLocations = (): JSX.Element => {
   const { recentLocations, loading, error } = useRecentLocations();
@@ -21,11 +22,7 @@ const RecentLocations = (): JSX.Element => {
     removeRecentLocation(user?.uid, index);
   };
 
-  if (!recentLocations || recentLocations.length === 0) {
-    return <></>;
-  }
-
-  return (
+  const content = (
     <>
       <Heading as="h2" size="sm" fontWeight="normal" mb={2}>
         Recent locations:
@@ -42,6 +39,19 @@ const RecentLocations = (): JSX.Element => {
         ))}
       </Wrap>
     </>
+  );
+
+  return (
+    <ServerStateDisplayWrapper
+      isLoading={loading}
+      isError={!!error}
+      error={error}
+      data={recentLocations}
+      errorAsToast
+      loadingComponent={<Skeleton>{content}</Skeleton>}
+    >
+      {content}
+    </ServerStateDisplayWrapper>
   );
 };
 
