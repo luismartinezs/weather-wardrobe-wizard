@@ -16,8 +16,6 @@ const RecentLocationItem = ({
       variant="outline"
       colorScheme="primary"
       borderRadius="md"
-      pl={3}
-      pr={2}
       sx={{
         "&:hover": {
           backgroundColor: "primary.900",
@@ -30,6 +28,8 @@ const RecentLocationItem = ({
           onClick={onClick}
           height="fit-content"
           py={2}
+          pl={2}
+          pr={1}
         >
           <Text fontSize="medium" fontWeight="normal">
             {location.name}
