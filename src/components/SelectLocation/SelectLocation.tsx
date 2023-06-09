@@ -1,5 +1,3 @@
-import { useState, useCallback } from "react";
-
 import {
   Box,
   Button,
@@ -15,37 +13,26 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
-import debounce from "lodash.debounce";
 
 import { useId } from "@/util/hooks";
 import { LocationSuggestion } from "@/types/weatherApi";
 import ErrorMessage from "@/components/ErrorMessage";
-import useStore from "@/store";
-import { useLocation } from "@/hooks/useLocation";
 import ServerStateDisplayWrapper from "@/components/ServerStateDisplayWrapper";
-
-interface UseLocationReturnType {
-  data: LocationSuggestion[] | null;
-  isLoading: boolean;
-  refetch: (options?: { cancelRefetch: boolean }) => void;
-  isError: boolean;
-  error: Error | null;
-}
+import { useSelectLocation } from "@/hooks/useSelectedLocation";
 
 const SelectLocation = (): JSX.Element => {
-  const selectedLocation = useStore((state) => state.selectedLocation);
-  const setSelectedLocation = useStore((state) => state.setSelectedLocation);
-
-  const [locationQuery, setLocationQuery] = useState(
-    selectedLocation?.name || ""
-  );
   const {
-    data: locationSuggestions,
+    locationQuery,
+    locationSuggestions,
     isLoading,
-    refetch,
+    isSelected,
+    handleLocationChange,
+    handleLocationSelection,
     isError,
     error,
-  } = useLocation({ locationQuery }) as UseLocationReturnType;
+    setLocationQuery,
+    setIsSelected,
+  } = useSelectLocation();
 
   const {
     isOpen: isErrorVisible,
@@ -55,33 +42,9 @@ const SelectLocation = (): JSX.Element => {
     defaultIsOpen: false,
   });
   const errorId = useId();
-  const [isSelected, setIsSelected] = useState(!!selectedLocation);
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const debouncedRefetch = useCallback(
-    debounce(() => {
-      onOpen();
-      refetch({ cancelRefetch: true });
-    }, 500),
-    [onOpen, refetch]
-  );
-
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setIsSelected(false);
-    const _locationQuery = e.target.value;
-    setLocationQuery(_locationQuery);
-    if (!_locationQuery || _locationQuery.length < 2) {
-      return;
-    }
-    debouncedRefetch();
-  }
 
   function createLocationSuggestionHandler(item: LocationSuggestion) {
-    return function handleLocationSuggestionClick() {
-      setLocationQuery(item.name);
-      setIsSelected(true);
-      setSelectedLocation(item);
-    };
+    return () => handleLocationSelection(item);
   }
 
   return (
@@ -98,7 +61,7 @@ const SelectLocation = (): JSX.Element => {
               placeholder="Enter a location, e.g. Hanoi"
               size="lg"
               value={locationQuery}
-              onChange={handleChange}
+              onChange={handleLocationChange}
               list="location-suggestions"
               aria-describedby={errorId}
             />
