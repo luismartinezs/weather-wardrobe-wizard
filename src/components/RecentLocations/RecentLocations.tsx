@@ -2,17 +2,15 @@ import { Heading, Wrap, WrapItem } from "@chakra-ui/react";
 
 import RecentLocationItem from "@/components/RecentLocationItem";
 import { useRecentLocations } from "@/hooks/useRecentLocations";
-import { useWeatherForecast } from "@/hooks/useWeatherForecast";
-import { useSelectLocation } from "@/hooks/useSelectLocation";
+import { useUpdateLocationAndRefetchWeather } from "@/hooks/useUpdateLocationAndRefetchWeather";
 
 const RecentLocations = (): JSX.Element => {
-  const { handleLocationSelection } = useSelectLocation();
   const { recentLocations } = useRecentLocations();
-  const { refetch } = useWeatherForecast();
+  const { updateLocationAndRefetchWeather } =
+    useUpdateLocationAndRefetchWeather();
 
   const onLocationClick = async (location: any) => {
-    handleLocationSelection(location);
-    await refetch();
+    updateLocationAndRefetchWeather(location);
   };
 
   const onLocationRemove = (index: number) => {
