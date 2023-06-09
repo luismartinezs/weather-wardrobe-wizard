@@ -5,6 +5,7 @@ import SelectLocation from "@/components/SelectLocation";
 import WeatherForecast from "@/components/WeatherForecast";
 import ClothingSuggestions from "@/components/ClothingSuggestions";
 import LocationButton from "@/components/LocationButton";
+import RecentLocations from "@/components/RecentLocations";
 
 export default function Home() {
   return (
@@ -23,6 +24,9 @@ export default function Home() {
           <LocationButton />
         </Box>
       </Container>
+      <Box mt={4}>
+        <RecentLocations />
+      </Box>
       <Box mt={8}>
         <WeatherForecast />
       </Box>

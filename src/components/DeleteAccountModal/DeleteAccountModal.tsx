@@ -19,7 +19,6 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { deleteAccount } from "@/firebase/auth";
-import useStore from "@/store";
 import { getAuthError } from "@/firebase/util";
 import { useUser } from "@/context/User";
 
@@ -36,9 +35,7 @@ const DeleteAccountModal = ({
 }): JSX.Element => {
   const toast = useToast();
   const { user } = useUser();
-  const isPasswordProvider = useStore(
-    (state) => state.user?.providerData[0]?.providerId === "password"
-  );
+  const isPasswordProvider = user?.providerData[0]?.providerId === "password";
 
   const schema = yup.object().shape({
     password: yup.string().test("password", "Password is required", (value) => {

@@ -2,7 +2,6 @@ import { doc, getDoc, getDocs, collection, addDoc, updateDoc, deleteDoc, Documen
 
 import { db } from "@/firebase/app";
 
-
 export interface FirestoreDocument<Data = DocumentData> {
   id: string;
   data: Data;
@@ -12,8 +11,14 @@ export interface FirestoreCollection<Data = DocumentData> {
   [key: string]: Data;
 }
 
-export async function getDocument<Data = DocumentData>(collectionName: string, documentId: string): Promise<FirestoreDocument<Data> | null> {
+export function getDocumentRef(collectionName: string, documentId: string): DocumentReference {
   const docRef = doc(db, collectionName, documentId);
+  return docRef;
+}
+
+
+export async function getDocument<Data = DocumentData>(collectionName: string, documentId: string): Promise<FirestoreDocument<Data> | null> {
+  const docRef = getDocumentRef(collectionName, documentId);
   const docSnap = await getDoc(docRef);
 
   if (docSnap.exists()) {
@@ -72,11 +77,11 @@ export async function addDocument<Data extends DocumentData = DocumentData>(coll
 
 export async function editDocument<Data extends DocumentData = DocumentData>(collectionName: string, documentId: string, data: Data): Promise<void> {
   console.log(`Editing document ${documentId} in ${collectionName}`)
-  const docRef = doc(db, collectionName, documentId);
+  const docRef = getDocumentRef(collectionName, documentId);
   await updateDoc(docRef, data);
 }
 
 export async function deleteDocument(collectionName: string, documentId: string): Promise<void> {
-  const docRef = doc(db, collectionName, documentId);
+  const docRef = getDocumentRef(collectionName, documentId);
   await deleteDoc(docRef);
 }
