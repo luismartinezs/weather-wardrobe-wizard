@@ -40,6 +40,7 @@ const TemperatureChart = ({
           );
         })}
         <Line
+          isAnimationActive={false}
           animationDuration={300}
           type="monotone"
           dataKey="maxTemp"
@@ -62,6 +63,7 @@ const TemperatureChart = ({
           }}
         />
         <Line
+          isAnimationActive={false}
           animationDuration={300}
           type="monotone"
           dataKey="minTemp"
