@@ -2,6 +2,7 @@ import { type Page, expect } from '@playwright/test';
 
 export async function setupLocation(page: Page) {
   await page.goto('/');
+  await page.waitForSelector('[placeholder="Enter a location, e.g. Hanoi"]');
   await page.getByPlaceholder('Enter a location, e.g. Hanoi').click();
   await page.getByPlaceholder('Enter a location, e.g. Hanoi').fill('hanoi');
 }
