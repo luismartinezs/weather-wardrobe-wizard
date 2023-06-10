@@ -25,7 +25,7 @@ const RecentLocations = (): JSX.Element => {
   const content = (
     <>
       <Heading as="h2" fontSize="medium" fontWeight="normal" mb={4}>
-        Recent locations:
+        {recentLocations.length > 0 && "Recent locations:"}
       </Heading>
       <Wrap spacing={3}>
         {recentLocations.map((location, index) => (
