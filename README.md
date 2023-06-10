@@ -1,16 +1,20 @@
 # Weather Wardrobe Wizard
 
-## Getting Started
+## Dev usage
 
-First, run the development server:
+Run the development server:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+pnpm dev # Warning: this will connect to production backend
 ```
+
+Run project with emulated backend:
+
+```bash
+pnpm emu:dev
+pnpm emu:start # In separate terminal
+```
+
 
 ## Playwright
 
@@ -153,3 +157,6 @@ E2e Tests:
 
 - Q: While emulating, firestore rules keep erroring out although they seem correct
 - A: Try restarting the emulator
+
+- Q: Locally run Playwright tests fail after `page.goto('/')`
+- A: Try restarting the local server

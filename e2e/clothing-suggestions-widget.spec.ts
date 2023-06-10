@@ -3,7 +3,6 @@ import { test, expect } from '@playwright/test';
 import { fetchForecast } from './util/location';
 
 test.beforeEach(async ({ page }) => {
-  page.on('console', console.log);
   await fetchForecast(page);
 });
 

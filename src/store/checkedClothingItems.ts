@@ -1,4 +1,4 @@
-import produce, { Immutable } from "immer"
+import { produce, Immutable } from "immer"
 import type { ClothingId } from "@/util/clothingSuggestions"
 import { StateCreator } from "zustand";
 
