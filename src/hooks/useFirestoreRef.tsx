@@ -1,18 +1,15 @@
 import { useEffect, useState } from "react";
 import {
+  DocumentData,
   DocumentReference,
-  DocumentSnapshot,
-  FirestoreError,
   onSnapshot,
 } from "firebase/firestore";
 
-type OnSnapshotHandler<T> = (snapshot: DocumentSnapshot<T>) => void;
-type OnErrorHandler = (error: FirestoreError) => void;
+type OnSnapshotDataHandler = (docData: DocumentData) => void;
 
 export function useFirestoreRef<T>(
   ref: DocumentReference<T>,
-  onSnapshotHandler: OnSnapshotHandler<T>,
-  onErrorHandler?: OnErrorHandler
+  onSnapshotDataHandler: OnSnapshotDataHandler
 ): {
   error: Error | null;
 } {
@@ -20,14 +17,19 @@ export function useFirestoreRef<T>(
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(ref, onSnapshotHandler, (error) => {
-      setError(error);
-      if (typeof onErrorHandler === "function") {
-        onErrorHandler(error);
+    const unsubscribe = onSnapshot(
+      ref,
+      (docSnapshot) => {
+        if (docSnapshot.exists()) {
+          onSnapshotDataHandler(docSnapshot.data() as DocumentData);
+        }
+      },
+      (error) => {
+        setError(error);
       }
-    });
+    );
     return () => unsubscribe();
-  }, [ref, onSnapshotHandler, onErrorHandler]);
+  }, [ref, onSnapshotDataHandler]);
 
   return { error };
 }
