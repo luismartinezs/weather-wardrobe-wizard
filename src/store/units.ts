@@ -1,7 +1,6 @@
+import { Units } from "@/firebase/firestore/user";
 import { Immutable } from "immer";
 import { StateCreator } from "zustand";
-
-export type Units = 'metric' | 'imperial'
 
 export type UnitsState = Immutable<{
   units: Units
