@@ -13,7 +13,7 @@ service cloud.firestore {
     match /recentLocations/{uid} {
       allow create: if isSignedIn() && request.resource.data.userUid == request.auth.uid;
       allow list: if isSignedIn() && request.auth.uid == resource.data.userUid;
-      allow get, update, delete: if isSignedIn() && resource.data.userUid == request.auth.uid;
+      allow get, update, delete: if isSignedIn() && uid == request.auth.uid;
     }
     match /{document=**} {
       allow read, write: if false;
