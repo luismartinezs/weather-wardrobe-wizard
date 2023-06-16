@@ -11,6 +11,15 @@ export interface FirestoreCollection<Data = DocumentData> {
   [key: string]: Data;
 }
 
+export type QueryOp = Parameters<typeof where>;
+
+export const getQuery = (collectionName: string, queryOp: QueryOp) => {
+  if (queryOp.some(op => op === undefined || op === null)) {
+    return query(collection(db, collectionName))
+  }
+  return query(collection(db, collectionName), where(...queryOp))
+}
+
 export function getDocumentRef(collectionName: string, documentId: string): DocumentReference {
   const docRef = doc(db, collectionName, documentId);
   return docRef;
@@ -42,7 +51,7 @@ export async function getDocumentsWithQuery<Data = DocumentData>(q: Query): Prom
 }
 
 export async function getDocumentsByUserUid<Data = DocumentData>(collectionName: string, userUid: string): Promise<FirestoreDocument<Data>[] | null> {
-  const q = query(collection(db, collectionName), where("userUid", "==", userUid));
+  const q = getQuery(collectionName, ["userUid", "==", userUid]);
   const documents = await getDocumentsWithQuery<Data>(q);
 
   return documents;

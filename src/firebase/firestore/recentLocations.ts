@@ -1,5 +1,5 @@
 import { LocationSuggestion } from "@/types/weatherApi";
-import { addDocument, editDocument, getDocumentRef, getDocumentsByUserUid } from "@/firebase/firestore/api";
+import { QueryOp, addDocument, editDocument, getDocumentRef, getDocumentsByUserUid, getQuery } from "@/firebase/firestore/api";
 import removeByIndex from "@/util/removeByIndex";
 
 export type UserLocationData = {
@@ -9,6 +9,10 @@ export type UserLocationData = {
 
 const COLLECTION_NAME = 'recentLocations';
 const MAX_LENGTH = 10;
+
+export function getRecentLocationQuery(queryOp: QueryOp) {
+  return getQuery(COLLECTION_NAME, queryOp);
+}
 
 function addUniqueLocation(locations: LocationSuggestion[], newLocation: LocationSuggestion): LocationSuggestion[] {
   const locationExists = locations.some(

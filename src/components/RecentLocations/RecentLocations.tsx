@@ -8,10 +8,10 @@ import { removeRecentLocation } from "@/firebase/firestore/recentLocations";
 import ServerStateDisplayWrapper from "../ServerStateDisplayWrapper";
 
 const RecentLocations = (): JSX.Element => {
+  const { user } = useUser();
   const { recentLocations, loading, error } = useRecentLocations();
   const { updateLocationAndRefetchWeather } =
     useUpdateLocationAndRefetchWeather();
-  const { user } = useUser();
 
   const onLocationClick = async (location: any) => {
     updateLocationAndRefetchWeather(location);
