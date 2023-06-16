@@ -1,4 +1,4 @@
-import { Units } from "@/firebase/firestore/user";
+import { DEFAULT_UNITS, Units } from "@/firebase/firestore/user";
 import { Immutable } from "immer";
 import { StateCreator } from "zustand";
 
@@ -8,6 +8,6 @@ export type UnitsState = Immutable<{
 }>
 
 export const unitsSlice: StateCreator<UnitsState> = (set) => ({
-  units: 'metric',
+  units: DEFAULT_UNITS,
   setUnits: (units: Units) => set({ units }),
 })

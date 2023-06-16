@@ -7,6 +7,7 @@ export type Units = Imperial | Metric
 
 export const IMPERIAL: Imperial = 'imperial';
 export const METRIC: Metric = 'metric';
+export const DEFAULT_UNITS: Units = METRIC;
 
 export type UserData = {
   uid: string;

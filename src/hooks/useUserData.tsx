@@ -1,8 +1,13 @@
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 
 import { useUser } from "@/context/User";
 import { useDocument } from "@/hooks/useDocument";
-import { UserData, getUserDataRef } from "@/firebase/firestore/user";
+import {
+  DEFAULT_UNITS,
+  UserData,
+  getUserDataRef,
+  updateUserDocument,
+} from "@/firebase/firestore/user";
 
 export const useUserData = () => {
   const { user } = useUser();
@@ -10,5 +15,11 @@ export const useUserData = () => {
     if (!user?.uid) return;
     return getUserDataRef(user.uid);
   }, [user?.uid]);
-  return useDocument<UserData>(ref);
+  const onSnapshotDataHandler = useCallback(async (data: UserData) => {
+    if (!data.units) {
+      updateUserDocument(data.uid, { units: DEFAULT_UNITS });
+    }
+  }, []);
+
+  return useDocument<UserData>(ref, onSnapshotDataHandler);
 };

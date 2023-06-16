@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 export function useDocument<T>(
   ref?: DocumentReference,
-  onSnapshotDataHandler?: (doc: T) => void
+  onSnapshotDataHandler?: (data: T) => void
 ) {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
