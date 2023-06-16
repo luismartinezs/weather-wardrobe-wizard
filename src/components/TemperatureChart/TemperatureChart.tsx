@@ -1,7 +1,7 @@
 import { Line, LineChart, ReferenceLine, YAxis } from "recharts";
 import { getTStr } from "@/util/util";
 import { baseTheme, Box } from "@chakra-ui/react";
-import useStore from "@/store";
+import { useUnits } from "@/hooks/useUnits";
 
 const TemperatureChart = ({
   data,
@@ -10,7 +10,7 @@ const TemperatureChart = ({
   data: { maxTemp: number; minTemp: number }[];
   pointWidth: number;
 }): JSX.Element => {
-  const { units } = useStore();
+  const { units } = useUnits();
 
   return (
     <Box mx="auto">

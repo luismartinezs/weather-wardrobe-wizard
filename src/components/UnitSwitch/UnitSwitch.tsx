@@ -1,9 +1,9 @@
-import useStore from "@/store";
+import { IMPERIAL, METRIC } from "@/firebase/firestore/user";
+import { useUnits } from "@/hooks/useUnits";
 import { FormControl, Show, Switch, Text } from "@chakra-ui/react";
 
 const UnitSwitch = (): JSX.Element => {
-  const units = useStore((state) => state.units);
-  const setUnits = useStore((state) => state.setUnits);
+  const { units, setUnits } = useUnits();
 
   return (
     <FormControl
@@ -14,7 +14,7 @@ const UnitSwitch = (): JSX.Element => {
       minW="60px"
     >
       <Show above="md">
-        <Text as="span" color={units === "metric" ? "white" : "gray.500"}>
+        <Text as="span" color={units === METRIC ? "white" : "gray.500"}>
           Metric
         </Text>
       </Show>
@@ -27,17 +27,17 @@ const UnitSwitch = (): JSX.Element => {
         id="unitSwitch"
         mx={1}
         aria-label="Toggle units"
-        onChange={() => setUnits(units === "metric" ? "imperial" : "metric")}
+        onChange={() => setUnits(units === METRIC ? IMPERIAL : METRIC)}
         sx={{
           ".chakra-switch__track": {
             bg: "gray.500",
           },
         }}
-        isChecked={units === "imperial"}
+        isChecked={units === IMPERIAL}
         data-testid="unit-switch"
       />
       <Show above="md">
-        <Text as="span" color={units === "imperial" ? "white" : "gray.500"}>
+        <Text as="span" color={units === IMPERIAL ? "white" : "gray.500"}>
           Imperial
         </Text>
       </Show>

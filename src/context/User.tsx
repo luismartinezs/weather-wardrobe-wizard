@@ -6,11 +6,10 @@ import React, {
   useCallback,
 } from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
-import pRetry from "p-retry";
 
 import { type UserData } from "@/firebase/firestore/user";
 import { auth } from "@/firebase/app";
-import { getDocument } from "@/firebase/firestore/api";
+import { useUserData } from "@/hooks/useUserData";
 
 export const UserContext = createContext<{
   idle: boolean;
@@ -28,12 +27,39 @@ export const UserContext = createContext<{
   refreshUser: async () => {},
 });
 
+const UserDataFetcher = ({
+  onUserDataChange,
+}: {
+  onUserDataChange: (userData: ReturnType<typeof useUserData>) => void;
+}) => {
+  const userData = useUserData();
+
+  useEffect(() => {
+    onUserDataChange(userData);
+  }, [userData, onUserDataChange]);
+
+  return null;
+};
+
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
+  const [idle, setIdle] = useState(true);
   const [user, setUser] = useState<User | null>(null);
-  const [userData, setUserData] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null | undefined>(null);
-  const [idle, setIdle] = useState(true);
+  const [userData, setUserData] = useState<UserData | null>(null);
+  const [userDataLoading, setUserDataLoading] = useState(false);
+  const [userDataError, setUserDataError] = useState<Error | null | undefined>(
+    null
+  );
+
+  const handleUserDataChange = useCallback(
+    (newUserData: ReturnType<typeof useUserData>) => {
+      setUserDataLoading(newUserData.loading);
+      setUserData(newUserData.data);
+      setUserDataError(newUserData.error);
+    },
+    []
+  );
 
   const handleErrors = useCallback(
     (err: unknown) => {
@@ -46,39 +72,29 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     [setError]
   );
 
-  const getUserData = async (user: User) => {
-    // NOTE user data is generated on user creation by firebase cloud function using extension rowy/firestore-user-document, retrieval of userData is retried to allow time for the function to complete
-    const userData = await pRetry(
-      () => getDocument<UserData>("users", user.uid),
-      { retries: 3 }
-    );
-    if (!userData) {
-      throw new Error("UserProvider: User data not found.");
-    }
-
-    return userData.data;
-  };
-
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      if (firebaseUser) {
-        try {
-          setLoading(true);
-          const userData = await getUserData(firebaseUser);
-          setUser(firebaseUser);
-          setUserData(userData);
-        } catch (err) {
-          handleErrors(err);
-        } finally {
-          setLoading(false);
+    const unsubscribeFromAuthState = onAuthStateChanged(
+      auth,
+      async (firebaseUser) => {
+        if (firebaseUser) {
+          try {
+            setLoading(true);
+            setUser(firebaseUser);
+          } catch (err) {
+            handleErrors(err);
+          } finally {
+            setLoading(false);
+          }
+        } else {
+          setUser(null);
         }
-      } else {
-        setUser(null);
+        setIdle(false);
       }
-      setIdle(false);
-    });
+    );
 
-    return () => unsubscribe();
+    return () => {
+      unsubscribeFromAuthState();
+    };
   }, [handleErrors]);
 
   const refreshUser = async () => {
@@ -87,7 +103,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       try {
         setLoading(true);
         await firebaseUser.reload();
-        const userData = await getUserData(firebaseUser);
         setUser(firebaseUser);
         setUserData(userData);
       } catch (err) {
@@ -100,8 +115,16 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <UserContext.Provider
-      value={{ user, userData, loading, error, idle, refreshUser }}
+      value={{
+        user,
+        userData,
+        loading: loading || userDataLoading,
+        error: error || userDataError,
+        idle,
+        refreshUser,
+      }}
     >
+      <UserDataFetcher onUserDataChange={handleUserDataChange} />
       {children}
     </UserContext.Provider>
   );

@@ -10,10 +10,10 @@ service cloud.firestore {
       allow read, write: if isSignedIn() && request.auth.uid == userId;
       allow delete, update: if isSignedIn() && request.auth.uid == resource.data.uid;
     }
-    match /recentLocations/{uid} {
-      allow create: if isSignedIn() && request.resource.data.userUid == request.auth.uid;
+    match /recentLocations/{userId} {
+      allow create: if isSignedIn();
       allow list: if isSignedIn() && request.auth.uid == resource.data.userUid;
-      allow get, update, delete: if isSignedIn() && uid == request.auth.uid;
+      allow get, update, delete: if isSignedIn() && userId == request.auth.uid;
     }
     match /{document=**} {
       allow read, write: if false;

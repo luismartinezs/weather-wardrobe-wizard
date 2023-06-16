@@ -15,7 +15,7 @@ export function getRecentLocationQuery(queryOp: QueryOp) {
   return getQuery(COLLECTION_NAME, queryOp);
 }
 
-export function getRecentLocationRef<T extends DocumentData = DocumentData>(documentId: string) {
+export function getRecentLocationRef<T extends DocumentData = UserLocationData>(documentId: string) {
   return getDocumentRef<T>(COLLECTION_NAME, documentId);
 }
 
