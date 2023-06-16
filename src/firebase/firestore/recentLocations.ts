@@ -1,6 +1,7 @@
 import { LocationSuggestion } from "@/types/weatherApi";
-import { QueryOp, addDocument, editDocument, getDocumentRef, getDocumentsByUserUid, getQuery } from "@/firebase/firestore/api";
+import { QueryOp, addDocumentWithId, editDocument, getDocumentRef, getDocumentsByUserUid, getQuery } from "@/firebase/firestore/api";
 import removeByIndex from "@/util/removeByIndex";
+import { DocumentData } from "firebase/firestore";
 
 export type UserLocationData = {
   userUid: string;
@@ -12,6 +13,10 @@ const MAX_LENGTH = 10;
 
 export function getRecentLocationQuery(queryOp: QueryOp) {
   return getQuery(COLLECTION_NAME, queryOp);
+}
+
+export function getRecentLocationRef<T extends DocumentData = DocumentData>(documentId: string) {
+  return getDocumentRef<T>(COLLECTION_NAME, documentId);
 }
 
 function addUniqueLocation(locations: LocationSuggestion[], newLocation: LocationSuggestion): LocationSuggestion[] {
@@ -41,7 +46,7 @@ export async function addRecentLocation(userUid: string, location: LocationSugge
 
     await editDocument(COLLECTION_NAME, id, { locations: updatedLocations });
   } else {
-    await addDocument(COLLECTION_NAME, { userUid, locations: [location] });
+    await addDocumentWithId(COLLECTION_NAME, userUid, { userUid, locations: [location] });
   }
 }
 

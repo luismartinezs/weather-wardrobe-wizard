@@ -1,4 +1,4 @@
-import { doc, getDoc, getDocs, collection, addDoc, updateDoc, deleteDoc, DocumentData, DocumentReference, Query, where, query } from "firebase/firestore";
+import { doc, getDoc, getDocs, collection, addDoc, updateDoc, deleteDoc, DocumentData, DocumentReference, Query, where, query, setDoc } from "firebase/firestore";
 
 import { db } from "@/firebase/app";
 
@@ -13,18 +13,23 @@ export interface FirestoreCollection<Data = DocumentData> {
 
 export type QueryOp = Parameters<typeof where>;
 
-export const getQuery = (collectionName: string, queryOp: QueryOp) => {
+export function getQuery<T extends DocumentData = DocumentData>(
+  collectionName: string,
+  queryOp: QueryOp
+): Query<T> {
   if (queryOp.some(op => op === undefined || op === null)) {
-    return query(collection(db, collectionName))
+    return query(collection(db, collectionName)) as Query<T>;
   }
-  return query(collection(db, collectionName), where(...queryOp))
+  return query(collection(db, collectionName), where(...queryOp)) as Query<T>;
 }
 
-export function getDocumentRef(collectionName: string, documentId: string): DocumentReference {
+export function getDocumentRef<T extends DocumentData = DocumentData>(
+  collectionName: string,
+  documentId: string
+): DocumentReference<T> {
   const docRef = doc(db, collectionName, documentId);
-  return docRef;
+  return docRef as DocumentReference<T>;
 }
-
 
 export async function getDocument<Data = DocumentData>(collectionName: string, documentId: string): Promise<FirestoreDocument<Data> | null> {
   const docRef = getDocumentRef(collectionName, documentId);
@@ -33,7 +38,6 @@ export async function getDocument<Data = DocumentData>(collectionName: string, d
   if (docSnap.exists()) {
     return { id: docSnap.id, data: docSnap.data() as Data };
   } else {
-    console.log(`No document with ID: ${documentId}`);
     return null;
   }
 }
@@ -45,7 +49,6 @@ export async function getDocumentsWithQuery<Data = DocumentData>(q: Query): Prom
   if (!querySnapshot.empty) {
     return querySnapshot.docs.map(doc => ({ id: doc.id, data: doc.data() as Data }));
   } else {
-    console.log(`No documents found for the provided query.`);
     return null;
   }
 }
@@ -68,14 +71,12 @@ export async function getAllDocuments<Data = DocumentData>(collectionName: strin
     });
     return allDocs;
   } else {
-    console.log(`No documents found in collection: ${collectionName}`);
     return null;
   }
 }
 
 export async function addDocument<Data extends DocumentData = DocumentData>(collectionName: string, data: Data): Promise<DocumentReference | null> {
   try {
-    console.log(`Adding document to ${collectionName}`)
     const docRef = await addDoc(collection(db, collectionName), data);
     return docRef;
   } catch (e) {
@@ -84,8 +85,22 @@ export async function addDocument<Data extends DocumentData = DocumentData>(coll
   }
 }
 
+export async function addDocumentWithId<Data extends DocumentData = DocumentData>(
+  collectionName: string,
+  id: string,
+  data: Data
+): Promise<DocumentReference | null> {
+  try {
+    const docRef = doc(db, collectionName, id);
+    await setDoc(docRef, data);
+    return docRef;
+  } catch (e) {
+    console.error(`Error adding document to ${collectionName}: `, e);
+    return null;
+  }
+}
+
 export async function editDocument<Data extends DocumentData = DocumentData>(collectionName: string, documentId: string, data: Data): Promise<void> {
-  console.log(`Editing document ${documentId} in ${collectionName}`)
   const docRef = getDocumentRef(collectionName, documentId);
   await updateDoc(docRef, data);
 }
