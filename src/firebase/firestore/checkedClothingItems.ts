@@ -24,3 +24,18 @@ export function checkClothingItem({
 
   updateUserDocument(userUid, { checkedClothingItems: newIds });
 }
+
+
+export function setCheckedClothingItems({
+  userUid,
+  checkedIds
+}: {
+  userUid?: string;
+  checkedIds: ClothingId[];
+}) {
+  if (!userUid) {
+    return
+  }
+
+  updateUserDocument(userUid, { checkedClothingItems: checkedIds });
+}
