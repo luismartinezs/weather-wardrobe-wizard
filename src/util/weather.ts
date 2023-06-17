@@ -1,5 +1,3 @@
-import { format } from 'date-fns';
-
 export interface WeatherForecast {
   date: string,
   avgTemp: number,
@@ -21,7 +19,7 @@ function getFiveDayForecast(data: any): WeatherForecast[] | null {
   }
   const forecasts: any[] = data.list;
   const dailyForecasts: WeatherForecast[] = [];
-  const today = format(new Date(), 'yyyy-MM-dd')
+  const now = new Date().getTime();
 
   let currentDay: string = '';
   let tempSum: number = 0;
@@ -34,9 +32,10 @@ function getFiveDayForecast(data: any): WeatherForecast[] | null {
   let weatherIcon: string = '01d';
 
   forecasts.forEach(forecast => {
+    const forecastTimestamp = forecast.dt * 1000;
     const date = forecast.dt_txt.substring(0, 10);
 
-    if (date !== currentDay && date !== today) {
+    if (date !== currentDay && forecastTimestamp > now) {
       if (currentDay !== '') {
         const avgTemp = tempSum / count;
         dailyForecasts.push({
