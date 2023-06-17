@@ -12,7 +12,16 @@ const Layout = ({ children }: { children: React.ReactNode }): JSX.Element => {
   return (
     <Flex minH="100vh" direction="column">
       <Header />
-      <Container as="main" maxW="container.xl" mt={6} mb={28}>
+      <Container
+        as="main"
+        maxW={{
+          base: "container.sm",
+          md: "container.md",
+          xl: "container.xl",
+        }}
+        mt={6}
+        mb={28}
+      >
         <SkipNavContent />
         {error && (
           <Box mb={4}>

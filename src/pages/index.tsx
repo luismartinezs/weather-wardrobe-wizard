@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { Box, Container } from "@chakra-ui/react";
+import { Box, Container, Text } from "@chakra-ui/react";
 
 import SelectLocation from "@/components/SelectLocation";
 import WeatherForecast from "@/components/WeatherForecast";
@@ -18,7 +18,11 @@ export default function Home() {
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <Container>
+      <Text mb={4} fontSize="xl" color="gray.400">
+        I will help you decide what clothes to pack for your trip, based on the
+        weather forecast
+      </Text>
+      <Container px={0}>
         <SelectLocation />
         <Box mt={2}>
           <LocationButton />
