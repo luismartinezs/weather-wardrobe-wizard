@@ -1,4 +1,4 @@
-import { Flex, Heading, Link, Text } from "@chakra-ui/react";
+import { Flex, Heading, Link } from "@chakra-ui/react";
 import Image from "next/image";
 import ResponsiveNav from "@/components/ResponsiveNav";
 import NextLink from "next/link";
@@ -43,9 +43,6 @@ const Header = () => {
                 Weather Wardrobe Wizard
               </Heading>
             </Link>
-            <Text mt={2} fontSize="lg" color="gray.400">
-              I will help you decide what clothes to pack for your trip
-            </Text>
           </Flex>
         </Flex>
 
