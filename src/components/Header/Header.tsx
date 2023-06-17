@@ -1,4 +1,4 @@
-import { Flex, Heading, Link, Text } from "@chakra-ui/react";
+import { Flex, Heading, Link } from "@chakra-ui/react";
 import Image from "next/image";
 import ResponsiveNav from "@/components/ResponsiveNav";
 import NextLink from "next/link";
