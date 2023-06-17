@@ -1,4 +1,5 @@
 import { editDocument, getDocument, getDocumentRef } from "@/firebase/firestore/api";
+import { ClothingId } from "@/util/clothingSuggestions";
 import { DocumentData } from "firebase/firestore";
 
 export type Imperial = 'imperial'
@@ -13,6 +14,7 @@ export type UserData = {
   uid: string;
   email: string;
   units: Units;
+  checkedClothingItems: ClothingId[];
 }
 
 const COLLECTION_NAME = 'users';

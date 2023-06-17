@@ -19,6 +19,9 @@ export const useUserData = () => {
     if (!data.units) {
       updateUserDocument(data.uid, { units: DEFAULT_UNITS });
     }
+    if (!data.checkedClothingItems) {
+      updateUserDocument(data.uid, { checkedClothingItems: [] });
+    }
   }, []);
 
   return useDocument<UserData>(ref, onSnapshotDataHandler);

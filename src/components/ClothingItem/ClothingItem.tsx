@@ -10,26 +10,23 @@ import {
 import Image from "next/image";
 // import AmazonLink from "@/components/AmazonLink";
 import type { ClothingId } from "@/util/clothingSuggestions";
-import useStore from "@/store";
+import { useCheckedClothingItems } from "@/hooks/useCheckedClothingItems";
 
 const size = {
   w: "340px",
 };
 
-const ClothingItem = ({
-  item,
-}: {
+type ClothingItemProps = {
   item: {
     label: string;
     url: string;
     imageUrl: string;
     id: ClothingId;
   };
-}): JSX.Element => {
-  const checked = useStore((state) => state.checkedClothingItems).includes(
-    item.id
-  );
-  const checkClothingItem = useStore((state) => state.checkClothingItem);
+};
+
+const ClothingItem = ({ item }: ClothingItemProps): JSX.Element => {
+  const { checked, checkClothingItem } = useCheckedClothingItems(item.id);
   const labelId = useId();
 
   return (
