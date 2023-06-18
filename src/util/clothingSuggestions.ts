@@ -1,4 +1,4 @@
-import { areArraysOverlapping, between } from '@/util/util';
+import { areArraysOverlapping, between, dedupeArray } from '@/util/util';
 import { WeatherForecast } from '@/util/weather';
 
 export type ClothingSuggestion = {
@@ -35,54 +35,96 @@ export const clothingMap: { [index: string]: ClothingSuggestion } = {
     label: "Snow boots",
     imageUrl: "https://res.cloudinary.com/dicyllvry/image/upload/v1679223339/weather-wardrobe-wizard/0_3_lowg7j.png",
     url: "https://www.amazon.com/s?k=snow+boots&i=apparel&ref=nb_sb_noss_2"
-  }
+  },
+  "lightLinenShirt": { "label": "Light Linen Shirt", "imageUrl": "https://res.cloudinary.com/dicyllvry/image/upload/v1687099763/weather-wardrobe-wizard/saito200_An_appealing_photo_of_a_light_linen_shirt_showcasing_i_58a08c25-f695-4d8c-a844-743ea4301e74_x00fwz.png", "url": "" },
+  "linenShorts": { "label": "Linen Shorts", "imageUrl": "https://res.cloudinary.com/dicyllvry/image/upload/v1687100148/weather-wardrobe-wizard/saito200_A_product_photo_of_a_pair_of_linen_shorts_perfect_for__6f010d94-ac73-45bf-9766-48653e198799_gchrqb.png", "url": "" },
+  "sunHat": { "label": "Sun Hat", "imageUrl": "https://res.cloudinary.com/dicyllvry/image/upload/v1687099790/weather-wardrobe-wizard/saito200_An_attractive_product_photo_of_a_sun_hat_emphasizing_i_2ee5233a-563e-4a50-8042-1a3e1217fd85_tauvod.png", "url": "" },
+  "lightJeans": { "label": "Light Jeans", "imageUrl": "https://res.cloudinary.com/dicyllvry/image/upload/v1687098956/weather-wardrobe-wizard/saito200_A_chic_product_photo_of_a_pair_of_light_jeans_emphasiz_f7d26e4d-614c-4dd4-b87b-d9714c156120_hth3f5.png", "url": "" },
+  "heavyJeans": { "label": "Heavy Jeans", "imageUrl": "https://res.cloudinary.com/dicyllvry/image/upload/v1687099798/weather-wardrobe-wizard/saito200_A_product_photo_of_a_pair_of_heavy_jeans_perfect_for_c_2c58e94e-31e6-42d7-a072-5113ac163c08_fcied3.png", "url": "" },
+  "longSleevedShirt": { "label": "Long-Sleeved Shirt", "imageUrl": "https://res.cloudinary.com/dicyllvry/image/upload/v1687099753/weather-wardrobe-wizard/saito200_A_stylish_photo_of_a_long-sleeved_shirt_emphasizing_it_b18bfa55-9dc9-404e-86c6-630ec93b7d78_zqich3.png", "url": "" },
+  "lightJacket": { "label": "Light Jacket", "imageUrl": "https://res.cloudinary.com/dicyllvry/image/upload/v1687099748/weather-wardrobe-wizard/saito200_A_product_photo_of_a_light_jacket_perfect_for_transiti_fde63e92-e49d-4815-a372-aa5bd356fd05_aowllp.png", "url": "" },
+  "heavyJacket": { "label": "Heavy Jacket", "imageUrl": "https://res.cloudinary.com/dicyllvry/image/upload/v1687099794/weather-wardrobe-wizard/saito200_A_product_photo_of_a_heavy_jacket_highlighting_its_dur_84db2342-c834-4ad6-87bd-e9e721191f86_iyvwlz.png", "url": "" },
+  "thickSweater": { "label": "Thick Sweater", "imageUrl": "https://res.cloudinary.com/dicyllvry/image/upload/v1687099731/weather-wardrobe-wizard/saito200_A_captivating_photo_of_a_thick_sweater_perfect_for_lay_1384c8c4-6a80-4211-a7e5-2721a5bf6fc3_oeslam.png", "url": "" },
+  "lightSweater": { "label": "Light Sweater", "imageUrl": "https://res.cloudinary.com/dicyllvry/image/upload/v1687099758/weather-wardrobe-wizard/saito200_A_chic_product_photo_of_a_light_sweater_designed_for_l_4f920465-91be-4db4-bf8d-6838af97ef68_vat6d6.png", "url": "" },
+  "waterproofJacket": { "label": "Waterproof Jacket", "imageUrl": "https://res.cloudinary.com/dicyllvry/image/upload/v1687099741/weather-wardrobe-wizard/saito200_A_product_photo_of_a_waterproof_jacket_showcasing_its__53afb622-2884-4a97-91db-a0dcbb6fa432_wrm9bo.png", "url": "" },
+  "insulatedBoots": { "label": "Insulated Boots", "imageUrl": "https://res.cloudinary.com/dicyllvry/image/upload/v1687099745/weather-wardrobe-wizard/saito200_A_photo_of_a_pair_of_insulated_boots_emphasizing_their_7d2fc6d8-cc66-4e2f-a8f5-b06c95937968_abizo4.png", "url": "" },
+  "thermalGloves": { "label": "Thermal Gloves", "imageUrl": "", "url": "" },
+  "downJacket": { "label": "Down Jacket", "imageUrl": "https://res.cloudinary.com/dicyllvry/image/upload/v1687099727/weather-wardrobe-wizard/saito200_A_product_photo_of_a_down_jacket_showcasing_its_superi_63aba00f-779d-4725-89b5-868948b8c096_co6awf.png", "url": "" },
+  "windbreaker": { "label": "Windbreaker", "imageUrl": "https://res.cloudinary.com/dicyllvry/image/upload/v1687099722/weather-wardrobe-wizard/saito200_A_product_photo_of_a_windbreaker_emphasizing_its_light_139ede03-e21c-4574-b876-e63ee7d2726b_ahwidi.png", "url": "" },
+  "highVisibilityClothing": { "label": "High Visibility Clothing", "imageUrl": "", "url": "" },
+  "warmCoat": { "label": "Warm Coat", "imageUrl": "", "url": "" },
+  "lightBreathableDress": { "label": "Light Dress", "imageUrl": "https://res.cloudinary.com/dicyllvry/image/upload/v1687099624/weather-wardrobe-wizard/saito200_An_enchanting_photo_of_a_light_breathable_dress_perfec_88ab290d-fb4c-47da-87fb-958b052f00ea_mqroxh.png", "url": "" },
+  "waterproofPants": { "label": "Waterproof Pants", "imageUrl": "https://res.cloudinary.com/dicyllvry/image/upload/v1687099737/weather-wardrobe-wizard/saito200_An_impressive_product_photo_of_a_pair_of_waterproof_pa_9af1d603-cfc3-43e6-9e5b-a884c759bc9e_zgm6qs.png", "url": "" },
+  "sunglasses": { "label": "Sunglasses", "imageUrl": "https://res.cloudinary.com/dicyllvry/image/upload/v1687099646/weather-wardrobe-wizard/saito200_A_stylish_product_shot_of_a_pair_of_sunglasses_emphasi_4749ed7c-7822-41c5-920a-69e012c2b44a_kt6rjt.png", "url": "" },
+  "umbrella": { "label": "Umbrella", "imageUrl": "https://res.cloudinary.com/dicyllvry/image/upload/v1687099635/weather-wardrobe-wizard/saito200_A_striking_photo_showcasing_a_sturdy_umbrella_perfect__321cbf15-ad0c-49e2-8636-bfc2e6a2dcd1_qomabk.png", "url": "" },
+  "waterproofGloves": { "label": "Waterproof Gloves", "imageUrl": "https://res.cloudinary.com/dicyllvry/image/upload/v1687100138/weather-wardrobe-wizard/saito200_An_eye-catching_photo_of_a_pair_of_waterproof_gloves_e_1c5db5fc-0e41-456b-bac4-31208bd87970_cq8s9f.png", "url": "" },
+  "earMuffs": { "label": "Ear Muffs", "imageUrl": "https://res.cloudinary.com/dicyllvry/image/upload/v1687100144/weather-wardrobe-wizard/saito200_A_product_photo_of_a_pair_of_ear_muffs_highlighting_th_e5ebf8f3-5245-43c8-813b-0474c1415859_zb0oiv.png", "url": "" },
+  "faceMask": { "label": "Face Mask", "imageUrl": "", "url": "" },
+  "sunscreen": { "label": "Sunscreen", "imageUrl": "https://res.cloudinary.com/dicyllvry/image/upload/v1687099663/weather-wardrobe-wizard/saito200_An_appealing_product_photo_of_a_tube_of_sunscreen_emph_ab78f19d-3596-4440-9dec-a1817c136422_lrcluw.png", "url": "" },
+  "chapstick": { "label": "Chapstick", "imageUrl": "https://res.cloudinary.com/dicyllvry/image/upload/v1687099653/weather-wardrobe-wizard/saito200_A_detailed_photo_of_a_tube_of_chapstick_highlighting_i_840eec07-5668-403a-8b54-02ff903f849b_ea38rw.png", "url": "" },
+  "moisturizer": { "label": "Moisturizer", "imageUrl": "", "url": "" },
+  "insulatedWaterBottle": { "label": "Insulated Water Bottle", "imageUrl": "", "url": "" },
+  "warmSocks": { "label": "Warm Socks", "imageUrl": "", "url": "" },
+  "waterproofSocks": { "label": "Waterproof Socks", "imageUrl": "", "url": "" },
+  "neckWarmer": { "label": "Neck Warmer", "imageUrl": "https://res.cloudinary.com/dicyllvry/image/upload/v1687099658/weather-wardrobe-wizard/saito200_A_captivating_product_photo_of_a_neck_warmer_emphasizi_064b8ba2-1c41-41f3-a654-2e7ca8ee1b13_fqfl2s.png", "url": "" }
 }
 
 function getClothingForTemperature(minT: number, maxT: number): string[] {
+  console.debug(`Getting clothing for temperature range ${minT} - ${maxT}`);
   const layers = [];
 
-  layers.push("tShirt");
-
-  if (minT > 25) {
-    layers.push("shorts");
-  }
-  if (between(minT, 13, 25)) {
-    layers.push("jeans");
-  }
-  if (minT <= 13) {
-    layers.push("warmPants");
-  }
-  if (between(minT, 13, 20)) {
-    layers.push("sweater");
-  }
-  if (between(minT, 7, 13)) {
-    layers.push("jacket");
-  }
-  if (between(minT, 0, 7)) {
-    layers.push("gloves");
-  }
-  if (minT <= 0) {
-    layers.push("thinGloves", "thickGloves");
-  }
-  if (between(minT, -10, 7)) {
-    layers.push("sweater", "jacket", "beanie", "scarf", "leggings");
-  }
-  if (minT <= -10) {
-    layers.push("fleeceSweater", "jacket", "monkeyCap", "scarf", "fleecePants", "thermalUnderwear", "fleecePants", "thermalSocks");
-  }
-
+  // Very hot: over 25 degrees
   if (maxT > 25) {
-    layers.push('shorts')
+    layers.push('lightBreathableDress', 'linenShorts', 'lightLinenShirt');
   }
 
+  // Hot: 20 - 25 degrees
+  if (maxT > 20 && maxT <= 25) {
+    layers.push('shorts', 'tshirt');
+  }
+
+  // Mild to warm: 13 - 25 degrees
+  if (minT > 13 && minT <= 25) {
+    layers.push('jeans', 'lightJeans', 'longSleevedShirt');
+  }
+
+  // Cool to mild: 13 - 20 degrees
+  if (minT > 13 && minT <= 20) {
+    layers.push('lightSweater', 'lightJacket');
+  }
+
+  // Chilly: 7 - 13 degrees
+  if (minT > 7 && minT <= 13) {
+    layers.push('warmPants', 'heavyJeans', 'thickSweater');
+  }
+
+  // Cold: 0 - 7 degrees
+  if (minT > 0 && minT <= 7) {
+    layers.push('jacket', 'heavyJacket', 'neckWarmer', 'thinGloves');
+  }
+
+  // Very cold: below 0 degrees
+  if (minT <= 0) {
+    layers.push('thickGloves', 'earMuffs', 'insulatedBoots');
+  }
+
+  // Extremely cold: below -10 degrees
+  if (minT <= -10) {
+    layers.push('fleeceSweater', 'jacket', 'monkeyCap', 'scarf', 'fleecePants', 'thermalUnderwear', 'thermalSocks');
+  }
+
+  console.debug(layers);
+
+  // Ensure we don't duplicate any layers and return the array
   return [...new Set(layers)];
 }
+
 
 function getClothingForWeather(weatherTypes: string[]): string[] {
   const clothing = []
 
   if (areArraysOverlapping(weatherTypes, ['Rain', 'Thunderstorm', 'Drizzle'])) {
-    clothing.push("raincoat");
+    clothing.push("raincoat", "umbrella", "waterproofPants", "waterproofJacket");
   }
   if (weatherTypes.includes("Rain") && !weatherTypes.includes("Snow")) {
     clothing.push("waterProofShoes");
@@ -98,11 +140,43 @@ function getClothingForWeather(weatherTypes: string[]): string[] {
     clothing.push("faceMask");
   }
   if (weatherTypes.includes("Clear")) {
-    clothing.push("sunglasses");
+    clothing.push("sunglasses", "sunHat", "sunscreen");
   }
 
   return clothing;
 }
+
+function getClothingForWind(windSpeed: number): string[] {
+  const clothing = []
+
+  if (windSpeed > 5) {
+    clothing.push("windbreaker");
+  }
+
+  return clothing;
+}
+
+// TODO: Redefine this logic
+function getClothingForHumidity(maxHumidity: number): string[] {
+  return []
+  console.debug(`Getting clothing for humidity ${maxHumidity}`);
+  const clothing = [];
+
+  if (maxHumidity > 75) {
+    clothing.push("lightBreathableDress", "lightLinenShirt", "linenShorts");
+  }
+
+  else if (maxHumidity > 35) {
+    clothing.push("longSleevedShirt", "jeans");
+  }
+
+  else {
+    clothing.push("chapstick", "heavyJacket", "thickSweater");
+  }
+
+  return clothing;
+}
+
 
 export type ClothingId = keyof typeof clothingMap;
 export type ClothingSuggestionWithId = ClothingSuggestion & { id: ClothingId }
@@ -111,19 +185,38 @@ export const getClothingSuggestions = (forecast: WeatherForecast[] | null): Clot
   if (!forecast) {
     return null
   }
-  const { minTemp, maxTemp, weatherTypes } = forecast.reduce((acc, day) => {
+  const { minTemp, maxTemp, weatherTypes, maxWindSpeed, maxHumidity } = forecast.reduce((acc, day) => {
     return {
       minTemp: Math.min(acc.minTemp, day.minTemp),
       maxTemp: Math.max(acc.maxTemp, day.maxTemp),
-      weatherTypes: new Set([...acc.weatherTypes, day.weatherType])
+      weatherTypes: new Set([...acc.weatherTypes, day.weatherType]),
+      maxWindSpeed: Math.max(acc.maxWindSpeed, day.maxWindSpeed),
+      maxHumidity: Math.max(acc.maxHumidity, day.maxHumidity)
     }
   }, {
     minTemp: Number.MAX_VALUE,
     maxTemp: Number.MIN_VALUE,
-    weatherTypes: new Set<string>()
+    weatherTypes: new Set<string>(),
+    maxWindSpeed: Number.MIN_VALUE,
+    maxHumidity: Number.MIN_VALUE
   });
 
-  return [...getClothingForTemperature(minTemp, maxTemp), ...getClothingForWeather([...weatherTypes])].sort().filter(id => id in clothingMap).map(id => {
-    return { id: id as keyof typeof clothingMap, ...clothingMap[id as keyof typeof clothingMap] }
-  });
+  function handleClothingIds(clothingIds: ClothingId[]) {
+    return dedupeArray(clothingIds)
+      .sort()
+      .filter(id => id in clothingMap)
+      .map(id => {
+        return {
+          id: id as keyof typeof clothingMap,
+          ...clothingMap[id as keyof typeof clothingMap]
+        }
+      });
+  }
+
+  return handleClothingIds([
+    ...getClothingForTemperature(minTemp, maxTemp),
+    ...getClothingForWeather([...weatherTypes]),
+    ...getClothingForWind(maxWindSpeed),
+    ...getClothingForHumidity(maxHumidity)
+  ])
 };

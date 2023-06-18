@@ -88,7 +88,8 @@ const SelectLocation = (): JSX.Element => {
               {!isLocationSelected &&
                 locationSuggestions?.map((item, idx) => (
                   <Box
-                    key={`${item.lat}${item.lon}`}
+                    // idx prevents duplicate keys since it is possible that two listed locations have the same lat and lon
+                    key={`${item.lat}${item.lon}${idx}`}
                     width="100%"
                     borderBottom={
                       idx < locationSuggestions.length - 1 ? "1px" : 0

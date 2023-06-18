@@ -5,8 +5,11 @@ export interface WeatherForecast {
   maxTemp: number,
   minTempHour: string,
   maxTempHour: string,
-  weatherType: string
-  weatherIcon: string
+  weatherType: string,
+  weatherTypes: string[],
+  weatherIcon: string,
+  maxWindSpeed: number,
+  maxHumidity: number
 }
 
 function parseTemp(temp: number) {
@@ -29,7 +32,13 @@ function getFiveDayForecast(data: any): WeatherForecast[] | null {
   let minTempHour: string = '';
   let count: number = 0;
   let weatherType: string = 'Clear';
+  let weatherTypes: string[] = [];
   let weatherIcon: string = '01d';
+  let maxWindSpeed: number = 0; // %
+  let maxHumidity: number = 0; // %
+
+
+  console.debug(forecasts);
 
   forecasts.forEach(forecast => {
     const forecastTimestamp = forecast.dt * 1000;
@@ -43,10 +52,13 @@ function getFiveDayForecast(data: any): WeatherForecast[] | null {
           avgTemp: parseTemp(avgTemp),
           minTemp: parseTemp(minTemp),
           maxTemp: parseTemp(maxTemp),
-          minTempHour: minTempHour,
-          maxTempHour: maxTempHour,
-          weatherType: weatherType,
-          weatherIcon: weatherIcon
+          minTempHour,
+          maxTempHour,
+          weatherType,
+          weatherTypes,
+          weatherIcon,
+          maxWindSpeed,
+          maxHumidity
         });
       }
 
@@ -58,7 +70,10 @@ function getFiveDayForecast(data: any): WeatherForecast[] | null {
       minTempHour = maxTempHour;
       count = 1;
       weatherType = forecast.weather[0].main;
+      weatherTypes = [weatherType];
       weatherIcon = forecast.weather[0].icon;
+      maxWindSpeed = forecast.wind.speed;
+      maxHumidity = forecast.main.humidity;
     } else {
       tempSum += forecast.main.temp;
       count++;
@@ -73,7 +88,19 @@ function getFiveDayForecast(data: any): WeatherForecast[] | null {
         maxTempHour = forecast.dt_txt.substring(11, 16);
       }
 
+      if (forecast.wind.speed > maxWindSpeed) {
+        maxWindSpeed = forecast.wind.speed;
+      }
+
+      if (forecast.main.humidity > maxHumidity) {
+        maxHumidity = forecast.main.humidity;
+      }
+
       const newWeatherType = forecast.weather[0].main;
+
+      if (!weatherTypes.includes(newWeatherType)) {
+        weatherTypes.push(newWeatherType);
+      }
 
       if (newWeatherType === 'Rain' || newWeatherType === 'Snow' || (newWeatherType !== 'Clear' && weatherType === 'Clear')) {
         weatherType = newWeatherType;
@@ -82,7 +109,7 @@ function getFiveDayForecast(data: any): WeatherForecast[] | null {
     }
   });
 
-  // Add the last day's forecast
+  // NOTE Add the last day's forecast
   const avgTemp = tempSum / count;
   dailyForecasts.push({
     date: currentDay,
@@ -91,8 +118,11 @@ function getFiveDayForecast(data: any): WeatherForecast[] | null {
     maxTemp: parseTemp(maxTemp),
     minTempHour,
     maxTempHour,
+    weatherTypes,
     weatherType,
-    weatherIcon
+    weatherIcon,
+    maxWindSpeed,
+    maxHumidity
   });
 
   return dailyForecasts;
