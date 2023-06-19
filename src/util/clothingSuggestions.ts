@@ -9,7 +9,6 @@ export type ClothingSuggestion = {
 }
 
 function getClothingForTemperature(minT: number, maxT: number): string[] {
-  console.debug(`Getting clothing for temperature range ${minT} - ${maxT}`);
   const layers = [];
 
   // Very hot: over 25 degrees
@@ -113,7 +112,6 @@ function getClothingForHumidity(maxHumidity: number): string[] {
 
 
 function getMinimalClothingForTemperature(minT: number, maxT: number): string[] {
-  console.debug(`Getting clothing for temperature range ${minT} - ${maxT}`);
   const layers = [];
 
   layers.push('tShirt')

@@ -37,9 +37,6 @@ function getFiveDayForecast(data: any): WeatherForecast[] | null {
   let maxWindSpeed: number = 0; // %
   let maxHumidity: number = 0; // %
 
-
-  console.debug(forecasts);
-
   forecasts.forEach(forecast => {
     const forecastTimestamp = forecast.dt * 1000;
     const date = forecast.dt_txt.substring(0, 10);
