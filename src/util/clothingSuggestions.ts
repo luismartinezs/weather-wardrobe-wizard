@@ -171,7 +171,7 @@ function getMinimalClothingForWeather(weatherTypes: string[]): string[] {
 function getMinimalClothingForWind(windSpeed: number): string[] {
   const clothing = []
 
-  if (windSpeed > 7) {
+  if (windSpeed > 10) {
     clothing.push("windbreaker");
   }
 
