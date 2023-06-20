@@ -38,4 +38,8 @@ function convertHour(timeString: string) {
   return formattedTime;
 }
 
-export { between, areArraysOverlapping, cToF, convertHour, getTStr };
+function dedupeArray(arr: any[]) {
+  return [...new Set(arr)];
+}
+
+export { between, areArraysOverlapping, cToF, convertHour, getTStr, dedupeArray };
