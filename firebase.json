@@ -18,5 +18,21 @@
   "extensions": {
     "firestore-user-document": "rowy/firestore-user-document@0.0.6",
     "delete-user-data": "firebase/delete-user-data@0.1.17"
-  }
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log"
+      ],
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run lint",
+        "npm --prefix \"$RESOURCE_DIR\" run build"
+      ]
+    }
+  ]
 }

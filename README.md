@@ -1,6 +1,6 @@
 # Weather Wardrobe Wizard
 
-## Dev usage
+## Quick start
 
 Run the development server:
 
@@ -12,6 +12,7 @@ Run project with emulated backend:
 
 ```bash
 pnpm emu:dev
+(cd functions && pnpm i && pnpm setupEnvVars) && (cd functions && pnpm build) # Setup cloud functions
 pnpm emu:start # In separate terminal
 ```
 
@@ -41,13 +42,30 @@ npx playwright show-report
 # Shows the report of the last test run.
 ```
 
+## Run locally as a dev
+
+### Initial setup (only needed the first time)
+
+- Prerequisites: `node`, `pnpm`, `firebase cli`
+- Clone project to your local machine
+- Install dependencies `pnpm i`
+- Initialize firebase project and emulators `firebase init`
+  - Do not override any local files
+  - Accept to download the emulators
+- Initialize cloud functions `(cd functions && pnpm i && pnpm setupEnvVars)`
+- Build cloud functions `(cd functions && pnpm build)`
+
+### After initial setup
+
+- If you changed the cloud functions code since you last built them, rebuild them `(cd functions && pnpm build)`
+- Run firebase emulators `pnpm emu:start`
+- In a separate shell, run the UI in "emulator mode" `pnpm emu:dev`
+
 ## References
 
 - Implement react-query in NextJS: https://codesandbox.io/s/fetching-data-on-server-final-stl70?file=/pages/pokemon/%5Bid%5D.tsx
 - Chakra UI / NextJS setup reference https://chakra-ui.com/getting-started/nextjs-guide
 - Figma board: https://www.figma.com/file/5xJJxyBBjKqJpycZRNJ4tF/Weather-app?node-id=0%3A1&t=UW37yMJfACT8f4FK-0
-
-### Stateless components
 
 ## Dev tasks
 
