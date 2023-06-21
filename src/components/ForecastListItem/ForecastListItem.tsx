@@ -1,13 +1,16 @@
 import { Flex, ListItem, Text } from "@chakra-ui/react";
-import { format, isTomorrow } from "date-fns";
+import { format, isToday, isTomorrow } from "date-fns";
 
-import { WeatherForecast } from "@/util/weather";
 import WeatherIcon from "@/components/WeatherIcon";
+import { WeatherForecast } from "@/lib/openweather/types";
 
 function getWeekDay(dateString: string) {
   const _date = new Date(dateString);
 
-  return isTomorrow(_date) ? "Tomorrow" : format(_date, "iiii");
+  if (isTomorrow(_date)) return "Tomorrow";
+  if (isToday(_date)) return "Today";
+
+  return format(_date, "iiii");
 }
 
 function getMonthDay(dateString: string) {

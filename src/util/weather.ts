@@ -1,20 +1,5 @@
-export interface WeatherForecast {
-  date: string,
-  avgTemp: number,
-  minTemp: number,
-  maxTemp: number,
-  minTempHour: string,
-  maxTempHour: string,
-  weatherType: string,
-  weatherTypes: string[],
-  weatherIcon: string,
-  maxWindSpeed: number,
-  maxHumidity: number
-}
-
-function parseTemp(temp: number) {
-  return Math.round(temp);
-}
+import { WeatherForecast } from "@/lib/openweather/types";
+import { parseTemp } from "@/util/temperature";
 
 function getFiveDayForecast(data: any): WeatherForecast[] | null {
   if (!data || !data.list) {
@@ -124,6 +109,5 @@ function getFiveDayForecast(data: any): WeatherForecast[] | null {
 
   return dailyForecasts;
 }
-
 
 export { getFiveDayForecast }

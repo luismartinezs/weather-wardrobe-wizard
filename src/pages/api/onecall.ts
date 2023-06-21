@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
 import cors, { runMiddleware } from '@/lib/cors'
-import { getWeatherForecastUrl } from '@/lib/openweather/urls'
+import { getOneCallUrl } from '@/lib/openweather/urls'
 
 const OPEN_WEATHER_API_KEY = process.env.OPEN_WEATHER_API_KEY
 
@@ -16,7 +16,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       return
     }
 
-    const url = `${getWeatherForecastUrl(lat, lon)}&appid=${OPEN_WEATHER_API_KEY}&units=metric`
+    const url = `${getOneCallUrl(lat, lon)}&appid=${OPEN_WEATHER_API_KEY}&exclude=current,minutely,hourly`
     const response = await fetch(url)
     const data = await response.json()
 

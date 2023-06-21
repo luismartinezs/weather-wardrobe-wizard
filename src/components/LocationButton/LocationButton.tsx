@@ -1,6 +1,6 @@
 import { useUser } from "@/context/User";
 import { addRecentLocation } from "@/firebase/firestore/recentLocations";
-import { useWeatherForecast } from "@/hooks/useWeatherForecast";
+import { useForecastAdapter } from "@/hooks/useForecastAdapter";
 import useStore, { type StoreState } from "@/store";
 import { Button } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
@@ -22,7 +22,7 @@ function useButtonLabel(selectedLocation: StoreState["selectedLocation"]) {
 const LocationButton = (): JSX.Element => {
   const selectedLocation = useStore((state) => state.selectedLocation);
   const buttonLabel = useButtonLabel(selectedLocation);
-  const { isLoading, refetch } = useWeatherForecast();
+  const { isLoading, refetch } = useForecastAdapter();
   const { user } = useUser();
 
   const handleClick = () => {

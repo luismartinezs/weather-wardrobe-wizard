@@ -1,6 +1,6 @@
 import { areArraysOverlapping, between, dedupeArray } from '@/util/util';
-import { WeatherForecast } from '@/util/weather';
 import { clothingMap } from '@/util/clothingMap';
+import { WeatherForecast } from '@/lib/openweather/types';
 
 export type ClothingSuggestion = {
   label: string;
