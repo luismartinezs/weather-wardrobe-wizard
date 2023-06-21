@@ -46,12 +46,22 @@ interface Daily {
   rain?: number;
 }
 
-interface OneCallData {
+export interface Alert {
+  sender_name: string;
+  event: string;
+  start: number; // Assuming Unix timestamp is a number
+  end: number; // Assuming Unix timestamp is a number
+  description: string;
+  tags: string[]; // Assuming "tags" is an array of strings. Update accordingly if different.
+};
+
+export interface OneCallData {
   lat: number;
   lon: number;
   timezone: string;
   timezone_offset: number;
   daily: Daily[];
+  alerts?: Alert[];
 }
 
 function getWeatherType(weather: Weather[]): {

@@ -1,9 +1,10 @@
 import useStore from "@/store";
 import { LocationSuggestion } from "@/types/weatherApi";
 import { fetchErrorHandler } from "@/util/dataFetch";
-import { getForecastFromOneCallData } from "@/lib/openweather/onecall";
+import { Alert, getForecastFromOneCallData } from "@/lib/openweather/onecall";
 import { format } from "date-fns";
-import { useQuery } from "react-query";
+import { UseQueryResult, useQuery } from "react-query";
+import { WeatherForecast } from "@/lib/openweather/types";
 
 function fetchOneCall(
   location: LocationSuggestion | null
@@ -17,7 +18,10 @@ function fetchOneCall(
   );
 }
 
-export const useOneCall = () => {
+export const useOneCall = (): {
+  forecast: WeatherForecast[] | null;
+  alerts: Alert[] | undefined;
+} & UseQueryResult<any, Error> => {
   const selectedLocation = useStore((state) => state.selectedLocation);
 
   const query = useQuery<any, Error>(
@@ -41,6 +45,7 @@ export const useOneCall = () => {
 
   return {
     forecast: getForecastFromOneCallData(query.data),
+    alerts: query.data?.alerts,
     ...query,
   };
 };
