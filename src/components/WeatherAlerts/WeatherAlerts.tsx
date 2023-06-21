@@ -11,8 +11,6 @@ const WeatherAlerts = (): JSX.Element => {
     return <></>;
   }
 
-  console.debug("alerts", alerts);
-
   return (
     <>
       <Flex align="baseline" gap={2}>
