@@ -3,12 +3,12 @@
   "scripts": {
     "lint": "eslint --ext .js,.ts .",
     "prebuild": "rm -rf lib",
-    "build": "pnpm lint && tsc",
+    "build": "npm lint && tsc",
     "build:watch": "tsc --watch",
-    "serve": "pnpm build && firebase emulators:start --only functions",
-    "shell": "pnpm build && firebase functions:shell",
-    "start": "pnpm shell",
-    "predeploy": "pnpm --prefix functions run build",
+    "serve": "npm build && firebase emulators:start --only functions",
+    "shell": "npm build && firebase functions:shell",
+    "start": "npm shell",
+    "predeploy": "npm --prefix functions run build",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log"
   },
