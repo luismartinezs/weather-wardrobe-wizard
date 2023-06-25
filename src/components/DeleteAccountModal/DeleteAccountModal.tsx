@@ -23,7 +23,7 @@ import { getAuthError } from "@/firebase/util";
 import { useUser } from "@/context/User";
 
 type FormData = {
-  password?: string;
+  password: string | undefined;
 };
 
 const DeleteAccountModal = ({

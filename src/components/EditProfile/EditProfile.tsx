@@ -22,12 +22,12 @@ import { useUser } from "@/context/User";
 
 type FormData = {
   email: string;
-  displayName?: string;
+  displayName: string | undefined;
 };
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
-  displayName: yup.string(),
+  displayName: yup.string().notRequired(),
 });
 
 const EditProfile = (): JSX.Element => {

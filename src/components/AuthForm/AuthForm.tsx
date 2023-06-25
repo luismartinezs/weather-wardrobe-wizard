@@ -22,7 +22,7 @@ import { useUser } from "@/context/User";
 export type FormData = {
   email: string;
   password: string;
-  displayName: yup.Maybe<string | undefined>;
+  displayName: string | undefined;
 };
 
 const schema = yup.object().shape({
