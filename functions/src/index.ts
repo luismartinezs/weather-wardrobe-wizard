@@ -16,7 +16,7 @@ import {
 admin.initializeApp();
 const db = admin.firestore();
 
-const JOB_TIMER = 60 * 60; // seconds
+const JOB_TIMER = 60 * 60 * 24; // seconds
 const jobTimerMinutes = Math.round(JOB_TIMER / 60);
 const isEmulator = process.env.FUNCTIONS_EMULATOR === "true";
 
