@@ -7,18 +7,27 @@ import { onRequest } from "firebase-functions/v2/https";
 import { RECENT_LOCATIONS, FCM_TOKENS } from "./constants";
 import { UserLocationData } from "../../src/firebase/firestore/recentLocations";
 import { getOneCallUrl } from "../../src/lib/openweather/urls";
+import { formatTs } from "../../src/util/alert";
+import { LocationSuggestion } from "../../src/types/weatherApi";
+import {
+  type Alert,
+  type OneCallData,
+} from "../../src/lib/openweather/onecall";
 
 admin.initializeApp();
 const db = admin.firestore();
 
-const JOB_TIMER = 60 * 60; // seconds
+const JOB_TIMER = 5 * 60; // seconds
 const jobTimerMinutes = Math.round(JOB_TIMER / 60);
 const isEmulator = process.env.FUNCTIONS_EMULATOR === "true";
 
-type RecentLocations = Record<string, any>;
+type RecentLocations = Record<string, LocationSuggestion[]>;
 type LocationsUsers = Record<string, string[]>;
-type LocationsAlerts = Record<string, any>;
-type UserAlerts = Record<string, any>;
+type LocationsAlerts = Record<string, Alert[]>;
+type UserAlerts = Record<
+  string,
+  Array<{ location: LocationSuggestion; alerts: Alert[] }>
+>;
 
 async function getRecentLocations() {
   const recentLocationsSnapshot = await db.collection(RECENT_LOCATIONS).get();
@@ -65,9 +74,10 @@ async function fetchOneCall(lat: number, lon: number) {
   }&exclude=current,minutely,hourly,daily`;
   try {
     const response = await fetch(url);
-    return response.json();
+    return response.json() as Promise<Omit<OneCallData, "daily">>;
   } catch (err) {
     error(err);
+    return null;
   }
 }
 
@@ -79,10 +89,14 @@ function getUserAlerts(
 
   Object.entries(recentLocations).forEach(([userUid, locations]) => {
     userAlerts[userUid] = [];
-    locations.forEach(({ lat, lon }: { lat: number; lon: number }) => {
+    locations.forEach((location) => {
+      const { lat, lon } = location;
       const locationKey = getKeyFromLatLon(lat, lon);
       if (locationsAlerts[locationKey]) {
-        userAlerts[userUid].push(locationsAlerts[locationKey]);
+        userAlerts[userUid].push({
+          location,
+          alerts: locationsAlerts[locationKey],
+        });
       }
     });
   });
@@ -115,35 +129,41 @@ async function handleWeatherAlerts() {
   for (const [key] of Object.entries(locationsUsers)) {
     const { lat, lon } = getLatLonFromKey(key);
     const oneCallData = await fetchOneCall(lat, lon);
-    if (oneCallData.alerts) {
+    if (oneCallData?.alerts) {
       locationsAlerts[key] = oneCallData.alerts;
     }
   }
 
   const userAlerts = getUserAlerts(recentLocations, locationsAlerts);
 
-  Object.entries(userAlerts).forEach(([userUid, alerts]) => {
-    info(`userUid: ${userUid}, alerts: ${alerts}`);
+  Object.entries(userAlerts).forEach(([userUid, locationsAlerts]) => {
     const userToken = userFcmTokens[userUid];
-    info(`userToken: ${userToken}`);
     if (userToken) {
-      const message = {
-        token: userToken,
-        notification: {
-          title: "Weather Alert",
-          body: "This is a weather alert",
-        },
-        webpush: {
-          fcmOptions: {
-            link: "https://dummypage.com",
-          },
-        },
-      };
-      try {
-        admin.messaging().send(message);
-      } catch (err) {
-        error(err);
-      }
+      info("locationsAlerts", locationsAlerts);
+      locationsAlerts.forEach(({ location, alerts }) => {
+        alerts.forEach((_alert) => {
+          info("alert", _alert);
+          const message = {
+            token: userToken,
+            notification: {
+              title: `${_alert.event} in ${location.name}`,
+              body: `${_alert.description} - ${formatTs(
+                _alert.start
+              )} to ${formatTs(_alert.end)} - ${_alert.sender_name}`,
+            },
+            webpush: {
+              fcmOptions: {
+                link: "https://weather-wardrobe-wizard.netlify.app/",
+              },
+            },
+          };
+          try {
+            admin.messaging().send(message);
+          } catch (err) {
+            error(err);
+          }
+        });
+      });
     } else {
       info(`No FCM token found for userUid: ${userUid}`);
     }
@@ -155,7 +175,7 @@ export const sendWeatherAlerts = onSchedule(
     schedule: `every ${jobTimerMinutes} minutes`,
   },
   async (event) => {
-    handleWeatherAlerts();
+    return handleWeatherAlerts();
   }
 );
 

@@ -7,11 +7,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { type Alert as TAlert } from "@/lib/openweather/onecall";
-import { format } from "date-fns";
-
-const formatTs = (ts: number): string => {
-  return format(ts * 1000, "Pp");
-};
+import { formatTs } from "@/util/alert";
 
 const WeatherAlert = ({ alert }: { alert: TAlert }): JSX.Element => {
   return (

@@ -16,7 +16,10 @@
     "pubsub": {
       "port": 8085
     },
-    "singleProjectMode": true
+    "singleProjectMode": true,
+    "functions": {
+      "port": 5001
+    }
   },
   "extensions": {
     "firestore-user-document": "rowy/firestore-user-document@0.0.6",
