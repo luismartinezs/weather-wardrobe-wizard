@@ -25,6 +25,7 @@ function getFilteredItems(
 
 export const useFilteredClothingItems = () => {
   const { clothingSuggestions, ...rest } = useClothingSuggestions();
+  console.debug("clothingSuggestions", clothingSuggestions);
   const filter = useStore((state) => state.filter);
 
   return useDataStoreAdapter<
@@ -45,6 +46,7 @@ export const useFilteredClothingItems = () => {
       };
     },
     useServerCallback: (userUid, userData) => {
+      console.debug("userData", userData);
       return {
         filteredClothingItems: getFilteredItems(
           clothingSuggestions,

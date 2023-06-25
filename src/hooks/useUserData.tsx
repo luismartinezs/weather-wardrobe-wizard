@@ -5,6 +5,7 @@ import { useDocument } from "@/hooks/useDocument";
 import {
   DEFAULT_UNITS,
   UserData,
+  addUserDocument,
   getUserDataRef,
   updateUserDocument,
 } from "@/firebase/firestore/user";
@@ -16,6 +17,15 @@ export const useUserData = () => {
     return getUserDataRef(user.uid);
   }, [user?.uid]);
   const onSnapshotDataHandler = useCallback(async (data: UserData) => {
+    if (!user?.uid) {
+      return;
+    }
+    if (!data) {
+      return addUserDocument(user?.uid, {
+        units: DEFAULT_UNITS,
+        checkedClothingItems: [],
+      });
+    }
     if (!data?.uid) {
       return;
     }
