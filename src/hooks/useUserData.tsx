@@ -16,10 +16,13 @@ export const useUserData = () => {
     return getUserDataRef(user.uid);
   }, [user?.uid]);
   const onSnapshotDataHandler = useCallback(async (data: UserData) => {
-    if (!data.units) {
+    if (!data?.uid) {
+      return;
+    }
+    if (!data?.units) {
       updateUserDocument(data.uid, { units: DEFAULT_UNITS });
     }
-    if (!data.checkedClothingItems) {
+    if (!data?.checkedClothingItems) {
       updateUserDocument(data.uid, { checkedClothingItems: [] });
     }
   }, []);

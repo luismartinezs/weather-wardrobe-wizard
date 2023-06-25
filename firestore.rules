@@ -15,6 +15,11 @@ service cloud.firestore {
       allow list: if isSignedIn() && request.auth.uid == resource.data.userUid;
       allow get, update, delete: if isSignedIn() && userId == request.auth.uid;
     }
+    match /fcmTokens/{userId} {
+      allow create: if isSignedIn();
+      allow list: if isSignedIn() && request.auth.uid == resource.data.userUid;
+      allow get, update, delete: if isSignedIn() && userId == request.auth.uid;
+    }
     match /{document=**} {
       allow read, write: if false;
     }

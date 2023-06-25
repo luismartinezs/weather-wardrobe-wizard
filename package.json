@@ -17,7 +17,9 @@
     "emu:clean": "rm -rf emu-data",
     "emu:dev": "cross-env NEXT_PUBLIC_FIREBASE_EMULATOR=true next dev",
     "emu:start": "firebase emulators:start --import=./emu-data --export-on-exit",
-    "firebase:deploy": "firebase deploy"
+    "firebase:deploy": "firebase deploy",
+    "build:functions": "cd functions && pnpm build",
+    "fb:deploy:rules": "firebase deploy --only firestore:rules"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.19",
