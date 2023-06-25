@@ -17,7 +17,6 @@ export function useFirebaseMessaging(
         vapidKey: process.env.NEXT_PUBLIC_VAPID_KEY,
       })
         .then((_token) => {
-          console.debug("Token received: ", _token);
           setCurrentToken(_token);
           setToken(user.uid, _token);
         })
@@ -29,7 +28,6 @@ export function useFirebaseMessaging(
     let unsub: (() => void) | undefined;
     if (messaging) {
       unsub = onMessage(messaging, (payload) => {
-        console.debug("Message received. ", payload);
         if (onMessageHandler) {
           onMessageHandler(payload);
         }
