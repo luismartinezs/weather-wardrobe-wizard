@@ -15,7 +15,7 @@ const Layout = ({ children }: { children: React.ReactNode }): JSX.Element => {
       title: payload?.notification?.title,
       description: payload?.notification?.body,
       status: "info",
-      duration: 5000,
+      duration: 8000,
       isClosable: true,
     });
   });
