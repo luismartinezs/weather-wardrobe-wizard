@@ -19,7 +19,8 @@
     "emu:start": "firebase emulators:start --import=./emu-data --export-on-exit",
     "firebase:deploy": "firebase deploy",
     "build:functions": "cd functions && pnpm build",
-    "fb:deploy:rules": "firebase deploy --only firestore:rules"
+    "fb:deploy:rules": "firebase deploy --only firestore:rules",
+    "fb:deploy:functions": "firebase deploy --only functions"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.19",
