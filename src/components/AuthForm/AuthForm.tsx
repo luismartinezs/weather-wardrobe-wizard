@@ -22,13 +22,13 @@ import { useUser } from "@/context/User";
 export type FormData = {
   email: string;
   password: string;
-  displayName?: string;
+  displayName: yup.Maybe<string | undefined>;
 };
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
   password: yup.string().min(6).required(),
-  displayName: yup.string(),
+  displayName: yup.string().notRequired(),
 });
 
 interface AuthFormProps {
