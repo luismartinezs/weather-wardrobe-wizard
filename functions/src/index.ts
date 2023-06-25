@@ -139,7 +139,11 @@ async function handleWeatherAlerts() {
           },
         },
       };
-      admin.messaging().send(message);
+      try {
+        admin.messaging().send(message);
+      } catch (err) {
+        error(err);
+      }
     } else {
       info(`No FCM token found for userUid: ${userUid}`);
     }

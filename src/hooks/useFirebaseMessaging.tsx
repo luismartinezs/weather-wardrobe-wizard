@@ -17,6 +17,7 @@ export function useFirebaseMessaging(
         vapidKey: process.env.NEXT_PUBLIC_VAPID_KEY,
       })
         .then((_token) => {
+          console.debug("Token received: ", _token);
           setCurrentToken(_token);
           setToken(user.uid, _token);
         })
