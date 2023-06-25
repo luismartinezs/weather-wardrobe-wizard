@@ -1,4 +1,3 @@
-import fetch from "node-fetch";
 import * as admin from "firebase-admin";
 import { error, info } from "firebase-functions/logger";
 import { onSchedule } from "firebase-functions/v2/scheduler";
@@ -17,7 +16,7 @@ import {
 admin.initializeApp();
 const db = admin.firestore();
 
-const JOB_TIMER = 5 * 60; // seconds
+const JOB_TIMER = 60 * 60; // seconds
 const jobTimerMinutes = Math.round(JOB_TIMER / 60);
 const isEmulator = process.env.FUNCTIONS_EMULATOR === "true";
 
