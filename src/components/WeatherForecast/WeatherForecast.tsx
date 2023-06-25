@@ -1,11 +1,11 @@
 import ForecastCard from "@/components/ForecastCard";
 import useStore from "@/store";
-import { useWeatherForecast } from "@/hooks/useWeatherForecast";
+import { useForecastAdapter } from "@/hooks/useForecastAdapter";
 import ServerStateDisplayWrapper from "@/components/ServerStateDisplayWrapper";
 
 const WeatherForecast = (): JSX.Element => {
   const selectedLocation = useStore((state) => state.selectedLocation);
-  const { forecast, isLoading, isError, error } = useWeatherForecast();
+  const { forecast, isLoading, isError, error } = useForecastAdapter();
 
   return (
     <ServerStateDisplayWrapper

@@ -17,7 +17,9 @@
     "emu:clean": "rm -rf emu-data",
     "emu:dev": "cross-env NEXT_PUBLIC_FIREBASE_EMULATOR=true next dev",
     "emu:start": "firebase emulators:start --import=./emu-data --export-on-exit",
-    "firebase:deploy": "firebase deploy"
+    "firebase:deploy": "firebase deploy",
+    "build:functions": "cd functions && pnpm build",
+    "fb:deploy:rules": "firebase deploy --only firestore:rules"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.19",
@@ -36,6 +38,8 @@
     "eslint": "8.42.0",
     "eslint-config-next": "13.4.4",
     "firebase": "^9.22.2",
+    "firebase-admin": "^11.9.0",
+    "firebase-functions": "^4.4.1",
     "framer-motion": "^10.12.16",
     "immer": "^10.0.2",
     "lodash.debounce": "^4.0.8",

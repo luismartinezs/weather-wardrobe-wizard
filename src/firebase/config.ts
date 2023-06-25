@@ -5,5 +5,5 @@ export const firebaseConfig = {
   storageBucket: "weather-wardrobe-wizard.appspot.com",
   messagingSenderId: "757546456944",
   appId: "1:757546456944:web:6852e7b369c184177061b5",
-  measurementId: "G-Y0S6HCQX1K"
+  measurementId: "G-Y0S6HCQX1K",
 };

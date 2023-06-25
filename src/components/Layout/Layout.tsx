@@ -1,13 +1,24 @@
-import { Box, Container, Flex, Spinner } from "@chakra-ui/react";
+import { Box, Container, Flex, Spinner, useToast } from "@chakra-ui/react";
 import { SkipNavContent } from "@chakra-ui/skip-nav";
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { useUser } from "@/context/User";
 import ErrorMessage from "../ErrorMessage";
+import { useFirebaseMessaging } from "@/hooks/useFirebaseMessaging";
 
 const Layout = ({ children }: { children: React.ReactNode }): JSX.Element => {
   const { loading, error } = useUser();
+  const toast = useToast();
+  useFirebaseMessaging((payload) => {
+    toast({
+      title: payload?.notification?.title,
+      description: payload?.notification?.body,
+      status: "info",
+      duration: 5000,
+      isClosable: true,
+    });
+  });
 
   return (
     <Flex minH="100vh" direction="column">

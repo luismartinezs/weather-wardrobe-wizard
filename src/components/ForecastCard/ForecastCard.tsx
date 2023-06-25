@@ -13,12 +13,12 @@ import UnitSwitch from "../UnitSwitch";
 import ForecastListItem from "@/components/ForecastListItem";
 import TemperatureChart from "@/components/TemperatureChart";
 import useStore from "@/store";
-import { useWeatherForecast } from "@/hooks/useWeatherForecast";
+import { useForecastAdapter } from "@/hooks/useForecastAdapter";
 
 const itemWidth = 150;
 
 const ForecastCard = (): JSX.Element => {
-  const { forecast } = useWeatherForecast();
+  const { forecast } = useForecastAdapter("onecall");
   const selectedLocation = useStore((state) => state.selectedLocation);
 
   if (!selectedLocation || !forecast) {

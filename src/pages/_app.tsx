@@ -11,10 +11,13 @@ import theme from "@/theme";
 import "@/styles/globals.css";
 import { UserProvider } from "@/context/User";
 import { FirebaseProvider } from "@/context/Firebase";
+import { useSW } from "@/hooks/useSW";
 
 const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }: AppProps) {
+  useSW();
+
   return (
     <>
       <Head>
