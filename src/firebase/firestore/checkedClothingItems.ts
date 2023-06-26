@@ -1,17 +1,17 @@
-import { ClothingId } from "@/util/clothingSuggestions";
+import { ClothingId } from "@/features/clothing-suggestions/utils/clothingSuggestions";
 import { updateUserDocument } from "@/firebase/firestore/user";
 
 export function checkClothingItem({
   userUid,
   id,
-  checkedIds
+  checkedIds,
 }: {
   userUid?: string;
   id: ClothingId;
   checkedIds?: ClothingId[];
 }) {
   if (!userUid || !checkedIds) {
-    return
+    return;
   }
 
   let newIds: ClothingId[];
@@ -25,16 +25,15 @@ export function checkClothingItem({
   updateUserDocument(userUid, { checkedClothingItems: newIds });
 }
 
-
 export function setCheckedClothingItems({
   userUid,
-  checkedIds
+  checkedIds,
 }: {
   userUid?: string;
   checkedIds: ClothingId[];
 }) {
   if (!userUid) {
-    return
+    return;
   }
 
   updateUserDocument(userUid, { checkedClothingItems: checkedIds });

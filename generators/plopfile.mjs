@@ -21,4 +21,34 @@ export default function plopGenerator(plop) {
       }
     ],
   });
+  plop.setGenerator("feature", {
+    description: 'Create a new feature',
+    prompts: [{
+      type: 'input',
+      name: 'name',
+      message: 'What is your feature name?'
+    }],
+    actions: [
+      {
+        type: 'add',
+        path: '../src/features/{{camelCase name}}/components/index.tsx',
+        templateFile: 'templates/index.hbs',
+      },
+      {
+        type: 'add',
+        path: '../src/features/{{camelCase name}}/hooks/index.tsx',
+        templateFile: 'templates/index.hbs',
+      },
+      {
+        type: 'add',
+        path: '../src/features/{{camelCase name}}/util/index.ts',
+        templateFile: 'templates/index.hbs',
+      },
+      {
+        type: 'add',
+        path: '../src/features/{{camelCase name}}/types/index.ts',
+        templateFile: 'templates/index.hbs',
+      },
+    ]
+  })
 }

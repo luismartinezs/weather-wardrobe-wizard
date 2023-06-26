@@ -17,10 +17,10 @@ import {
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import Image from "next/image";
-import ProfileLink from "@/components/ProfileLink";
+import ProfileLink from "@/features/user-profile/components/ProfileLink";
 import { useRouteChange } from "@/hooks/useRouteChange";
 import { useRouter } from "next/router";
-import { useUser } from "@/context/User";
+import { useUser } from "@/features/auth/context/User";
 
 const links: Array<{
   label: string;

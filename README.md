@@ -178,3 +178,14 @@ E2e Tests:
 
 - Q: Locally run Playwright tests fail after `page.goto('/')`
 - A: Try restarting the local server
+
+## Project structure
+
+- File names and folder names are kebab-cased, except for react component folders and files, which are PascalCased
+- `pages` folder is as determined by Next.js
+- Each feature has its own folder inside `src/features`, a feature, loosely speaking, might be something that brings a new specific functionality to the app
+- Inside each feature, you might find folders such as `components`, `hooks`, `store`, `api`, `types`, `utils`, etc.
+- Each file related to a specific feature goes in the corresponding subfolder inside that feature's folder
+- Files which contain "common" code, or code related to multiple features, go in the appropriate subfolder directly inside the `src` folder
+- Besides "features", we might have "services", e.g. firebase. In this case, there is a `src/firebase/` folder which contains code related to interacting with the firebase instance
+- New components / features can be added with `pnpm plop`

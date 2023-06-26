@@ -5,13 +5,13 @@ import { onRequest } from "firebase-functions/v2/https";
 
 import { RECENT_LOCATIONS, FCM_TOKENS } from "./constants";
 import { UserLocationData } from "../../src/firebase/firestore/recentLocations";
-import { getOneCallUrl } from "../../src/lib/openweather/urls";
-import { formatTs } from "../../src/util/alert";
-import { LocationSuggestion } from "../../src/types/weatherApi";
+import { getOneCallUrl } from "../../src/features/weather-forecast/utils/urls";
+import { formatTs } from "../../src/utils/time";
+import { LocationSuggestion } from "../../src/features/location/types";
 import {
   type Alert,
   type OneCallData,
-} from "../../src/lib/openweather/onecall";
+} from "../../src/features/weather-forecast/utils/onecall";
 
 admin.initializeApp();
 const db = admin.firestore();
