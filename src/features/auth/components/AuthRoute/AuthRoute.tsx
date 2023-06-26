@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 
 import { Flex, Spinner } from "@chakra-ui/react";
 
-import { useUser } from "@/context/User";
+import { useUser } from "@/features/auth/context/User";
 
 // This component is used to protect routes that require authentication. If the user is not authenticated, they will be redirected to the sign in page.
 const AuthRoute = ({ children }: { children: React.ReactNode }) => {

@@ -1,4 +1,4 @@
-import { useUser } from "@/context/User";
+import { useUser } from "@/features/auth/context/User";
 import { UserData } from "@/firebase/firestore/user";
 import { useUserData } from "@/features/user-profile/hooks/useUserData";
 

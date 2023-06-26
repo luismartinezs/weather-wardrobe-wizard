@@ -1,4 +1,4 @@
-import { useUser } from "@/context/User";
+import { useUser } from "@/features/auth/context/User";
 import { addRecentLocation } from "@/firebase/firestore/recentLocations";
 import { useForecastAdapter } from "@/features/weather-forecast/hooks/useForecastAdapter";
 import useStore, { type StoreState } from "@/store";

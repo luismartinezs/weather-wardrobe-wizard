@@ -20,7 +20,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { deleteAccount } from "@/firebase/auth";
 import { getAuthError } from "@/firebase/util";
-import { useUser } from "@/context/User";
+import { useUser } from "@/features/auth/context/User";
 
 type FormData = {
   password: string | undefined;

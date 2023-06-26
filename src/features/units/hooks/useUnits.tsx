@@ -1,4 +1,4 @@
-import { useUser } from "@/context/User";
+import { useUser } from "@/features/auth/context/User";
 import { Units, updateUserDocument } from "@/firebase/firestore/user";
 import useStore from "@/store";
 

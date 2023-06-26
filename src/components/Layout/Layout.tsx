@@ -3,7 +3,7 @@ import { SkipNavContent } from "@chakra-ui/skip-nav";
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import { useUser } from "@/context/User";
+import { useUser } from "@/features/auth/context/User";
 import ErrorMessage from "../ErrorMessage";
 import { useFirebaseMessaging } from "@/firebase/hooks/useFirebaseMessaging";
 

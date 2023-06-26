@@ -17,7 +17,7 @@ import { useEffect, useState } from "react";
 import ErrorMessage from "@/components/ErrorMessage";
 import { getAuthError } from "@/firebase/util";
 import { useRouter } from "next/router";
-import { useUser } from "@/context/User";
+import { useUser } from "@/features/auth/context/User";
 
 export type FormData = {
   email: string;

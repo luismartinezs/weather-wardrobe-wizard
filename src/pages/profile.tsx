@@ -3,7 +3,7 @@ import DeleteAccount from "@/features/user-profile/components/DeleteAccount";
 import EditPassword from "@/features/user-profile/components/EditPassword";
 import EditProfile from "@/features/user-profile/components/EditProfile";
 import SignoutButton from "@/features/auth/components/SignoutButton";
-import { useUser } from "@/context/User";
+import { useUser } from "@/features/auth/context/User";
 import {
   Box,
   Card,

@@ -18,7 +18,7 @@ import ServerErrorAlert from "@/components/ServerErrorAlert";
 import { useServerError } from "@/hooks/useServerError";
 import ConfirmModal from "@/components/ConfirmModal";
 import { getAuthError } from "@/firebase/util";
-import { useUser } from "@/context/User";
+import { useUser } from "@/features/auth/context/User";
 
 type FormData = {
   email: string;

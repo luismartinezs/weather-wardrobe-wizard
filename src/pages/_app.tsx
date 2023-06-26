@@ -9,8 +9,8 @@ import MetaTags from "@/components/MetaTags";
 import Layout from "@/components/Layout";
 import theme from "@/theme";
 import "@/styles/globals.css";
-import { UserProvider } from "@/context/User";
-import { FirebaseProvider } from "@/context/Firebase";
+import { UserProvider } from "@/features/auth/context/User";
+import { FirebaseProvider } from "@/firebase/context/Firebase";
 import { useSW } from "@/hooks/useSW";
 
 const queryClient = new QueryClient();

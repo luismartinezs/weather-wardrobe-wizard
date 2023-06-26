@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { MessagePayload, getToken, onMessage } from "firebase/messaging";
 
-import { useUser } from "@/context/User";
+import { useUser } from "@/features/auth/context/User";
 import { messaging } from "@/firebase/app";
 import { setToken } from "@/firebase/firestore/fcmTokens";
 

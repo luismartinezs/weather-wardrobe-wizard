@@ -3,7 +3,7 @@ import { Heading, Skeleton, Wrap, WrapItem } from "@chakra-ui/react";
 import RecentLocationItem from "@/features/location/components/RecentLocationItem";
 import { useRecentLocations } from "@/features/location/hooks/useRecentLocations";
 import { useUpdateLocationAndRefetchWeather } from "@/hooks/useUpdateLocationAndRefetchWeather";
-import { useUser } from "@/context/User";
+import { useUser } from "@/features/auth/context/User";
 import { removeRecentLocation } from "@/firebase/firestore/recentLocations";
 import ServerStateDisplayWrapper from "../../../../components/ServerStateDisplayWrapper";
 
