@@ -1,7 +1,7 @@
 import { Line, LineChart, ReferenceLine, YAxis } from "recharts";
 import { getTStr } from "@/util/util";
 import { baseTheme, Box } from "@chakra-ui/react";
-import { useUnits } from "@/hooks/useUnits";
+import { useUnits } from "@/features/units/hooks/useUnits";
 
 const TemperatureChart = ({
   data,

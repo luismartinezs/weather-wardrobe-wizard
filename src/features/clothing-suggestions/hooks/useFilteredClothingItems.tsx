@@ -1,4 +1,4 @@
-import { useClothingSuggestions } from "@/hooks/useClothingSuggestions";
+import { useClothingSuggestions } from "@/features/clothing-suggestions/hooks/useClothingSuggestions";
 import useStore from "@/store";
 import { ClothingSuggestionWithId } from "@/util/clothingSuggestions";
 import { FilterType } from "@/store/checkedClothingItems";

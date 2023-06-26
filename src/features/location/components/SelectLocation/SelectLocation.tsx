@@ -18,7 +18,7 @@ import { useId } from "@/util/hooks";
 import { LocationSuggestion } from "@/types/weatherApi";
 import ErrorMessage from "@/components/ErrorMessage";
 import ServerStateDisplayWrapper from "@/components/ServerStateDisplayWrapper";
-import { useSelectLocation } from "@/hooks/useSelectLocation";
+import { useSelectLocation } from "@/features/location/hooks/useSelectLocation";
 
 const SelectLocation = (): JSX.Element => {
   const {

@@ -6,7 +6,7 @@ import {
   Flex,
   Text,
 } from "@chakra-ui/react";
-import { type Alert as TAlert } from "@/lib/openweather/onecall";
+import { type Alert as TAlert } from "@/features/weather-forecast/utils/onecall";
 import { formatTs } from "@/util/alert";
 
 const WeatherAlert = ({ alert }: { alert: TAlert }): JSX.Element => {

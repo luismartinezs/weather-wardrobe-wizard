@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 
 import { useUser } from "@/context/User";
-import { useDocument } from "@/hooks/useDocument";
+import { useDocument } from "@/firebase/hooks/useDocument";
 import {
   UserLocationData,
   getRecentLocationRef,

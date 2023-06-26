@@ -2,7 +2,7 @@ import { Flex, ListItem, Text } from "@chakra-ui/react";
 import { format, isToday, isTomorrow } from "date-fns";
 
 import WeatherIcon from "@/features/weather-forecast/components/WeatherIcon";
-import { WeatherForecast } from "@/lib/openweather/types";
+import { WeatherForecast } from "@/features/weather-forecast/types";
 
 function getWeekDay(dateString: string) {
   const _date = new Date(dateString);

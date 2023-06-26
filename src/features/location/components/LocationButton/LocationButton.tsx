@@ -1,6 +1,6 @@
 import { useUser } from "@/context/User";
 import { addRecentLocation } from "@/firebase/firestore/recentLocations";
-import { useForecastAdapter } from "@/hooks/useForecastAdapter";
+import { useForecastAdapter } from "@/features/weather-forecast/hooks/useForecastAdapter";
 import useStore, { type StoreState } from "@/store";
 import { Button } from "@chakra-ui/react";
 import { useEffect, useState } from "react";

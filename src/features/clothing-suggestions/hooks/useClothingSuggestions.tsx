@@ -1,4 +1,4 @@
-import { useForecastAdapter } from "@/hooks/useForecastAdapter";
+import { useForecastAdapter } from "@/features/weather-forecast/hooks/useForecastAdapter";
 import { getClothingSuggestions } from "@/util/clothingSuggestions";
 
 export const useClothingSuggestions = () => {

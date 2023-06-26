@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { useUser } from "@/context/User";
 import ErrorMessage from "../ErrorMessage";
-import { useFirebaseMessaging } from "@/hooks/useFirebaseMessaging";
+import { useFirebaseMessaging } from "@/firebase/hooks/useFirebaseMessaging";
 
 const Layout = ({ children }: { children: React.ReactNode }): JSX.Element => {
   const { loading, error } = useUser();

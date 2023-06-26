@@ -1,6 +1,6 @@
 import ForecastCard from "@/features/weather-forecast/components/ForecastCard";
 import useStore from "@/store";
-import { useForecastAdapter } from "@/hooks/useForecastAdapter";
+import { useForecastAdapter } from "@/features/weather-forecast/hooks/useForecastAdapter";
 import ServerStateDisplayWrapper from "@/components/ServerStateDisplayWrapper";
 
 const WeatherForecast = (): JSX.Element => {

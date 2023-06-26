@@ -1,4 +1,4 @@
-import { WeatherForecast } from "@/lib/openweather/types";
+import { WeatherForecast } from "@/features/weather-forecast/types";
 import { kelvinToCelsius, parseTemp } from "@/util/temperature";
 
 interface Temperature {
@@ -53,7 +53,7 @@ export interface Alert {
   end: number; // Assuming Unix timestamp is a number
   description: string;
   tags: string[]; // Assuming "tags" is an array of strings. Update accordingly if different.
-};
+}
 
 export interface OneCallData {
   lat: number;
@@ -65,35 +65,41 @@ export interface OneCallData {
 }
 
 function getWeatherType(weather: Weather[]): {
-  weatherType: string,
-  weatherIcon: string
+  weatherType: string;
+  weatherIcon: string;
 } {
   if (!weather || weather.length === 0) {
     return {
-      weatherType: 'Clear',
-      weatherIcon: '01d'
-    }
+      weatherType: "Clear",
+      weatherIcon: "01d",
+    };
   }
-  let weatherType: string = 'Clear';
-  let weatherIcon: string = '01d';
+  let weatherType: string = "Clear";
+  let weatherIcon: string = "01d";
   weather.forEach(({ main, icon }) => {
-    if (main === 'Rain' || main === 'Snow' || (main !== 'Clear' && weatherType === 'Clear')) {
+    if (
+      main === "Rain" ||
+      main === "Snow" ||
+      (main !== "Clear" && weatherType === "Clear")
+    ) {
       weatherType = main;
       weatherIcon = icon;
     }
-  })
+  });
   return {
     weatherType,
-    weatherIcon
-  }
+    weatherIcon,
+  };
 }
 
-export function getForecastFromOneCallData(data: OneCallData): WeatherForecast[] | null {
+export function getForecastFromOneCallData(
+  data: OneCallData
+): WeatherForecast[] | null {
   if (!data || !data.daily) {
     return null;
   }
 
-  return data.daily.map(d => {
+  return data.daily.map((d) => {
     const weather = getWeatherType(d.weather);
     return {
       date: new Date(d.dt * 1000).toISOString().substring(0, 10),
@@ -101,10 +107,10 @@ export function getForecastFromOneCallData(data: OneCallData): WeatherForecast[]
       minTemp: parseTemp(kelvinToCelsius(d.temp.min)),
       maxTemp: parseTemp(kelvinToCelsius(d.temp.max)),
       weatherType: weather.weatherType,
-      weatherTypes: d.weather.map(w => w.main),
+      weatherTypes: d.weather.map((w) => w.main),
       weatherIcon: weather.weatherIcon,
       maxWindSpeed: d.wind_speed,
-      maxHumidity: d.humidity
-    }
-  })
+      maxHumidity: d.humidity,
+    };
+  });
 }

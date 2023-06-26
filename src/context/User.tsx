@@ -9,7 +9,7 @@ import { onAuthStateChanged, User } from "firebase/auth";
 
 import { type UserData } from "@/firebase/firestore/user";
 import { auth } from "@/firebase/app";
-import { useUserData } from "@/hooks/useUserData";
+import { useUserData } from "@/features/user-profile/hooks/useUserData";
 
 export const UserContext = createContext<{
   idle: boolean;

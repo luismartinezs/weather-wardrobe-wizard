@@ -1,6 +1,6 @@
 // NOTE user data is generated on user creation by firebase cloud function using extension rowy/firestore-user-document
 import React, { useContext, createContext } from "react";
-import { useUserData } from "@/hooks/useUserData";
+import { useUserData } from "@/features/user-profile/hooks/useUserData";
 
 const UserDataContext = createContext<ReturnType<typeof useUserData>>({
   loading: false,

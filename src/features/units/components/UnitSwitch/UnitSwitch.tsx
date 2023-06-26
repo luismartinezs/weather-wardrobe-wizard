@@ -1,5 +1,5 @@
 import { IMPERIAL, METRIC } from "@/firebase/firestore/user";
-import { useUnits } from "@/hooks/useUnits";
+import { useUnits } from "@/features/units/hooks/useUnits";
 import { FormControl, Show, Switch, Text } from "@chakra-ui/react";
 
 const UnitSwitch = (): JSX.Element => {

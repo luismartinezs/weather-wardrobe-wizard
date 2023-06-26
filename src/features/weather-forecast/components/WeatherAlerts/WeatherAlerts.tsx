@@ -1,4 +1,4 @@
-import { useOneCall } from "@/hooks/useOneCall";
+import { useOneCall } from "@/features/weather-forecast/hooks/useOneCall";
 import WeatherAlert from "../WeatherAlert/WeatherAlert";
 import { Flex, List, ListItem, Text } from "@chakra-ui/react";
 import useStore from "@/store";

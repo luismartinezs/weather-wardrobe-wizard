@@ -1,5 +1,5 @@
-import { useWeatherForecast } from "@/hooks/useWeatherForecast";
-import { useOneCall } from "@/hooks/useOneCall";
+import { useWeatherForecast } from "@/features/weather-forecast/hooks/useWeatherForecast";
+import { useOneCall } from "@/features/weather-forecast/hooks/useOneCall";
 
 type Type = "onecall" | "weather-forecast";
 

@@ -9,11 +9,11 @@ import {
   baseTheme,
   Flex,
 } from "@chakra-ui/react";
-import UnitSwitch from "@/components/UnitSwitch";
+import UnitSwitch from "@/features/units/components/UnitSwitch";
 import ForecastListItem from "@/features/weather-forecast/components/ForecastListItem";
 import TemperatureChart from "@/features/weather-forecast/components/TemperatureChart";
 import useStore from "@/store";
-import { useForecastAdapter } from "@/hooks/useForecastAdapter";
+import { useForecastAdapter } from "@/features/weather-forecast/hooks/useForecastAdapter";
 
 const itemWidth = 150;
 

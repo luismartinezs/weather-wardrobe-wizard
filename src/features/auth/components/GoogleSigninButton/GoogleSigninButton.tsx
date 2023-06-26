@@ -3,7 +3,7 @@ import ButtonWithIcon, {
   type ButtonWithIconProps,
 } from "@/components/ButtonWithIcon";
 
-import { useGoogleSignin } from "@/hooks/useGoogleSignin";
+import { useGoogleSignin } from "@/features/auth/hooks/useGoogleSignin";
 
 const GoogleSigninButton = ({
   size = "md",

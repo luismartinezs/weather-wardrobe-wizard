@@ -1,10 +1,13 @@
 import useStore from "@/store";
 import { LocationSuggestion } from "@/types/weatherApi";
 import { fetchErrorHandler } from "@/util/dataFetch";
-import { Alert, getForecastFromOneCallData } from "@/lib/openweather/onecall";
+import {
+  Alert,
+  getForecastFromOneCallData,
+} from "@/features/weather-forecast/utils/onecall";
 import { format } from "date-fns";
 import { UseQueryResult, useQuery } from "react-query";
-import { WeatherForecast } from "@/lib/openweather/types";
+import { WeatherForecast } from "@/features/weather-forecast/types";
 
 function fetchOneCall(
   location: LocationSuggestion | null

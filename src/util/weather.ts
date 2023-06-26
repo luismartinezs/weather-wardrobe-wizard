@@ -1,4 +1,4 @@
-import { WeatherForecast } from "@/lib/openweather/types";
+import { WeatherForecast } from "@/features/weather-forecast/types";
 import { parseTemp } from "@/util/temperature";
 
 function getFiveDayForecast(data: any): WeatherForecast[] | null {
@@ -9,25 +9,25 @@ function getFiveDayForecast(data: any): WeatherForecast[] | null {
   const dailyForecasts: WeatherForecast[] = [];
   const now = new Date().getTime();
 
-  let currentDay: string = '';
+  let currentDay: string = "";
   let tempSum: number = 0;
   let minTemp: number = Number.MAX_VALUE;
   let maxTemp: number = Number.MIN_VALUE;
-  let maxTempHour: string = '';
-  let minTempHour: string = '';
+  let maxTempHour: string = "";
+  let minTempHour: string = "";
   let count: number = 0;
-  let weatherType: string = 'Clear';
+  let weatherType: string = "Clear";
   let weatherTypes: string[] = [];
-  let weatherIcon: string = '01d';
+  let weatherIcon: string = "01d";
   let maxWindSpeed: number = 0; // %
   let maxHumidity: number = 0; // %
 
-  forecasts.forEach(forecast => {
+  forecasts.forEach((forecast) => {
     const forecastTimestamp = forecast.dt * 1000;
     const date = forecast.dt_txt.substring(0, 10);
 
     if (date !== currentDay && forecastTimestamp > now) {
-      if (currentDay !== '') {
+      if (currentDay !== "") {
         const avgTemp = tempSum / count;
         dailyForecasts.push({
           date: currentDay,
@@ -40,7 +40,7 @@ function getFiveDayForecast(data: any): WeatherForecast[] | null {
           weatherTypes,
           weatherIcon,
           maxWindSpeed,
-          maxHumidity
+          maxHumidity,
         });
       }
 
@@ -84,7 +84,11 @@ function getFiveDayForecast(data: any): WeatherForecast[] | null {
         weatherTypes.push(newWeatherType);
       }
 
-      if (newWeatherType === 'Rain' || newWeatherType === 'Snow' || (newWeatherType !== 'Clear' && weatherType === 'Clear')) {
+      if (
+        newWeatherType === "Rain" ||
+        newWeatherType === "Snow" ||
+        (newWeatherType !== "Clear" && weatherType === "Clear")
+      ) {
         weatherType = newWeatherType;
         weatherIcon = forecast.weather[0].icon;
       }
@@ -104,10 +108,10 @@ function getFiveDayForecast(data: any): WeatherForecast[] | null {
     weatherType,
     weatherIcon,
     maxWindSpeed,
-    maxHumidity
+    maxHumidity,
   });
 
   return dailyForecasts;
 }
 
-export { getFiveDayForecast }
+export { getFiveDayForecast };

@@ -1,7 +1,7 @@
 import { Heading, Skeleton, Wrap, WrapItem } from "@chakra-ui/react";
 
 import RecentLocationItem from "@/features/location/components/RecentLocationItem";
-import { useRecentLocations } from "@/hooks/useRecentLocations";
+import { useRecentLocations } from "@/features/location/hooks/useRecentLocations";
 import { useUpdateLocationAndRefetchWeather } from "@/hooks/useUpdateLocationAndRefetchWeather";
 import { useUser } from "@/context/User";
 import { removeRecentLocation } from "@/firebase/firestore/recentLocations";
