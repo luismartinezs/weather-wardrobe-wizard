@@ -1,5 +1,5 @@
 import { WeatherForecast } from "@/features/weather-forecast/types";
-import { parseTemp } from "@/util/temperature";
+import { parseTemp } from "@/utils/temperature";
 
 function getFiveDayForecast(data: any): WeatherForecast[] | null {
   if (!data || !data.list) {

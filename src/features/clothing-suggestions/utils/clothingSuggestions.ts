@@ -1,6 +1,8 @@
-import { areArraysOverlapping, between, dedupeArray } from "@/util/util";
-import { clothingMap } from "@/util/clothingMap";
+import { clothingMap } from "@/features/clothing-suggestions/utils/clothingMap";
 import { WeatherForecast } from "@/features/weather-forecast/types";
+import { areArraysOverlapping } from "@/utils/areArraysOverlapping";
+import { between } from "@/utils/between";
+import { dedupeArray } from "@/utils/dedupeArray";
 
 export type ClothingSuggestion = {
   label: string;

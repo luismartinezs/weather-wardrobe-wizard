@@ -1,4 +1,4 @@
-import { LocationSuggestion } from "@/types/weatherApi";
+import { LocationSuggestion } from "@/features/location/types";
 import { CloseIcon } from "@chakra-ui/icons";
 import { Badge, Button, Flex, IconButton, Text } from "@chakra-ui/react";
 

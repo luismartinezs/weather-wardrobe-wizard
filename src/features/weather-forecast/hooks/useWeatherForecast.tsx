@@ -1,7 +1,7 @@
 import useStore from "@/store";
-import { LocationSuggestion } from "@/types/weatherApi";
-import { fetchErrorHandler } from "@/util/dataFetch";
-import { getFiveDayForecast } from "@/util/weather";
+import { LocationSuggestion } from "@/features/location/types";
+import { fetchErrorHandler } from "@/utils/dataFetch";
+import { getFiveDayForecast } from "@/utils/weather";
 import { format } from "date-fns";
 import { useQuery } from "react-query";
 

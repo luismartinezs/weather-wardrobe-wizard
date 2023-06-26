@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 
-import { LocationSuggestion } from "@/types/weatherApi";
-import { fetchErrorHandler } from "@/util/dataFetch";
+import { LocationSuggestion } from "@/features/location/types";
+import { fetchErrorHandler } from "@/utils/dataFetch";
 
 function fetchLocationSuggestions(
   query: string

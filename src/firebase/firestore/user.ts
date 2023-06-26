@@ -4,7 +4,7 @@ import {
   getDocument,
   getDocumentRef,
 } from "@/firebase/firestore/api";
-import { ClothingId } from "@/util/clothingSuggestions";
+import { ClothingId } from "@/features/clothing-suggestions/utils/clothingSuggestions";
 import { DocumentData } from "firebase/firestore";
 
 export type Imperial = "imperial";

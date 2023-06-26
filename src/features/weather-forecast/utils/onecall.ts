@@ -1,5 +1,5 @@
 import { WeatherForecast } from "@/features/weather-forecast/types";
-import { kelvinToCelsius, parseTemp } from "@/util/temperature";
+import { kelvinToCelsius, parseTemp } from "@/utils/temperature";
 
 interface Temperature {
   day: number;

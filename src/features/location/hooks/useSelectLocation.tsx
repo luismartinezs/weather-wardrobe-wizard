@@ -2,7 +2,7 @@ import { useCallback, useEffect } from "react";
 import debounce from "lodash.debounce";
 import useStore from "@/store";
 import { useLocation } from "@/features/location/hooks/useLocation";
-import { LocationSuggestion } from "@/types/weatherApi";
+import { LocationSuggestion } from "@/features/location/types";
 
 export function useSelectLocation() {
   const selectedLocation = useStore((state) => state.selectedLocation);

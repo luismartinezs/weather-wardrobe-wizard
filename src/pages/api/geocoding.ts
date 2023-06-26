@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-import cors, { runMiddleware } from "@/util/cors";
-import { LocationSuggestion } from "@/types/weatherApi";
+import cors, { runMiddleware } from "@/utils/cors";
+import { LocationSuggestion } from "@/features/location/types";
 import { getGeocodingUrl } from "@/features/weather-forecast/utils/urls";
 
 const OPEN_WEATHER_API_KEY = process.env.OPEN_WEATHER_API_KEY;

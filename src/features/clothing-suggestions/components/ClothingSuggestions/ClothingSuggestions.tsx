@@ -2,7 +2,7 @@ import { baseTheme, Flex, Heading } from "@chakra-ui/react";
 import ClothingItem from "@/features/clothing-suggestions/components/ClothingItem";
 import { useFilteredClothingItems } from "@/features/clothing-suggestions/hooks/useFilteredClothingItems";
 import ServerStateDisplayWrapper from "@/components/ServerStateDisplayWrapper";
-import CheckControls from "@/components/CheckControls";
+import CheckControls from "@/features/clothing-suggestions/components/CheckControls";
 
 const ClothingSuggestions = (): JSX.Element => {
   const { filteredClothingItems, isLoading } = useFilteredClothingItems();

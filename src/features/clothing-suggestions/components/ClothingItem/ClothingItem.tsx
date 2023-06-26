@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import Image from "next/image";
 // import AmazonLink from "@/components/AmazonLink";
-import type { ClothingId } from "@/util/clothingSuggestions";
+import type { ClothingId } from "@/features/clothing-suggestions/utils/clothingSuggestions";
 import { useCheckedClothingItems } from "@/features/clothing-suggestions/hooks/useCheckedClothingItems";
 
 const size = {

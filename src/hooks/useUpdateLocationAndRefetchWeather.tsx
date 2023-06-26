@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useStore } from "@/store";
-import { LocationSuggestion } from "@/types/weatherApi";
+import { LocationSuggestion } from "@/features/location/types";
 import { useForecastAdapter } from "@/features/weather-forecast/hooks/useForecastAdapter";
 
 export const useUpdateLocationAndRefetchWeather = () => {

@@ -11,11 +11,11 @@ import {
   useDisclosure,
   VStack,
   IconButton,
+  useId,
 } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
 
-import { useId } from "@/util/hooks";
-import { LocationSuggestion } from "@/types/weatherApi";
+import { LocationSuggestion } from "@/features/location/types";
 import ErrorMessage from "@/components/ErrorMessage";
 import ServerStateDisplayWrapper from "@/components/ServerStateDisplayWrapper";
 import { useSelectLocation } from "@/features/location/hooks/useSelectLocation";

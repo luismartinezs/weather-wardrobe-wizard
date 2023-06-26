@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-import cors, { runMiddleware } from "@/util/cors";
+import cors, { runMiddleware } from "@/utils/cors";
 import { getWeatherForecastUrl } from "@/features/weather-forecast/utils/urls";
 
 const OPEN_WEATHER_API_KEY = process.env.OPEN_WEATHER_API_KEY;

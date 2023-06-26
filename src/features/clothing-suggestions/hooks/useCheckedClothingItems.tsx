@@ -3,7 +3,7 @@ import {
   setCheckedClothingItems,
 } from "@/firebase/firestore/checkedClothingItems";
 import useStore from "@/store";
-import { ClothingId } from "@/util/clothingSuggestions";
+import { ClothingId } from "@/features/clothing-suggestions/utils/clothingSuggestions";
 import { useDataStoreAdapter } from "@/hooks/useDataStoreAdapter";
 
 export function useCheckedClothingItems(itemId?: ClothingId) {

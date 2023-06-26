@@ -7,7 +7,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { type Alert as TAlert } from "@/features/weather-forecast/utils/onecall";
-import { formatTs } from "@/util/alert";
+import { formatTs } from "@/utils/time";
 
 const WeatherAlert = ({ alert }: { alert: TAlert }): JSX.Element => {
   return (

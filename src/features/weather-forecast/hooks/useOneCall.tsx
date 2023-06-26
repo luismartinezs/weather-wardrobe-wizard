@@ -1,6 +1,6 @@
 import useStore from "@/store";
-import { LocationSuggestion } from "@/types/weatherApi";
-import { fetchErrorHandler } from "@/util/dataFetch";
+import { LocationSuggestion } from "@/features/location/types";
+import { fetchErrorHandler } from "@/utils/dataFetch";
 import {
   Alert,
   getForecastFromOneCallData,
