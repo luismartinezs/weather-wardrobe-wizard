@@ -10,7 +10,7 @@ import {
 import Image from "next/image";
 // import AmazonLink from "@/components/AmazonLink";
 import type { ClothingId } from "@/util/clothingSuggestions";
-import { useCheckedClothingItems } from "@/hooks/useCheckedClothingItems";
+import { useCheckedClothingItems } from "@/features/clothing-suggestions/hooks/useCheckedClothingItems";
 
 const size = {
   w: "340px",

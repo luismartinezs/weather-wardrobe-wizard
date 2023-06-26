@@ -1,6 +1,6 @@
 import { Flex, Text } from "@chakra-ui/react";
-import GoogleSigninButton from "@/components/GoogleSigninButton";
-import GithubSigninButton from "@/components/GithubSigninButton";
+import GoogleSigninButton from "@/features/auth/components/GoogleSigninButton";
+import GithubSigninButton from "@/features/auth/components/GithubSigninButton";
 
 const ThirdPartyConnect = (): JSX.Element => {
   return (

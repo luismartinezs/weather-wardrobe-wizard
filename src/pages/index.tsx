@@ -1,12 +1,12 @@
 import Head from "next/head";
 import { Box, Container, Text } from "@chakra-ui/react";
 
-import SelectLocation from "@/components/SelectLocation";
-import WeatherForecast from "@/components/WeatherForecast";
-import ClothingSuggestions from "@/components/ClothingSuggestions";
-import LocationButton from "@/components/LocationButton";
-import RecentLocations from "@/components/RecentLocations";
-import WeatherAlerts from "@/components/WeatherAlerts";
+import SelectLocation from "@/features/location/components/SelectLocation";
+import WeatherForecast from "@/features/weather-forecast/components/WeatherForecast";
+import ClothingSuggestions from "@/features/clothing-suggestions/components/ClothingSuggestions";
+import LocationButton from "@/features/location/components/LocationButton";
+import RecentLocations from "@/features/location/components/RecentLocations";
+import WeatherAlerts from "@/features/weather-forecast/components/WeatherAlerts";
 
 export default function Home() {
   return (

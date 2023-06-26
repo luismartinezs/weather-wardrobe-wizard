@@ -1,8 +1,8 @@
-import AuthRoute from "@/components/AuthRoute";
-import DeleteAccount from "@/components/DeleteAccount";
-import EditPassword from "@/components/EditPassword";
-import EditProfile from "@/components/EditProfile";
-import SignoutButton from "@/components/SignoutButton";
+import AuthRoute from "@/features/auth/components/AuthRoute";
+import DeleteAccount from "@/features/user-profile/components/DeleteAccount";
+import EditPassword from "@/features/user-profile/components/EditPassword";
+import EditProfile from "@/features/user-profile/components/EditProfile";
+import SignoutButton from "@/features/auth/components/SignoutButton";
 import { useUser } from "@/context/User";
 import {
   Box,

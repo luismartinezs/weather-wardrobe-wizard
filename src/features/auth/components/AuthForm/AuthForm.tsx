@@ -14,7 +14,7 @@ import ServerErrorAlert from "@/components/ServerErrorAlert";
 import { useServerError } from "@/hooks/useServerError";
 import { type WithErrorHandling } from "@/firebase/auth";
 import { useEffect, useState } from "react";
-import ErrorMessage from "../ErrorMessage";
+import ErrorMessage from "@/components/ErrorMessage";
 import { getAuthError } from "@/firebase/util";
 import { useRouter } from "next/router";
 import { useUser } from "@/context/User";

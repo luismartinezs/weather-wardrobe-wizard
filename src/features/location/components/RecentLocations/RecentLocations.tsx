@@ -1,11 +1,11 @@
 import { Heading, Skeleton, Wrap, WrapItem } from "@chakra-ui/react";
 
-import RecentLocationItem from "@/components/RecentLocationItem";
+import RecentLocationItem from "@/features/location/components/RecentLocationItem";
 import { useRecentLocations } from "@/hooks/useRecentLocations";
 import { useUpdateLocationAndRefetchWeather } from "@/hooks/useUpdateLocationAndRefetchWeather";
 import { useUser } from "@/context/User";
 import { removeRecentLocation } from "@/firebase/firestore/recentLocations";
-import ServerStateDisplayWrapper from "../ServerStateDisplayWrapper";
+import ServerStateDisplayWrapper from "../../../../components/ServerStateDisplayWrapper";
 
 const RecentLocations = (): JSX.Element => {
   const { user } = useUser();

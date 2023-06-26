@@ -1,5 +1,5 @@
 import { baseTheme, Flex, Heading } from "@chakra-ui/react";
-import ClothingItem from "@/components/ClothingItem";
+import ClothingItem from "@/features/clothing-suggestions/components/ClothingItem";
 import { useFilteredClothingItems } from "@/hooks/useFilteredClothingItems";
 import ServerStateDisplayWrapper from "@/components/ServerStateDisplayWrapper";
 import CheckControls from "@/components/CheckControls";

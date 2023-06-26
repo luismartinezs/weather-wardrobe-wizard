@@ -9,9 +9,9 @@ import {
   baseTheme,
   Flex,
 } from "@chakra-ui/react";
-import UnitSwitch from "../UnitSwitch";
-import ForecastListItem from "@/components/ForecastListItem";
-import TemperatureChart from "@/components/TemperatureChart";
+import UnitSwitch from "@/components/UnitSwitch";
+import ForecastListItem from "@/features/weather-forecast/components/ForecastListItem";
+import TemperatureChart from "@/features/weather-forecast/components/TemperatureChart";
 import useStore from "@/store";
 import { useForecastAdapter } from "@/hooks/useForecastAdapter";
 

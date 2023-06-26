@@ -4,7 +4,7 @@ import { Button, Flex } from "@chakra-ui/react";
 
 import useStore from "@/store";
 import type { FilterType } from "@/store/checkedClothingItems";
-import { useCheckedClothingItems } from "@/hooks/useCheckedClothingItems";
+import { useCheckedClothingItems } from "@/features/clothing-suggestions/hooks/useCheckedClothingItems";
 
 const buttonStaticProps = {
   variant: "ghost",

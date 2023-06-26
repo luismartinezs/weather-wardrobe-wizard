@@ -16,26 +16,29 @@ export const useUserData = () => {
     if (!user?.uid) return;
     return getUserDataRef(user.uid);
   }, [user?.uid]);
-  const onSnapshotDataHandler = useCallback(async (data: UserData) => {
-    if (!user?.uid) {
-      return;
-    }
-    if (!data) {
-      return addUserDocument(user?.uid, {
-        units: DEFAULT_UNITS,
-        checkedClothingItems: [],
-      });
-    }
-    if (!data?.uid) {
-      return;
-    }
-    if (!data?.units) {
-      updateUserDocument(data.uid, { units: DEFAULT_UNITS });
-    }
-    if (!data?.checkedClothingItems) {
-      updateUserDocument(data.uid, { checkedClothingItems: [] });
-    }
-  }, []);
+  const onSnapshotDataHandler = useCallback(
+    async (data: UserData) => {
+      if (!user?.uid) {
+        return;
+      }
+      if (!data) {
+        return addUserDocument(user?.uid, {
+          units: DEFAULT_UNITS,
+          checkedClothingItems: [],
+        });
+      }
+      if (!data?.uid) {
+        return;
+      }
+      if (!data?.units) {
+        updateUserDocument(data.uid, { units: DEFAULT_UNITS });
+      }
+      if (!data?.checkedClothingItems) {
+        updateUserDocument(data.uid, { checkedClothingItems: [] });
+      }
+    },
+    [user]
+  );
 
   return useDocument<UserData>(ref, onSnapshotDataHandler);
 };

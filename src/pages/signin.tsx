@@ -1,8 +1,8 @@
 import { Text, Link } from "@chakra-ui/react";
 import { signIn } from "@/firebase/auth";
 import NextLink from "next/link";
-import SigninRegister from "@/components/SigninRegister";
-import AuthForm, { type FormData } from "@/components/AuthForm";
+import SigninRegister from "@/features/auth/components/SigninRegister";
+import AuthForm, { type FormData } from "@/features/auth/components/AuthForm";
 
 function SignIn() {
   const onSubmit = async (data: FormData) => {

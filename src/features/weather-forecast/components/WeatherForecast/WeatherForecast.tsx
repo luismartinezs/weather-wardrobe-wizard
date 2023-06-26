@@ -1,4 +1,4 @@
-import ForecastCard from "@/components/ForecastCard";
+import ForecastCard from "@/features/weather-forecast/components/ForecastCard";
 import useStore from "@/store";
 import { useForecastAdapter } from "@/hooks/useForecastAdapter";
 import ServerStateDisplayWrapper from "@/components/ServerStateDisplayWrapper";

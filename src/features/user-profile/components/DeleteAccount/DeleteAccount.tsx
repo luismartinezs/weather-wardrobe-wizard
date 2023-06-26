@@ -1,6 +1,6 @@
 import { Button, useDisclosure } from "@chakra-ui/react";
 
-import DeleteAccountModal from "@/components/DeleteAccountModal";
+import DeleteAccountModal from "@/features/user-profile/components/DeleteAccountModal";
 
 const DeleteAccount = (): JSX.Element => {
   const { isOpen, onOpen, onClose } = useDisclosure();

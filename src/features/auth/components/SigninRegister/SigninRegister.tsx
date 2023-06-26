@@ -1,5 +1,5 @@
 import { Container, Divider, HStack, Text } from "@chakra-ui/react";
-import ThirdPartyConnect from "@/components/ThirdPartyConnect";
+import ThirdPartyConnect from "@/features/auth/components/ThirdPartyConnect";
 
 const SigninRegister = ({
   form,
