@@ -1,4 +1,4 @@
-import { ClothingId } from "@/features/clothing-suggestions/utils/clothingSuggestions";
+import { ClothingId } from "@/features/clothing-suggestions/utils/clothingMap";
 import { updateUserDocument } from "@/firebase/firestore/user";
 
 export function checkClothingItem({
