@@ -4,6 +4,7 @@ import { AiOutlineUnorderedList } from "react-icons/ai";
 import { BsGrid3X3Gap } from "react-icons/bs";
 
 import { ViewMode } from "@/features/clothing-suggestions/types";
+import { viewMode } from "@/features/clothing-suggestions/constants";
 
 type Props = {
   mode: ViewMode;
@@ -11,7 +12,7 @@ type Props = {
 };
 
 const ClothingViewButton = ({ mode, onClick }: Props): JSX.Element => {
-  return mode === "list" ? (
+  return mode === viewMode.list ? (
     <IconButton
       variant="outline"
       aria-label="Switch to grid view"

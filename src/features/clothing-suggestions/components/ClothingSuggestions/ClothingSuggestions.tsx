@@ -7,12 +7,13 @@ import { useState } from "react";
 import ClothingSuggestionsItemsWrapper from "@/features/clothing-suggestions/components/ClothingSuggestionsItemsWrapper";
 import { ViewMode } from "@/features/clothing-suggestions/types";
 import ClothingItemAdapter from "@/features/clothing-suggestions/components/ClothingItemAdapter";
+import { viewMode } from "@/features/clothing-suggestions/constants";
 
 const ClothingSuggestions = (): JSX.Element => {
   const { filteredClothingItems, isLoading } = useFilteredClothingItems();
-  const [viewMode, setViewMode] = useState<ViewMode>("list");
+  const [_viewMode, _setViewMode] = useState<ViewMode>(viewMode.list);
   const toggleView = () => {
-    setViewMode((prev) => (prev === "list" ? "grid" : "list"));
+    _setViewMode((prev) => (prev === "list" ? "grid" : "list"));
   };
 
   return (
@@ -33,11 +34,11 @@ const ClothingSuggestions = (): JSX.Element => {
       </Heading>
       <Flex justify="space-between" w="100%">
         <CheckControls />
-        <ClothingViewButton mode={viewMode} onClick={toggleView} />
+        <ClothingViewButton mode={_viewMode} onClick={toggleView} />
       </Flex>
-      <ClothingSuggestionsItemsWrapper mode="flex">
+      <ClothingSuggestionsItemsWrapper mode={_viewMode}>
         {filteredClothingItems?.map((item) => (
-          <ClothingItemAdapter key={item.id} item={item} mode="flex" />
+          <ClothingItemAdapter key={item.id} item={item} mode={_viewMode} />
         ))}
       </ClothingSuggestionsItemsWrapper>
     </ServerStateDisplayWrapper>

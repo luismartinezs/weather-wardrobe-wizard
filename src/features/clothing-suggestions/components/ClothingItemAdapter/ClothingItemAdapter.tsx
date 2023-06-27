@@ -4,7 +4,9 @@ import type {
 } from "@/features/clothing-suggestions/types";
 import { viewMode } from "@/features/clothing-suggestions/constants";
 import { useCheckedClothingItems } from "@/features/clothing-suggestions/hooks/useCheckedClothingItems";
-import FlexClothingItem from "../FlexClothingItem";
+import FlexClothingItem from "@/features/clothing-suggestions/components/FlexClothingItem";
+import ListClothingItem from "@/features/clothing-suggestions/components/ListClothingItem";
+import GridClothingItem from "@/features/clothing-suggestions/components/GridClothingItem";
 
 const ClothingItemAdapter = ({
   item,
@@ -24,7 +26,22 @@ const ClothingItemAdapter = ({
       />
     );
   }
-  return <></>;
+  if (mode === viewMode.grid) {
+    return (
+      <GridClothingItem
+        item={item}
+        checked={!!checked}
+        onChange={() => checkClothingItem(item.id)}
+      />
+    );
+  }
+  return (
+    <ListClothingItem
+      item={item}
+      checked={!!checked}
+      onChange={() => checkClothingItem(item.id)}
+    />
+  );
 };
 
 export default ClothingItemAdapter;

@@ -1,14 +1,15 @@
-import { baseTheme, Flex } from "@chakra-ui/react";
+import { baseTheme, Flex, Grid, List } from "@chakra-ui/react";
 import { ViewMode } from "@/features/clothing-suggestions/types";
+import { viewMode } from "@/features/clothing-suggestions/constants";
 
 const ClothingSuggestionsItemsWrapper = ({
-  mode,
+  mode = viewMode.list,
   children,
 }: {
   mode: ViewMode;
   children: React.ReactNode;
 }): JSX.Element => {
-  if (mode === "flex") {
+  if (mode === viewMode.flex) {
     return (
       <Flex
         mt={2}
@@ -47,20 +48,29 @@ const ClothingSuggestionsItemsWrapper = ({
     );
   }
 
-  if (mode === "grid") {
+  if (mode === viewMode.grid) {
     return (
-      <Flex
-        mt={2}
-        flexWrap="wrap"
+      <Grid
+        templateColumns={{
+          base: "repeat(1, 1fr)",
+          sm: "repeat(2, 1fr)",
+          md: "repeat(2, 1fr)",
+          xl: "repeat(3, 1fr)",
+        }}
         gap={2}
+        mt={2}
         pb={2}
         data-testid="clothing-suggestions"
       >
         {children}
-      </Flex>
+      </Grid>
     );
   }
-  return <></>;
+  return (
+    <List spacing={1.5} mt={2} pb={2} data-testid="clothing-suggestions">
+      {children}
+    </List>
+  );
 };
 
 export default ClothingSuggestionsItemsWrapper;
