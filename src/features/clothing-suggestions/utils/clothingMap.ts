@@ -276,3 +276,5 @@ export const clothingMap: { [index: string]: ClothingSuggestion } = {
     url: "",
   },
 };
+
+export type ClothingId = keyof typeof clothingMap;

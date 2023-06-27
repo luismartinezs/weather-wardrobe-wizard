@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import { Button, Flex } from "@chakra-ui/react";
 
 import useStore from "@/store";
-import type { FilterType } from "@/store/checkedClothingItems";
+import type { FilterType } from "@/features/clothing-suggestions/store/checkedClothingItems";
 import { useCheckedClothingItems } from "@/features/clothing-suggestions/hooks/useCheckedClothingItems";
 
 const buttonStaticProps = {

@@ -1,4 +1,7 @@
-import { clothingMap } from "@/features/clothing-suggestions/utils/clothingMap";
+import {
+  ClothingId,
+  clothingMap,
+} from "@/features/clothing-suggestions/utils/clothingMap";
 import { WeatherForecast } from "@/features/weather-forecast/types";
 import { areArraysOverlapping } from "@/utils/areArraysOverlapping";
 import { between } from "@/utils/between";
@@ -180,7 +183,6 @@ function getMinimalClothingForWind(windSpeed: number): string[] {
   return clothing;
 }
 
-export type ClothingId = keyof typeof clothingMap;
 export type ClothingSuggestionWithId = ClothingSuggestion & { id: ClothingId };
 
 function handleClothingIds(clothingIds: ClothingId[]) {

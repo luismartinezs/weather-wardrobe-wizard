@@ -9,24 +9,23 @@ import {
 } from "@chakra-ui/react";
 import Image from "next/image";
 // import AmazonLink from "@/components/AmazonLink";
-import type { ClothingId } from "@/features/clothing-suggestions/utils/clothingSuggestions";
-import { useCheckedClothingItems } from "@/features/clothing-suggestions/hooks/useCheckedClothingItems";
+import type { ClothingItem as TClothingItem } from "@/features/clothing-suggestions/types";
 
 const size = {
   w: "340px",
 };
 
 type ClothingItemProps = {
-  item: {
-    label: string;
-    url: string;
-    imageUrl: string;
-    id: ClothingId;
-  };
+  item: TClothingItem;
+  checked: boolean;
+  onChange: () => void;
 };
 
-const ClothingItem = ({ item }: ClothingItemProps): JSX.Element => {
-  const { checked, checkClothingItem } = useCheckedClothingItems(item.id);
+const FlexClothingItem = ({
+  item,
+  checked,
+  onChange,
+}: ClothingItemProps): JSX.Element => {
   const labelId = useId();
 
   return (
@@ -34,7 +33,7 @@ const ClothingItem = ({ item }: ClothingItemProps): JSX.Element => {
       <CardBody>
         <Checkbox
           isChecked={checked}
-          onChange={() => checkClothingItem(item.id)}
+          onChange={onChange}
           aria-labelledby={labelId}
           size="lg"
           display="flex"
@@ -77,4 +76,4 @@ const ClothingItem = ({ item }: ClothingItemProps): JSX.Element => {
   );
 };
 
-export default ClothingItem;
+export default FlexClothingItem;

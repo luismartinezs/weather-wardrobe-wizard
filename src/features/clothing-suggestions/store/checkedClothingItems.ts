@@ -1,5 +1,5 @@
 import { produce, Immutable } from "immer";
-import type { ClothingId } from "@/features/clothing-suggestions/utils/clothingSuggestions";
+import type { ClothingId } from "@/features/clothing-suggestions/utils/clothingMap";
 import { StateCreator } from "zustand";
 
 export type FilterType = "all" | "checked" | "unchecked";

@@ -1,7 +1,7 @@
 import { useClothingSuggestions } from "@/features/clothing-suggestions/hooks/useClothingSuggestions";
 import useStore from "@/store";
 import { ClothingSuggestionWithId } from "@/features/clothing-suggestions/utils/clothingSuggestions";
-import { FilterType } from "@/store/checkedClothingItems";
+import { FilterType } from "@/features/clothing-suggestions/store/checkedClothingItems";
 import { useDataStoreAdapter } from "@/hooks/useDataStoreAdapter";
 
 function getFilteredItems(
