@@ -11,7 +11,7 @@ import { formatTs } from "@/utils/time";
 
 const WeatherAlert = ({ alert }: { alert: TAlert }): JSX.Element => {
   return (
-    <Alert status="info">
+    <Alert status="info" borderRadius="8px">
       <AlertIcon />
       <Flex flexDirection="column" align="start" justify="center">
         <AlertTitle>{alert.event}</AlertTitle>
