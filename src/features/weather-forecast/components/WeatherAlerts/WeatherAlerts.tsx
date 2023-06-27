@@ -14,11 +14,13 @@ const WeatherAlerts = (): JSX.Element => {
   return (
     <>
       <Flex align="baseline" gap={2}>
-        <Text as="span" color="gray.300">
-          Weather alerts for
-        </Text>
-        <Text as="span" color="primary.200">
-          {selectedLocation?.name}
+        <Text>
+          <Text as="span" color="gray.300">
+            Weather alerts for&nbsp;
+          </Text>
+          <Text as="span" color="primary.200">
+            {selectedLocation?.name}
+          </Text>
         </Text>
       </Flex>
       <List display="flex" flexDirection="column" gap={1}>
