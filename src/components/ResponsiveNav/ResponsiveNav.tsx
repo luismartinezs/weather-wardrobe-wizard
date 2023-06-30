@@ -1,4 +1,5 @@
 import { HamburgerIcon } from "@chakra-ui/icons";
+import { BsStars } from "react-icons/bs";
 import {
   Box,
   Drawer,
@@ -14,6 +15,7 @@ import {
   useDisclosure,
   Text,
   Spinner,
+  Icon,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import Image from "next/image";
@@ -21,45 +23,70 @@ import ProfileLink from "@/features/user-profile/components/ProfileLink";
 import { useRouteChange } from "@/hooks/useRouteChange";
 import { useRouter } from "next/router";
 import { useUser } from "@/features/auth/context/User";
+import useSubscription from "@/features/plans/hooks/useSubscription";
+import { IconType } from "react-icons";
+import { Subscription } from "@stripe/firestore-stripe-payments";
+import SubscriptionPill from "@/features/plans/components/SubscriptionPill";
 
-const links: Array<{
+const getLinks = (options?: {
+  subscription?: Subscription | null;
+}): Array<{
   label: string;
   href: string;
+  icon?: IconType;
+  iconColor?: string;
   requireGuest?: boolean;
   redirect?: boolean;
-}> = [
-  {
-    label: "Home",
-    href: "/",
-  },
-  {
-    label: "Sign in",
-    href: "/signin",
-    requireGuest: true,
-    redirect: true,
-  },
-];
+}> => {
+  const isSubscribed = ["active", "trialing"].includes(
+    options?.subscription?.status || ""
+  );
+
+  return [
+    {
+      label: "Home",
+      href: "/",
+    },
+    {
+      label: "Plans",
+      href: "/plans",
+      icon: !isSubscribed ? BsStars : undefined,
+      iconColor: "gold",
+    },
+    {
+      label: "Sign in",
+      href: "/signin",
+      requireGuest: true,
+      redirect: true,
+    },
+  ];
+};
 
 const Links = () => {
-  const { user, loading } = useUser();
+  const { user } = useUser();
+  const { subscription } = useSubscription(user);
   const { pathname } = useRouter();
+
   return (
     <>
-      {links
+      {getLinks({ subscription })
         .filter(({ requireGuest }) => {
           if (requireGuest && user) {
             return false;
           }
           return true;
         })
-        .map(({ label, href, redirect }) => {
+        .map(({ label, href, redirect, icon, iconColor }) => {
           let _href = href;
           if (redirect && pathname !== href) {
             _href = `${_href}?redirect=${pathname}`;
           }
           return (
             <Link as={NextLink} href={_href} key={href}>
-              {label}
+              <Flex align="center" gap="1">
+                {icon && <Icon as={icon} boxSize={6} color={iconColor} />}
+                <Text as="span">{label}</Text>
+              </Flex>
             </Link>
           );
         })}
@@ -86,9 +113,10 @@ const ResponsiveNav = (): JSX.Element => {
         display={{ base: "none", xl: "block" }}
         flexBasis={{ base: "100%", xl: "auto" }}
       >
-        <Flex align="center" gap="5">
+        <Flex align="center" gap={6}>
           <Links />
           {loading ? <Spinner /> : user && <ProfileLink user={user} />}
+          <SubscriptionPill />
         </Flex>
       </Box>
       <Drawer
@@ -130,6 +158,7 @@ const ResponsiveNav = (): JSX.Element => {
               ) : (
                 user && <ProfileLink user={user} label="Profile" />
               )}
+              <SubscriptionPill />
             </Flex>
           </DrawerBody>
 

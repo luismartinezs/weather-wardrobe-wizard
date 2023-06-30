@@ -23,7 +23,8 @@
   },
   "extensions": {
     "firestore-user-document": "rowy/firestore-user-document@0.0.6",
-    "delete-user-data": "firebase/delete-user-data@0.1.17"
+    "delete-user-data": "firebase/delete-user-data@0.1.17",
+    "firestore-stripe-payments": "stripe/firestore-stripe-payments@0.3.3"
   },
   "functions": [
     {

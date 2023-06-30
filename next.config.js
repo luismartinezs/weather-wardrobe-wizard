@@ -22,6 +22,7 @@ const nextConfig = {
       }
     ],
   },
+  transpilePackages: ["@stripe/firestore-stripe-payments"],
 };
 
 module.exports = withPWA(nextConfig);
