@@ -33,6 +33,10 @@ const links: Array<{
     href: "/",
   },
   {
+    label: "Plans",
+    href: "/plans",
+  },
+  {
     label: "Sign in",
     href: "/signin",
     requireGuest: true,

@@ -9,3 +9,8 @@ export function convertHour(timeString: string) {
 export const formatTs = (ts: number): string => {
   return format(ts * 1000, "Pp");
 };
+
+export const formatTimestamp = (timestamp: string | number | Date) => {
+  const date = new Date(timestamp);
+  return date.toLocaleString();
+};
