@@ -2,7 +2,7 @@
 export const featuresMap: Record<string, string[]> = {
   premium: [
     "AI generated advice",
-    "Weather forecasts up to 16 days",
-    "Unlimited searches",
+    // "Weather forecasts up to 16 days",
+    // "Unlimited searches",
   ],
 };
