@@ -7,6 +7,7 @@ import ClothingSuggestions from "@/features/clothing-suggestions/components/Clot
 import LocationButton from "@/features/location/components/LocationButton";
 import RecentLocations from "@/features/location/components/RecentLocations";
 import WeatherAlerts from "@/features/weather-forecast/components/WeatherAlerts";
+import AiSuggestions from "@/features/ai-suggestions/components/AiSuggestions";
 
 export default function Home() {
   return (
@@ -40,6 +41,9 @@ export default function Home() {
       </Box>
       <Box mt={8}>
         <ClothingSuggestions />
+      </Box>
+      <Box mt={8}>
+        <AiSuggestions />
       </Box>
     </>
   );
