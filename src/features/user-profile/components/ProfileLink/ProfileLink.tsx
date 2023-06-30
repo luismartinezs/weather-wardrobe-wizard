@@ -20,8 +20,8 @@ const ProfileLink = ({
 
   return (
     <Link as={NextLink} href="/profile">
-      <Flex align="center" gap="2" mr="4">
-        <Icon as={BiUserCircle} boxSize={6} />
+      <Flex align="center" gap="2">
+        <Icon as={BiUserCircle} boxSize={6} color="gray.400" />
         <Text as="span">{displayLabel}</Text>
       </Flex>
     </Link>
