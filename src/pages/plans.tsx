@@ -1,4 +1,4 @@
-import { Box, Flex, Heading } from "@chakra-ui/react";
+import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import { Product, getProducts } from "@stripe/firestore-stripe-payments";
 import { payments } from "@/firebase/payments";
 import PlanBox from "@/features/plans/components/PlanBox";
@@ -28,9 +28,13 @@ export default function Plans({ products }: { products: Product[] }) {
         </Heading>
       </Box>
       <Flex wrap="wrap" gap={8} justify="center">
-        {products.map((product) => (
-          <PlanBox plan={product} key={product.id} />
-        ))}
+        {products.length ? (
+          products.map((product) => <PlanBox plan={product} key={product.id} />)
+        ) : (
+          <Text fontSize="xl" color="gray.400">
+            There are no plans available at the moment
+          </Text>
+        )}
       </Flex>
     </>
   );
