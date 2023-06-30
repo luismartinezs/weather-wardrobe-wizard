@@ -38,7 +38,9 @@ const getLinks = (options?: {
   requireGuest?: boolean;
   redirect?: boolean;
 }> => {
-  const isSubscribed = options?.subscription?.status === "active";
+  const isSubscribed = ["active", "trialing"].includes(
+    options?.subscription?.status || ""
+  );
 
   return [
     {

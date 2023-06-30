@@ -12,7 +12,10 @@ const StripeCheckoutButton = ({
   children?: React.ReactNode;
   isDisabled?: boolean;
 }): JSX.Element => {
-  const { checkout, loading, error } = useCheckout({ price: price.id });
+  const { checkout, loading, error } = useCheckout({
+    price: price.id,
+    payment_method_types: ["card"],
+  });
 
   return (
     <>
