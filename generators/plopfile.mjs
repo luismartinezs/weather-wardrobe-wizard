@@ -11,6 +11,23 @@ export default function plopGenerator(plop) {
     actions: [
       {
         type: "add",
+        path: "../src/components/{{pascalCase name}}.tsx",
+        templateFile: "templates/component/component.tsx.hbs",
+      }
+    ],
+  });
+  plop.setGenerator("component in folder", {
+    description: "Standalone component in its own folder",
+    prompts: [
+      {
+        type: "input",
+        name: "name",
+        message: "component name",
+      },
+    ],
+    actions: [
+      {
+        type: "add",
         path: "../src/components/{{pascalCase name}}/index.tsx",
         templateFile: "templates/component/index.ts.hbs",
       },

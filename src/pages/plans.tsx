@@ -1,7 +1,8 @@
-import { Box, Heading } from "@chakra-ui/react";
+import { Box, Flex, Heading } from "@chakra-ui/react";
 import { Product, getProducts } from "@stripe/firestore-stripe-payments";
 import { payments } from "@/firebase/payments";
-import StripePricingTable from "@/components/StripePricingTable";
+// import StripePricingTable from "@/features/plans/components/StripePricingTable";
+import PlanBox from "@/features/plans/components/PlanBox";
 
 export const getServerSideProps = async () => {
   const products = await getProducts(payments, {
@@ -27,7 +28,12 @@ export default function Plans({ products }: { products: Product[] }) {
           Purchase a subscription
         </Heading>
       </Box>
-      <StripePricingTable mode="test" />
+      {/* <StripePricingTable mode="test" /> */}
+      <Flex wrap="wrap" gap={8} justify="center">
+        {products.map((product) => (
+          <PlanBox plan={product} key={product.id} />
+        ))}
+      </Flex>
     </>
   );
 }
