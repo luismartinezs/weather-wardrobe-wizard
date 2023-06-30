@@ -16,12 +16,12 @@ const AiSuggestions = (): JSX.Element => {
   const { user } = useUser();
   const { isSubscribed, isPremium } = useSubscription(user);
   const { suggestion, isLoading } = useAiSuggestions();
+
   return (
     <ServerStateDisplayWrapper
       isLoading={isLoading}
       data={suggestion}
       disableError
-      disableLoading
     >
       <Flex gap={2} align="center">
         <Heading
@@ -42,7 +42,7 @@ const AiSuggestions = (): JSX.Element => {
             color="gray.300"
             filter={isSubscribed && isPremium ? "" : "blur(10px)"}
           >
-            {suggestion}
+            {suggestion?.content}
           </Text>
         </CardBody>
         <CardFooter pt={0} justify="end">
