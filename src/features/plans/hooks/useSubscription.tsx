@@ -11,7 +11,11 @@ function useSubscription(user: User | null) {
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    if (!user) return;
+    setError(null);
+    if (!user) {
+      setSubscription(null);
+      return;
+    }
 
     onCurrentUserSubscriptionUpdate(
       payments,

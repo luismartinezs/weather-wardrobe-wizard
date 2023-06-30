@@ -26,6 +26,7 @@ import { useUser } from "@/features/auth/context/User";
 import useSubscription from "@/features/plans/hooks/useSubscription";
 import { IconType } from "react-icons";
 import { Subscription } from "@stripe/firestore-stripe-payments";
+import SubscriptionPill from "@/features/plans/components/SubscriptionPill";
 
 const getLinks = (options?: {
   subscription?: Subscription | null;
@@ -113,6 +114,7 @@ const ResponsiveNav = (): JSX.Element => {
         <Flex align="center" gap={6}>
           <Links />
           {loading ? <Spinner /> : user && <ProfileLink user={user} />}
+          <SubscriptionPill />
         </Flex>
       </Box>
       <Drawer
@@ -154,6 +156,7 @@ const ResponsiveNav = (): JSX.Element => {
               ) : (
                 user && <ProfileLink user={user} label="Profile" />
               )}
+              <SubscriptionPill />
             </Flex>
           </DrawerBody>
 
