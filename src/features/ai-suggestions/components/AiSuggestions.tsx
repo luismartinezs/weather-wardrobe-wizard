@@ -3,26 +3,24 @@ import { useAiSuggestions } from "@/features/ai-suggestions/hooks/useAiSuggestio
 import { useUser } from "@/features/auth/context/User";
 import PlanPill from "@/features/plans/components/PlanPill";
 import useSubscription from "@/features/plans/hooks/useSubscription";
+import { useForecastAdapter } from "@/features/weather-forecast/hooks/useForecastAdapter";
 import {
   Card,
   CardBody,
-  CardFooter,
   Flex,
   Heading,
+  Skeleton,
   Text,
 } from "@chakra-ui/react";
 
 const AiSuggestions = (): JSX.Element => {
   const { user } = useUser();
   const { isSubscribed, isPremium } = useSubscription(user);
-  const { suggestion, isLoading } = useAiSuggestions();
+  const { suggestion, isLoading, error } = useAiSuggestions();
+  const { forecast } = useForecastAdapter();
 
-  return (
-    <ServerStateDisplayWrapper
-      isLoading={isLoading}
-      data={suggestion}
-      disableError
-    >
+  const heading = (
+    <>
       <Flex gap={2} align="center">
         <Heading
           as="h2"
@@ -34,24 +32,41 @@ const AiSuggestions = (): JSX.Element => {
           Ai powered suggestions
         </Heading>
         <PlanPill>Premium</PlanPill>
+        {isSubscribed && isPremium && isLoading && (
+          <Text display="block" fontSize={14} color="gray.400">
+            (AI doing its thing, give it 1 minute...)
+          </Text>
+        )}
       </Flex>
-      <Card mt={4} overflow="hidden">
-        <CardBody>
-          <Text
-            whiteSpace="pre-line"
-            color="gray.300"
-            filter={isSubscribed && isPremium ? "" : "blur(10px)"}
-          >
-            {suggestion?.content}
-          </Text>
-        </CardBody>
-        <CardFooter pt={0} justify="end">
-          <Text fontSize={14} color="gray.400">
-            Powered by OpenAI
-          </Text>
-        </CardFooter>
-      </Card>
-    </ServerStateDisplayWrapper>
+    </>
+  );
+
+  if (!forecast) {
+    return <></>;
+  }
+
+  return (
+    <>
+      {heading}
+      <ServerStateDisplayWrapper
+        isLoading={isLoading}
+        data={suggestion}
+        error={error}
+        loadingComponent={<Skeleton mt={4} height={20} />}
+      >
+        <Card mt={4} overflow="hidden">
+          <CardBody>
+            <Text
+              whiteSpace="pre-line"
+              color="gray.300"
+              filter={isSubscribed && isPremium ? "" : "blur(10px)"}
+            >
+              {suggestion?.content}
+            </Text>
+          </CardBody>
+        </Card>
+      </ServerStateDisplayWrapper>
+    </>
   );
 };
 
