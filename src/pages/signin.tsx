@@ -3,8 +3,14 @@ import { signIn } from "@/firebase/auth";
 import NextLink from "next/link";
 import SigninRegister from "@/features/auth/components/SigninRegister";
 import AuthForm, { type FormData } from "@/features/auth/components/AuthForm";
+import { useRouter } from "next/router";
 
 function SignIn() {
+  const { query } = useRouter();
+  const redirect = Array.isArray(query.redirect)
+    ? query.redirect[0]
+    : query.redirect || "/";
+
   const onSubmit = async (data: FormData) => {
     return signIn(data.email, data.password);
   };
@@ -16,7 +22,7 @@ function SignIn() {
           onSubmit={onSubmit}
           buttonText="Sign in"
           title="Sign in"
-          redirectOnAuth="/"
+          redirectOnAuth={redirect || "/"}
         />
       }
       afterFormLink={

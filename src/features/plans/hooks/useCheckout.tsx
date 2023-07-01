@@ -19,8 +19,9 @@ export function useCheckout(params: SessionCreateParams) {
       setLoading(false);
       if (err instanceof Error) {
         setError(err);
+      } else {
+        console.error(err);
       }
-      console.error(err);
     }
   };
   return {
