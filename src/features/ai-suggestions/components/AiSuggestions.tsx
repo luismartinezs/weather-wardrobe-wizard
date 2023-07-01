@@ -1,6 +1,5 @@
 import OpaqueText from "@/components/OpaqueText";
 import ServerStateDisplayWrapper from "@/components/ServerStateDisplayWrapper";
-import { useAiSuggestions } from "@/features/ai-suggestions/hooks/useAiSuggestions";
 import { useUser } from "@/features/auth/context/User";
 import PlanPill from "@/features/plans/components/PlanPill";
 import useSubscription from "@/features/plans/hooks/useSubscription";
