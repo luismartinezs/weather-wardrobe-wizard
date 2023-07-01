@@ -37,6 +37,7 @@ function useSubscription(user: User | null) {
     error,
     isSubscribed: ["active", "trialing"].includes(subscription?.status || ""),
     isPremium: subscription?.role === "premium",
+    isTrial: subscription?.status === "trialing",
   };
 }
 
