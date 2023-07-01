@@ -1,7 +1,7 @@
 import * as admin from "firebase-admin";
 import { error, info } from "firebase-functions/logger";
 import { onSchedule } from "firebase-functions/v2/scheduler";
-import { onRequest } from "firebase-functions/v2/https";
+import { onCall, onRequest, HttpsError } from "firebase-functions/v2/https";
 
 import { RECENT_LOCATIONS, FCM_TOKENS } from "./constants";
 import { UserLocationData } from "../../src/firebase/firestore/recentLocations";
@@ -12,6 +12,12 @@ import {
   type Alert,
   type OneCallData,
 } from "../../src/features/weather-forecast/utils/onecall";
+import {
+  // appCheckGuard,
+  authGuard,
+  roleGuard,
+} from "./utils/guards";
+import { Configuration, OpenAIApi } from "openai";
 
 admin.initializeApp();
 const db = admin.firestore();
@@ -19,6 +25,7 @@ const db = admin.firestore();
 const JOB_TIMER = 60 * 60 * 24; // seconds
 const jobTimerMinutes = Math.round(JOB_TIMER / 60);
 const isEmulator = process.env.FUNCTIONS_EMULATOR === "true";
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 type RecentLocations = Record<string, LocationSuggestion[]>;
 type LocationsUsers = Record<string, string[]>;
@@ -191,3 +198,57 @@ export const sendWeatherAlertsHttp = onRequest(async (req, res) => {
     res.send("Only works in emulator mode");
   }
 });
+
+export const aiSuggestions = onCall(
+  {
+    // enforceAppCheck: true,
+    // cors: ["weather-wardrobe-wizard.netlify.app", "localhost"],
+  },
+  async (request) => {
+    // appCheckGuard(request);
+    authGuard(request);
+    await roleGuard(request, "premium");
+
+    const { forecast, locationName, countryName } = request.data;
+
+    if (!forecast) {
+      throw new HttpsError("invalid-argument", "No forecast provided.");
+    }
+
+    if (!locationName) {
+      throw new HttpsError("invalid-argument", "No location name provided.");
+    }
+
+    const fullLocation = `${locationName}${
+      countryName ? ` (${countryName})` : ""
+    }`;
+
+    const configuration = new Configuration({
+      apiKey: OPENAI_API_KEY,
+    });
+
+    const openai = new OpenAIApi(configuration);
+    try {
+      const completion = await openai.createChatCompletion({
+        model: "gpt-4",
+        messages: [
+          {
+            role: "system",
+            content: "You are a helpful assistant.",
+          },
+          {
+            role: "user",
+            content: `I am going on a trip to ${fullLocation}. Suggest appropriate clothing and offer useful information relative to what items to pack, based on the location, the period of the year, and the weather forecast:\n\nLocation: ${fullLocation}\n\nSummarized weather forecast data:\n\n${JSON.stringify(
+              forecast
+            )}\n\n(temperature is in Celsius, humidity is in %, wind speed is in meters per second)`,
+          },
+        ],
+      });
+
+      return completion.data.choices[0].message;
+    } catch (err) {
+      error(err);
+      throw new HttpsError("internal", "Failed to process request");
+    }
+  }
+);

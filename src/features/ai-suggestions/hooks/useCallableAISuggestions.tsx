@@ -1,37 +1,16 @@
-// NOTE deprecated because serverless functions deployed to Netlify have a 10 second timeout
+import { useQuery } from "react-query";
+import { httpsCallable } from "firebase/functions";
+
 import { useUser } from "@/features/auth/context/User";
 import useSubscription from "@/features/plans/hooks/useSubscription";
-import { useForecastAdapter } from "@/features/weather-forecast/hooks/useForecastAdapter";
-import {
-  ForecastSummary,
-  getForecastSummary,
-} from "@/features/weather-forecast/utils/getForecastSummary";
 import useStore from "@/store";
-import { fetchErrorHandler } from "@/utils/dataFetch";
-import { useQuery } from "react-query";
+import { useForecastAdapter } from "@/features/weather-forecast/hooks/useForecastAdapter";
+import { getForecastSummary } from "@/features/weather-forecast/utils/getForecastSummary";
+import { functions } from "@/firebase/app";
 
-function fetchAiSuggestions({
-  forecast,
-  locationName,
-  countryName,
-}: {
-  forecast: ForecastSummary;
-  locationName: string;
-  countryName?: string;
-}) {
-  return fetchErrorHandler(
-    "/api/ai-suggestions",
-    "There was an error trying to fetch AI suggestions",
-    "POST",
-    {
-      forecast,
-      locationName,
-      countryName,
-    }
-  );
-}
+const aiSuggestions = httpsCallable(functions, "aiSuggestions");
 
-export function useAiSuggestions() {
+export function useCallableAiSuggestions() {
   const { user } = useUser();
   const { isSubscribed, isPremium } = useSubscription(user);
   const selectedLocation = useStore((state) => state.selectedLocation);
@@ -40,12 +19,12 @@ export function useAiSuggestions() {
 
   const query = useQuery<any, Error>(
     [
-      "getAiSuggestions",
+      "getCallableAiSuggestions",
       `${forecast}${selectedLocation?.name}${selectedLocation?.country}`,
     ],
     () => {
       if (isSubscribed && isPremium && selectedLocation && forecastSummary) {
-        return fetchAiSuggestions({
+        return aiSuggestions({
           forecast: forecastSummary,
           locationName: selectedLocation.name,
           countryName: selectedLocation.country,
@@ -62,7 +41,7 @@ export function useAiSuggestions() {
   );
 
   return {
-    suggestion: query.data,
+    suggestion: query.data?.data,
     ...query,
   };
 }
