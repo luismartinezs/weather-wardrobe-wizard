@@ -5,6 +5,8 @@ import { getFiveDayForecast } from "@/utils/weather";
 import { format } from "date-fns";
 import { useQuery } from "react-query";
 
+const QUERY_KEY = "getWeatherForecast";
+
 function fetchWeatherForecast(
   location: LocationSuggestion | null
 ): Promise<any> | undefined {
@@ -22,7 +24,7 @@ export const useWeatherForecast = () => {
 
   const query = useQuery<any, Error>(
     [
-      "getWeatherForecast",
+      QUERY_KEY,
       `${selectedLocation?.lat}${selectedLocation?.lon}${format(
         new Date(),
         "MM/dd/yyyy"

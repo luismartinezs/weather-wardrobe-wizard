@@ -14,6 +14,7 @@ import {
   Heading,
   Text,
 } from "@chakra-ui/react";
+import SubscriptionPlanInfo from "@/features/plans/components/SubscriptionPlanInfo";
 
 export default function Profile() {
   const { user } = useUser();
@@ -29,9 +30,7 @@ export default function Profile() {
         <Text fontSize="xl" mt={4}>
           Hello {user?.displayName || user?.email}!
         </Text>
-        <Box mt={2}>
-          <SignoutButton />
-        </Box>
+        <SubscriptionPlanInfo />
         {providerId === "password" ? (
           <>
             <Divider my={4} />
@@ -42,6 +41,9 @@ export default function Profile() {
         ) : (
           <Text mt={4}>You are signed in with {providerId}</Text>
         )}
+        <Box mt={4}>
+          <SignoutButton />
+        </Box>
         <Divider my={4} />
         <Card color="red" borderColor="red" border="1px">
           <CardHeader pb={2}>

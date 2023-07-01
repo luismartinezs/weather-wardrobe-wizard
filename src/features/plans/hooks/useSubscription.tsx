@@ -32,7 +32,13 @@ function useSubscription(user: User | null) {
     );
   }, [user]);
 
-  return { subscription, error };
+  return {
+    subscription,
+    error,
+    isSubscribed: ["active", "trialing"].includes(subscription?.status || ""),
+    isPremium: subscription?.role === "premium",
+    isTrial: subscription?.status === "trialing",
+  };
 }
 
 export default useSubscription;

@@ -28,6 +28,7 @@ const StripeCheckoutButton = ({
       >
         {children || "Subscribe"}
       </Button>
+
       {error && (
         <Box mt={2}>
           <ErrorMessage error={error} />

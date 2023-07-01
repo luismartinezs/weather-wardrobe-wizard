@@ -3,8 +3,14 @@ import { signUp } from "@/firebase/auth";
 import NextLink from "next/link";
 import SigninRegister from "@/features/auth/components/SigninRegister";
 import AuthForm, { type FormData } from "@/features/auth/components/AuthForm";
+import { useRouter } from "next/router";
 
 function Register() {
+  const { query } = useRouter();
+  const redirect = Array.isArray(query.redirect)
+    ? query.redirect[0]
+    : query.redirect || "/";
+
   const onSubmit = async (data: FormData) => {
     return signUp(data.email, data.password, data.displayName);
   };
@@ -17,7 +23,7 @@ function Register() {
           buttonText="Create new user"
           title="Register"
           type="register"
-          redirectOnAuth="/"
+          redirectOnAuth={redirect || "/"}
         />
       }
       afterFormLink={
