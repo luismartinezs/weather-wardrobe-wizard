@@ -10,17 +10,23 @@ export type SelectedLocationState = Immutable<{
   setLocationQuery: (query: string) => void;
   isLocationSelected: boolean;
   setIsLocationSelected: (isLocationSelected: boolean) => void;
+  resetLocation: () => void;
 }>;
+
+const initialState = {
+  selectedLocation: null,
+  locationQuery: "",
+  isLocationSelected: false,
+};
 
 export const selectedLocationSlice: StateCreator<SelectedLocationState> = (
   set
 ) => ({
-  selectedLocation: null,
+  ...initialState,
   setSelectedLocation: (selectedLocation: LocationSuggestion) =>
     set({ selectedLocation }),
-  locationQuery: "",
   setLocationQuery: (locationQuery: string) => set({ locationQuery }),
-  isLocationSelected: false,
   setIsLocationSelected: (isLocationSelected: boolean) =>
     set({ isLocationSelected }),
+  resetLocation: () => set(initialState),
 });
