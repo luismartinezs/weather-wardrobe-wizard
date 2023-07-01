@@ -1,3 +1,4 @@
+import OpaqueText from "@/components/OpaqueText";
 import ServerStateDisplayWrapper from "@/components/ServerStateDisplayWrapper";
 import { useAiSuggestions } from "@/features/ai-suggestions/hooks/useAiSuggestions";
 import { useUser } from "@/features/auth/context/User";
@@ -5,6 +6,8 @@ import PlanPill from "@/features/plans/components/PlanPill";
 import useSubscription from "@/features/plans/hooks/useSubscription";
 import { useForecastAdapter } from "@/features/weather-forecast/hooks/useForecastAdapter";
 import {
+  Box,
+  Button,
   Card,
   CardBody,
   Flex,
@@ -12,6 +15,7 @@ import {
   Skeleton,
   Text,
 } from "@chakra-ui/react";
+import NextLink from "next/link";
 
 const AiSuggestions = (): JSX.Element => {
   const { user } = useUser();
@@ -45,6 +49,34 @@ const AiSuggestions = (): JSX.Element => {
     return <></>;
   }
 
+  if (!(isSubscribed && isPremium)) {
+    return (
+      <>
+        {heading}
+        <Card mt={4} overflow="hidden">
+          <CardBody>
+            <Box position="relative">
+              <Flex
+                position="absolute"
+                inset={0}
+                justify="center"
+                align="center"
+                zIndex={10}
+              >
+                <NextLink href="/plans">
+                  <Button colorScheme="secondary" boxShadow="xl">
+                    Upgrade to Premium
+                  </Button>
+                </NextLink>
+              </Flex>
+              <OpaqueText whiteSpace="pre-line" color="gray.300" />
+            </Box>
+          </CardBody>
+        </Card>
+      </>
+    );
+  }
+
   return (
     <>
       {heading}
@@ -56,11 +88,7 @@ const AiSuggestions = (): JSX.Element => {
       >
         <Card mt={4} overflow="hidden">
           <CardBody>
-            <Text
-              whiteSpace="pre-line"
-              color="gray.300"
-              filter={isSubscribed && isPremium ? "" : "blur(10px)"}
-            >
+            <Text whiteSpace="pre-line" color="gray.300">
               {suggestion?.content}
             </Text>
           </CardBody>

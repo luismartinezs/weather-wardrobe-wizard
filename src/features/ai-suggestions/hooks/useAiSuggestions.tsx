@@ -1,3 +1,5 @@
+import { useUser } from "@/features/auth/context/User";
+import useSubscription from "@/features/plans/hooks/useSubscription";
 import { useForecastAdapter } from "@/features/weather-forecast/hooks/useForecastAdapter";
 import {
   ForecastSummary,
@@ -29,6 +31,8 @@ function fetchAiSuggestions({
 }
 
 export function useAiSuggestions() {
+  const { user } = useUser();
+  const { isSubscribed, isPremium } = useSubscription(user);
   const selectedLocation = useStore((state) => state.selectedLocation);
   const { forecast } = useForecastAdapter();
   const forecastSummary = forecast && getForecastSummary(forecast);
@@ -39,7 +43,7 @@ export function useAiSuggestions() {
       `${forecast}${selectedLocation?.name}${selectedLocation?.country}`,
     ],
     () => {
-      if (selectedLocation && forecastSummary) {
+      if (isSubscribed && isPremium && selectedLocation && forecastSummary) {
         return fetchAiSuggestions({
           forecast: forecastSummary,
           locationName: selectedLocation.name,
@@ -48,7 +52,8 @@ export function useAiSuggestions() {
       }
     },
     {
-      enabled: !!selectedLocation && !!forecastSummary,
+      enabled:
+        !!selectedLocation && !!forecastSummary && isSubscribed && isPremium,
       staleTime: Infinity,
       refetchOnWindowFocus: false,
       retry: false,
