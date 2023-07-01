@@ -16,11 +16,12 @@ import {
   Text,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
+import { useCallableAiSuggestions } from "@/features/ai-suggestions/hooks/useCallableAISuggestions";
 
 const AiSuggestions = (): JSX.Element => {
   const { user } = useUser();
   const { isSubscribed, isPremium } = useSubscription(user);
-  const { suggestion, isLoading, error } = useAiSuggestions();
+  const { suggestion, isLoading, error } = useCallableAiSuggestions();
   const { forecast } = useForecastAdapter();
 
   const heading = (
@@ -84,7 +85,7 @@ const AiSuggestions = (): JSX.Element => {
         isLoading={isLoading}
         data={suggestion}
         error={error}
-        loadingComponent={<Skeleton mt={4} height={20} />}
+        loadingComponent={<Skeleton mt={4} height={20} borderRadius="8px" />}
       >
         <Card mt={4} overflow="hidden">
           <CardBody>
