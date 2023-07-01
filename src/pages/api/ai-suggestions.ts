@@ -10,8 +10,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const { forecast, locationName, countryName } = req.body;
 
-    console.log(req.body);
-
     if (!forecast) {
       res.status(400).json({ error: "No forecast provided" });
       return;
