@@ -13,15 +13,23 @@ import {
   Heading,
   Skeleton,
   Text,
+  useMediaQuery,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useCallableAiSuggestions } from "@/features/ai-suggestions/hooks/useCallableAISuggestions";
+
+const lorem =
+  "Enim reprehenderit aliqua veniam fugiat mollit sunt proident aute. Labore anim proident nulla commodo enim eiusmod incididunt ex. Duis irure officia velit anim in consequat veniam consequat exercitation. Minim in enim anim aliquip aliquip amet commodo laboris fugiat aliqua laboris laboris Lorem irure. Lorem nulla ea excepteur cupidatat ut pariatur irure ad excepteur ad pariatur amet eu. Elit veniam laborum ullamco duis elit laboris. Esse excepteur irure fugiat est eu officia amet enim ex occaecat irure proident Lorem ut.\n\nReprehenderit do deserunt quis fugiat. Voluptate in ex exercitation non ex pariatur sit voluptate. Incididunt veniam nisi dolor aliquip qui aliquip amet elit.";
+
+const shortLorem =
+  "Culpa ullamco Lorem tempor proident. Nostrud sunt consequat commodo dolor sit excepteur do eiusmod do nostrud consectetur exercitation voluptate. Enim nostrud enim reprehenderit culpa elit sit in dolore nisi non tempor.";
 
 const AiSuggestions = (): JSX.Element => {
   const { user } = useUser();
   const { isSubscribed, isPremium } = useSubscription(user);
   const { suggestion, isLoading, error } = useCallableAiSuggestions();
   const { forecast } = useForecastAdapter();
+  const [isMobile] = useMediaQuery("(max-width: 650px)");
 
   const heading = (
     <>
@@ -71,7 +79,11 @@ const AiSuggestions = (): JSX.Element => {
                   </Button>
                 </NextLink>
               </Flex>
-              <OpaqueText whiteSpace="pre-line" color="gray.300" />
+              <OpaqueText
+                whiteSpace="pre-line"
+                color="gray.300"
+                text={isMobile ? shortLorem : lorem}
+              />
             </Box>
           </CardBody>
         </Card>
