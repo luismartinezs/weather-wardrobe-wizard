@@ -48,7 +48,7 @@ const AiSuggestions = (): JSX.Element => {
           </Heading>
           <PlanPill>{t("premium_plan")}</PlanPill>
         </Flex>
-        {isSubscribed && isPremium && !isLoading && (
+        {isSubscribed && isPremium && isLoading && (
           <Text display="block" fontSize={14} color="gray.400">
             ({t("ai_thinking")})
           </Text>
