@@ -54,6 +54,7 @@ npx playwright show-report
   - Accept to download the emulators
 - Initialize cloud functions `(cd functions && pnpm i && pnpm setupEnvVars)`
 - Build cloud functions `(cd functions && pnpm build)`
+- To run the UI against the production backend, you will need to set a new `FIREBASE_APPCHECK_DEBUG_TOKEN` in the Firebase Console ([Use App Check with the debug provider in web apps  |  Firebase App Check](https://firebase.google.com/docs/app-check/web/debug-provider))
 
 ### After initial setup
 

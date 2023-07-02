@@ -2,8 +2,11 @@ import * as admin from "firebase-admin";
 import { error, info } from "firebase-functions/logger";
 import { onSchedule } from "firebase-functions/v2/scheduler";
 import { onCall, onRequest, HttpsError } from "firebase-functions/v2/https";
+import { Configuration, OpenAIApi } from "openai";
 
 import { RECENT_LOCATIONS, FCM_TOKENS } from "./constants";
+import { authGuard, roleGuard } from "./utils/guards";
+
 import { UserLocationData } from "../../src/firebase/firestore/recentLocations";
 import { getOneCallUrl } from "../../src/features/weather-forecast/utils/urls";
 import { formatTs } from "../../src/utils/time";
@@ -12,18 +15,12 @@ import {
   type Alert,
   type OneCallData,
 } from "../../src/features/weather-forecast/utils/onecall";
-import {
-  // appCheckGuard,
-  authGuard,
-  roleGuard,
-} from "./utils/guards";
-import { Configuration, OpenAIApi } from "openai";
 
 admin.initializeApp();
 const db = admin.firestore();
 
-const JOB_TIMER = 60 * 60 * 24; // seconds
-const jobTimerMinutes = Math.round(JOB_TIMER / 60);
+const ONE_DAY = 60 * 60 * 24;
+const jobTimerMinutes = Math.round(ONE_DAY / 60);
 const isEmulator = process.env.FUNCTIONS_EMULATOR === "true";
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
@@ -201,11 +198,13 @@ export const sendWeatherAlertsHttp = onRequest(async (req, res) => {
 
 export const aiSuggestions = onCall(
   {
-    // enforceAppCheck: true,
-    // cors: ["weather-wardrobe-wizard.netlify.app", "localhost"],
+    enforceAppCheck: true,
+    cors: [
+      "https://weather-wardrobe-wizard.netlify.app",
+      "http://localhost:3000",
+    ],
   },
   async (request) => {
-    // appCheckGuard(request);
     authGuard(request);
     await roleGuard(request, "premium");
 

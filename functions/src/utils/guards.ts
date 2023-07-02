@@ -18,17 +18,6 @@ const handleGetCurrentUserRoles = async (auth: CallableRequest["auth"]) => {
   return subscriptions.docs.map((doc) => doc.data().role);
 };
 
-const isProd = process.env.NODE_ENV === "production";
-
-export const appCheckGuard = (request: CallableRequest) => {
-  if (isProd && request.app == undefined) {
-    throw new HttpsError(
-      "failed-precondition",
-      "The function must be called from an App Check verified app."
-    );
-  }
-};
-
 export const authGuard = (request: CallableRequest) => {
   if (!request.auth) {
     throw new HttpsError(

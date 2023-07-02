@@ -26,8 +26,8 @@ const WeatherAlerts = (): JSX.Element => {
       <List display="flex" flexDirection="column" gap={1}>
         {alerts
           .sort((a, b) => a.start - b.start)
-          .map((alert) => (
-            <ListItem key={alert.start}>
+          .map((alert, index) => (
+            <ListItem key={index}>
               <WeatherAlert alert={alert} />
             </ListItem>
           ))}
