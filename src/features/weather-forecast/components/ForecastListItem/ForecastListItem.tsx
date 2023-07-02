@@ -43,7 +43,7 @@ const ForecastListItem = ({
       <Text color="gray.400" fontWeight="thin">
         {getMonthDay(dayForecast.date)}
       </Text>
-      <Flex justifyContent="center">
+      <Flex justify="center" align="center" h={20}>
         <WeatherIcon
           weatherCondition={dayForecast.weatherType}
           iconCode={dayForecast.weatherIcon}
