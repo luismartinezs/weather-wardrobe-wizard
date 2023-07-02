@@ -28,9 +28,11 @@ import { IconType } from "react-icons";
 import { Subscription } from "@stripe/firestore-stripe-payments";
 import SubscriptionPill from "@/features/plans/components/SubscriptionPill";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { useTranslation } from "next-i18next";
 
-const getLinks = (options?: {
+const getLinks = (options: {
   subscription?: Subscription | null;
+  t: (key: string) => string;
 }): Array<{
   label: string;
   href: string;
@@ -42,20 +44,21 @@ const getLinks = (options?: {
   const isSubscribed = ["active", "trialing"].includes(
     options?.subscription?.status || ""
   );
+  const { t } = options;
 
   return [
     {
-      label: "Home",
+      label: t("home"),
       href: "/",
     },
     {
-      label: "Plans",
+      label: t("plans"),
       href: "/plans",
       icon: !isSubscribed ? BsStars : undefined,
       iconColor: "gold",
     },
     {
-      label: "Sign in",
+      label: t("sign_in"),
       href: "/signin",
       requireGuest: true,
       redirect: true,
@@ -64,13 +67,14 @@ const getLinks = (options?: {
 };
 
 const Links = () => {
+  const { t } = useTranslation();
   const { user } = useUser();
   const { subscription } = useSubscription(user);
   const { pathname } = useRouter();
 
   return (
     <>
-      {getLinks({ subscription })
+      {getLinks({ subscription, t })
         .filter(({ requireGuest }) => {
           if (requireGuest && user) {
             return false;
