@@ -20,7 +20,8 @@
     "firebase:deploy": "firebase deploy",
     "build:functions": "cd functions && pnpm build",
     "fb:deploy:rules": "firebase deploy --only firestore:rules",
-    "fb:deploy:functions": "firebase deploy --only functions"
+    "fb:deploy:functions": "firebase deploy --only functions",
+    "e2e:ui": "pnpm exec playwright test --ui"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.19",
