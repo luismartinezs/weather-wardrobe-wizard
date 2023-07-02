@@ -1,3 +1,7 @@
+import { AppCheckTokenResult, getToken } from "firebase/app-check";
+
+import { appCheck } from "@/firebase/app";
+
 type Method = "GET" | "POST" | "PUT" | "DELETE";
 
 export async function fetchErrorHandler(
@@ -6,7 +10,7 @@ export async function fetchErrorHandler(
   method: Method = "GET",
   body?: any
 ) {
-  const headers = { "Content-Type": "application/json" };
+  const headers = await withAppCheck({ "Content-Type": "application/json" });
 
   const fetchOptions =
     method === "GET" || method === "DELETE"
@@ -19,4 +23,20 @@ export async function fetchErrorHandler(
     throw new Error(errorMessage);
   }
   return response.json();
+}
+
+export async function withAppCheck(
+  headers: HeadersInit = {}
+): Promise<HeadersInit> {
+  let appCheckTokenResponse: AppCheckTokenResult;
+  try {
+    appCheckTokenResponse = await getToken(appCheck, /* forceRefresh= */ false);
+  } catch (err) {
+    console.error(err);
+    return headers;
+  }
+  return {
+    ...headers,
+    "X-Firebase-AppCheck": appCheckTokenResponse.token,
+  };
 }
