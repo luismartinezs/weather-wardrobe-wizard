@@ -9,6 +9,7 @@ import {
   Text,
   useId,
 } from "@chakra-ui/react";
+import { useTranslation } from "next-i18next";
 import Image from "next/image";
 
 type ClothingItemProps = {
@@ -22,6 +23,7 @@ const GridClothingItem = ({
   checked,
   onChange,
 }: ClothingItemProps): JSX.Element => {
+  const { t } = useTranslation();
   const labelId = useId();
 
   return (
@@ -57,7 +59,7 @@ const GridClothingItem = ({
               textOverflow="ellipsis"
               overflow="hidden"
             >
-              {item.label}
+              {t(item.id)}
             </Text>
           </Checkbox>
           <Box
@@ -71,7 +73,7 @@ const GridClothingItem = ({
             <AspectRatio ratio={1 / 1}>
               <Image
                 src={item.imageUrl}
-                alt={item.label}
+                alt={t(item.id)}
                 width={300}
                 height={300}
                 style={{ objectFit: "cover" }}

@@ -6,8 +6,10 @@ import { useUpdateLocationAndRefetchWeather } from "@/hooks/useUpdateLocationAnd
 import { useUser } from "@/features/auth/context/User";
 import { removeRecentLocation } from "@/firebase/firestore/recentLocations";
 import ServerStateDisplayWrapper from "../../../../components/ServerStateDisplayWrapper";
+import { useTranslation } from "next-i18next";
 
 const RecentLocations = (): JSX.Element => {
+  const { t } = useTranslation();
   const { user } = useUser();
   const { recentLocations, loading, error } = useRecentLocations();
   const { updateLocationAndRefetchWeather } =
@@ -25,7 +27,7 @@ const RecentLocations = (): JSX.Element => {
   const content = (
     <>
       <Heading as="h2" fontSize="medium" fontWeight="normal" mb={4}>
-        {recentLocations.length > 0 && "Recent locations:"}
+        {recentLocations.length > 0 && `${t("recent_locations")}:`}
       </Heading>
       <Wrap spacing={3}>
         {recentLocations.map((location, index) => (

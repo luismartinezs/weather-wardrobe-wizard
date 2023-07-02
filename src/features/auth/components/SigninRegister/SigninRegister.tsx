@@ -1,5 +1,6 @@
 import { Container, Divider, HStack, Text } from "@chakra-ui/react";
 import ThirdPartyConnect from "@/features/auth/components/ThirdPartyConnect";
+import { useTranslation } from "next-i18next";
 
 const SigninRegister = ({
   form,
@@ -8,6 +9,8 @@ const SigninRegister = ({
   form?: JSX.Element;
   afterFormLink?: JSX.Element;
 }): JSX.Element => {
+  const { t } = useTranslation();
+
   return (
     <Container
       maxW="container.sm"
@@ -20,7 +23,9 @@ const SigninRegister = ({
       {afterFormLink && afterFormLink}
       <HStack color="gray.400" mt={4}>
         <Divider color="gray.400" bgColor="gray.400" />
-        <Text px={4}>OR</Text>
+        <Text px={4} textTransform="uppercase">
+          {t("or")}
+        </Text>
         <Divider bgColor="gray.400" />
       </HStack>
       <ThirdPartyConnect />

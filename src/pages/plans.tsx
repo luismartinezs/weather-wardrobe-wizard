@@ -4,8 +4,10 @@ import { payments } from "@/firebase/payments";
 import PlanBox from "@/features/plans/components/PlanBox";
 import { useUser } from "@/features/auth/context/User";
 import NextLink from "next/link";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async ({ locale }: { locale: string }) => {
   const products = await getProducts(payments, {
     includePrices: true,
     activeOnly: true,
@@ -17,18 +19,20 @@ export const getServerSideProps = async () => {
   return {
     props: {
       products,
+      ...(await serverSideTranslations(locale, ["common"])),
     },
   };
 };
 
 export default function Plans({ products }: { products: Product[] }) {
+  const { t } = useTranslation();
   const { user } = useUser();
 
   return (
     <>
       <Box textAlign="center" mb={8}>
         <Heading as="h1" fontSize="3xl">
-          Purchase a subscription
+          {t("purchase_subscription")}
         </Heading>
         {!user && (
           <Text mt={2} color="gray.300">
@@ -40,9 +44,9 @@ export default function Plans({ products }: { products: Product[] }) {
                 color: "white",
               }}
             >
-              Sign in
+              {t("sign_in")}
             </Link>{" "}
-            before purchasing a subscription.
+            {t("before_purchasing_subscription")}
           </Text>
         )}
       </Box>
@@ -51,7 +55,7 @@ export default function Plans({ products }: { products: Product[] }) {
           products.map((product) => <PlanBox plan={product} key={product.id} />)
         ) : (
           <Text fontSize="xl" color="gray.400">
-            There are no plans available at the moment
+            {t("no_plans_available")}
           </Text>
         )}
       </Flex>

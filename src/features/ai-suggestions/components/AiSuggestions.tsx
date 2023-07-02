@@ -17,6 +17,7 @@ import {
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useCallableAiSuggestions } from "@/features/ai-suggestions/hooks/useCallableAISuggestions";
+import { useTranslation } from "next-i18next";
 
 const lorem =
   "Enim reprehenderit aliqua veniam fugiat mollit sunt proident aute. Labore anim proident nulla commodo enim eiusmod incididunt ex. Duis irure officia velit anim in consequat veniam consequat exercitation. Minim in enim anim aliquip aliquip amet commodo laboris fugiat aliqua laboris laboris Lorem irure. Lorem nulla ea excepteur cupidatat ut pariatur irure ad excepteur ad pariatur amet eu. Elit veniam laborum ullamco duis elit laboris. Esse excepteur irure fugiat est eu officia amet enim ex occaecat irure proident Lorem ut.\n\nReprehenderit do deserunt quis fugiat. Voluptate in ex exercitation non ex pariatur sit voluptate. Incididunt veniam nisi dolor aliquip qui aliquip amet elit.";
@@ -25,6 +26,7 @@ const shortLorem =
   "Culpa ullamco Lorem tempor proident. Nostrud sunt consequat commodo dolor sit excepteur do eiusmod do nostrud consectetur exercitation voluptate. Enim nostrud enim reprehenderit culpa elit sit in dolore nisi non tempor.";
 
 const AiSuggestions = (): JSX.Element => {
+  const { t } = useTranslation();
   const { user } = useUser();
   const { isSubscribed, isPremium } = useSubscription(user);
   const { suggestion, isLoading, error } = useCallableAiSuggestions();
@@ -42,13 +44,13 @@ const AiSuggestions = (): JSX.Element => {
             textTransform="uppercase"
             letterSpacing={1.2}
           >
-            Ai powered suggestions
+            {t("ai_powered_suggestions")}
           </Heading>
-          <PlanPill>Premium</PlanPill>
+          <PlanPill>{t("premium_plan")}</PlanPill>
         </Flex>
         {isSubscribed && isPremium && !isLoading && (
           <Text display="block" fontSize={14} color="gray.400">
-            (AI thinking hard, give it a minute...)
+            ({t("ai_thinking")})
           </Text>
         )}
       </Flex>
@@ -75,7 +77,7 @@ const AiSuggestions = (): JSX.Element => {
               >
                 <NextLink href="/plans">
                   <Button colorScheme="secondary" boxShadow="xl">
-                    Upgrade to Premium
+                    {t("upgrade_to_premium")}
                   </Button>
                 </NextLink>
               </Flex>

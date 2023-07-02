@@ -19,8 +19,10 @@ import { LocationSuggestion } from "@/features/location/types";
 import ErrorMessage from "@/components/ErrorMessage";
 import ServerStateDisplayWrapper from "@/components/ServerStateDisplayWrapper";
 import { useSelectLocation } from "@/features/location/hooks/useSelectLocation";
+import { useTranslation } from "next-i18next";
 
 const SelectLocation = (): JSX.Element => {
+  const { t } = useTranslation();
   const {
     locationQuery,
     locationSuggestions,
@@ -46,14 +48,14 @@ const SelectLocation = (): JSX.Element => {
     <FormControl>
       <FormLabel>
         <Text fontSize="lg" as="span" color="gray.300">
-          Where are you going?
+          {t("where_are_you_going")}
         </Text>
       </FormLabel>
       <HStack>
         <Box pos="relative" flex={1}>
           <InputGroup>
             <Input
-              placeholder="Enter a location, e.g. Hanoi"
+              placeholder={t("location_placeholder")}
               size="lg"
               value={locationQuery}
               onChange={(event) => handleLocationChange(event.target.value)}

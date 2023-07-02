@@ -14,10 +14,12 @@ import ForecastListItem from "@/features/weather-forecast/components/ForecastLis
 import TemperatureChart from "@/features/weather-forecast/components/TemperatureChart";
 import useStore from "@/store";
 import { useForecastAdapter } from "@/features/weather-forecast/hooks/useForecastAdapter";
+import { useTranslation } from "next-i18next";
 
 const itemWidth = 150;
 
 const ForecastCard = (): JSX.Element => {
+  const { t } = useTranslation();
   const { forecast } = useForecastAdapter("onecall");
   const selectedLocation = useStore((state) => state.selectedLocation);
 
@@ -41,7 +43,7 @@ const ForecastCard = (): JSX.Element => {
             textTransform="uppercase"
             letterSpacing={1.2}
           >
-            Daily forecast for{" "}
+            {t("daily_forecast_for")}{" "}
             <Text as="span" color="primary.200">
               {selectedLocation.name}
             </Text>

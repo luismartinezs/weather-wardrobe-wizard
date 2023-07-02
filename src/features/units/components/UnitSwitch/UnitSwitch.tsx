@@ -1,8 +1,10 @@
 import { IMPERIAL, METRIC } from "@/firebase/firestore/user";
 import { useUnits } from "@/features/units/hooks/useUnits";
 import { FormControl, Show, Switch, Text } from "@chakra-ui/react";
+import { useTranslation } from "next-i18next";
 
 const UnitSwitch = (): JSX.Element => {
+  const { t } = useTranslation();
   const { units, setUnits } = useUnits();
 
   return (
@@ -15,7 +17,7 @@ const UnitSwitch = (): JSX.Element => {
     >
       <Show above="md">
         <Text as="span" color={units === METRIC ? "white" : "gray.500"}>
-          Metric
+          {t("metric")}
         </Text>
       </Show>
       <Show below="md">
@@ -38,7 +40,7 @@ const UnitSwitch = (): JSX.Element => {
       />
       <Show above="md">
         <Text as="span" color={units === IMPERIAL ? "white" : "gray.500"}>
-          Imperial
+          {t("imperial")}
         </Text>
       </Show>
     </FormControl>

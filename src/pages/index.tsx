@@ -14,28 +14,23 @@ import AiSuggestions from "@/features/ai-suggestions/components/AiSuggestions";
 export async function getStaticProps({ locale }: { locale: string }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["common", "footer"])),
-      // Will be passed to the page component as props
+      ...(await serverSideTranslations(locale, ["common"])),
     },
   };
 }
 
 export default function Home() {
-  const { t } = useTranslation("footer");
+  const { t } = useTranslation();
 
   return (
     <>
       <Head>
-        <title>Weather Wardrobe Wizard</title>
-        <meta
-          name="description"
-          content="Get suggestions of clothes to pack based on the weather forecast for the next 5 days"
-        />
+        <title>{t("app_title")}</title>
+        <meta name="description" content={t("app_description")} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Text mb={4} fontSize="xl" color="gray.400">
-        I will help you decide what clothes to pack for your trip, based on the
-        weather forecast
+        {t("home_help_text")}
       </Text>
       <Container px={0}>
         <SelectLocation />

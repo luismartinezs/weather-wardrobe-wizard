@@ -18,6 +18,7 @@ import ErrorMessage from "@/components/ErrorMessage";
 import { getAuthError } from "@/firebase/util";
 import { useRouter } from "next/router";
 import { useUser } from "@/features/auth/context/User";
+import { useTranslation } from "next-i18next";
 
 export type FormData = {
   email: string;
@@ -46,6 +47,7 @@ function AuthForm({
   type = "signin",
   redirectOnAuth,
 }: AuthFormProps) {
+  const { t } = useTranslation();
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
   const { user, loading: userLoading, error: userError } = useUser();
@@ -96,7 +98,9 @@ function AuthForm({
       {userError && <ErrorMessage error={userError} />}
       {type === "register" && (
         <FormControl isInvalid={!!errors.displayName}>
-          <FormLabel htmlFor="displayName">Name (optional)</FormLabel>
+          <FormLabel htmlFor="displayName">
+            {t("name")} ({t("optional")})
+          </FormLabel>
           <Input id="displayName" {...register("displayName")} />
           <FormErrorMessage aria-live="polite">
             {errors.displayName?.message}
@@ -104,14 +108,18 @@ function AuthForm({
         </FormControl>
       )}
       <FormControl isInvalid={!!errors.email}>
-        <FormLabel htmlFor="email">Email (required)</FormLabel>
+        <FormLabel htmlFor="email">
+          {t("email")} ({t("required")})
+        </FormLabel>
         <Input id="email" aria-required="true" {...register("email")} />
         <FormErrorMessage aria-live="polite">
           {errors.email?.message}
         </FormErrorMessage>
       </FormControl>
       <FormControl isInvalid={!!errors.password}>
-        <FormLabel htmlFor="password">Password (required)</FormLabel>
+        <FormLabel htmlFor="password">
+          {t("password")} ({t("required")})
+        </FormLabel>
         <Input
           id="password"
           type="password"
