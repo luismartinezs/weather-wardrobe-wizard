@@ -46,7 +46,7 @@ const AiSuggestions = (): JSX.Element => {
           </Heading>
           <PlanPill>Premium</PlanPill>
         </Flex>
-        {isSubscribed && isPremium && !isLoading && (
+        {isSubscribed && isPremium && isLoading && (
           <Text display="block" fontSize={14} color="gray.400">
             (AI thinking hard, give it a minute...)
           </Text>
