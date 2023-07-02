@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useState } from "react";
 
 const WeatherIcon = ({
   weatherCondition,
@@ -7,12 +8,20 @@ const WeatherIcon = ({
   weatherCondition: string;
   iconCode: string;
 }): JSX.Element => {
+  const iconSrc = `/weather-icons/dark/${iconCode}.png`;
+  const fallbackIconSrc = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+
+  const [imgSrc, setImgSrc] = useState(iconSrc);
+
   return (
     <Image
-      src={`https://openweathermap.org/img/wn/${iconCode}@2x.png`}
+      src={imgSrc}
       alt={weatherCondition}
-      width={80}
-      height={80}
+      width={75}
+      height={75}
+      onError={() => {
+        setImgSrc(fallbackIconSrc);
+      }}
     />
   );
 };
