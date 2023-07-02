@@ -19,16 +19,16 @@ function fetchAiSuggestions({
   locationName: string;
   countryName?: string;
 }) {
-  return fetchErrorHandler(
-    "/api/ai-suggestions",
-    "There was an error trying to fetch AI suggestions",
-    "POST",
-    {
+  return fetchErrorHandler({
+    url: "/api/ai-suggestions",
+    errorMessage: "There was an error trying to fetch AI suggestions",
+    method: "POST",
+    body: {
       forecast,
       locationName,
       countryName,
-    }
-  );
+    },
+  });
 }
 
 export function useAiSuggestions() {

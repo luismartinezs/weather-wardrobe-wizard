@@ -13,10 +13,10 @@ function fetchWeatherForecast(
   if (!location) {
     return;
   }
-  return fetchErrorHandler(
-    `/api/weather-forecast?lat=${location.lat}&lon=${location.lon}`,
-    "There was an error trying to fetch weather report"
-  );
+  return fetchErrorHandler({
+    url: `/api/weather-forecast?lat=${location.lat}&lon=${location.lon}`,
+    errorMessage: "There was an error trying to fetch weather report",
+  });
 }
 
 export const useWeatherForecast = () => {

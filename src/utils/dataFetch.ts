@@ -1,16 +1,23 @@
-import { AppCheckTokenResult, getToken } from "firebase/app-check";
-
-import { appCheck } from "@/firebase/app";
+import { AppCheck, AppCheckTokenResult, getToken } from "firebase/app-check";
 
 type Method = "GET" | "POST" | "PUT" | "DELETE";
 
-export async function fetchErrorHandler(
-  url: RequestInfo | URL,
-  errorMessage: string,
-  method: Method = "GET",
-  body?: any
-) {
-  const headers = await withAppCheck({ "Content-Type": "application/json" });
+export async function fetchErrorHandler({
+  url,
+  errorMessage,
+  method = "GET",
+  body,
+  appCheck,
+}: {
+  url: RequestInfo | URL;
+  errorMessage: string;
+  method?: Method;
+  body?: any;
+  appCheck?: AppCheck | null;
+}) {
+  const headers = await withAppCheck(appCheck, {
+    "Content-Type": "application/json",
+  });
 
   const fetchOptions =
     method === "GET" || method === "DELETE"
@@ -26,8 +33,12 @@ export async function fetchErrorHandler(
 }
 
 export async function withAppCheck(
+  appCheck?: AppCheck | null,
   headers: HeadersInit = {}
 ): Promise<HeadersInit> {
+  if (!appCheck) {
+    return headers;
+  }
   let appCheckTokenResponse: AppCheckTokenResult;
   try {
     appCheckTokenResponse = await getToken(appCheck, /* forceRefresh= */ false);

@@ -15,10 +15,10 @@ function fetchOneCall(
   if (!location) {
     return;
   }
-  return fetchErrorHandler(
-    `/api/onecall?lat=${location.lat}&lon=${location.lon}`,
-    "There was an error trying to fetch weather report"
-  );
+  return fetchErrorHandler({
+    url: `/api/onecall?lat=${location.lat}&lon=${location.lon}`,
+    errorMessage: "There was an error trying to fetch weather report",
+  });
 }
 
 export const useOneCall = (): {

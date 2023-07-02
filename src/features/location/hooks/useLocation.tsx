@@ -6,10 +6,11 @@ import { fetchErrorHandler } from "@/utils/dataFetch";
 function fetchLocationSuggestions(
   query: string
 ): Promise<LocationSuggestion[]> {
-  return fetchErrorHandler(
-    `/api/geocoding?query=${query}`,
-    "There was an error trying to get location suggestions. Try again."
-  );
+  return fetchErrorHandler({
+    url: `/api/geocoding?query=${query}`,
+    errorMessage:
+      "There was an error trying to get location suggestions. Try again.",
+  });
 }
 
 export const useLocation = ({ locationQuery }: { locationQuery: string }) => {
