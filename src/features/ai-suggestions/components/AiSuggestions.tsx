@@ -25,20 +25,22 @@ const AiSuggestions = (): JSX.Element => {
 
   const heading = (
     <>
-      <Flex gap={2} align="center">
-        <Heading
-          as="h2"
-          fontSize="lg"
-          fontWeight="thin"
-          textTransform="uppercase"
-          letterSpacing={1.2}
-        >
-          Ai powered suggestions
-        </Heading>
-        <PlanPill>Premium</PlanPill>
-        {isSubscribed && isPremium && isLoading && (
+      <Flex gap={2} align="center" wrap="wrap">
+        <Flex gap={2} align="center">
+          <Heading
+            as="h2"
+            fontSize="lg"
+            fontWeight="thin"
+            textTransform="uppercase"
+            letterSpacing={1.2}
+          >
+            Ai powered suggestions
+          </Heading>
+          <PlanPill>Premium</PlanPill>
+        </Flex>
+        {isSubscribed && isPremium && !isLoading && (
           <Text display="block" fontSize={14} color="gray.400">
-            (AI doing its thing, give it 1 minute...)
+            (AI thinking hard, give it a minute...)
           </Text>
         )}
       </Flex>
