@@ -62,3 +62,5 @@ emu-data
 
 # Stripe
 firestore-stripe-payments.secret.local
+# Sentry Auth Token
+.sentryclirc

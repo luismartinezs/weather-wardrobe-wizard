@@ -1,4 +1,21 @@
-const withPWA = require('next-pwa')({
+const { withSentryConfig } = require("@sentry/nextjs");
+const nextPwa = require('next-pwa')
+
+const SentryWebpackPluginOptions = {
+  silent: true,
+  org: "luis-martinez-suarez",
+  project: "weather-wardrobe-wizard",
+}
+
+const SentryOptions = {
+  widenClientFileUpload: true,
+  transpileClientSDK: true,
+  tunnelRoute: "/monitoring",
+  hideSourceMaps: true,
+  disableLogger: true,
+}
+
+const withPWA = nextPwa({
   dest: 'public',
   disable: process.env.NODE_ENV === 'development',
 })
@@ -25,4 +42,12 @@ const nextConfig = {
   transpilePackages: ["@stripe/firestore-stripe-payments"],
 };
 
-module.exports = withPWA(nextConfig);
+if (process.env.NODE_ENV === 'production') {
+  module.exports = withSentryConfig(
+    withPWA(nextConfig),
+    SentryWebpackPluginOptions,
+    SentryOptions
+  );
+} else {
+  module.exports = withPWA(nextConfig);
+}
