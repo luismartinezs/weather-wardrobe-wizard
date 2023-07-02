@@ -27,6 +27,7 @@ import useSubscription from "@/features/plans/hooks/useSubscription";
 import { IconType } from "react-icons";
 import { Subscription } from "@stripe/firestore-stripe-payments";
 import SubscriptionPill from "@/features/plans/components/SubscriptionPill";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const getLinks = (options?: {
   subscription?: Subscription | null;
@@ -117,6 +118,7 @@ const ResponsiveNav = (): JSX.Element => {
           <Links />
           {loading ? <Spinner /> : user && <ProfileLink user={user} />}
           <SubscriptionPill />
+          <LanguageSwitcher />
         </Flex>
       </Box>
       <Drawer
@@ -159,6 +161,7 @@ const ResponsiveNav = (): JSX.Element => {
                 user && <ProfileLink user={user} label="Profile" />
               )}
               <SubscriptionPill />
+              <LanguageSwitcher />
             </Flex>
           </DrawerBody>
 
