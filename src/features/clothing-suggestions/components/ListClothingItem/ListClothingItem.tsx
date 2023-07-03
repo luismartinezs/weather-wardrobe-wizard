@@ -33,7 +33,7 @@ const ListClothingItem = ({
         w="100%"
       >
         <Text ml={2} id={labelId} color={checked ? "gray.500" : "gray.100"}>
-          {t(item.id)}
+          {t(item.id as string)}
         </Text>
       </Checkbox>
     </ListItem>

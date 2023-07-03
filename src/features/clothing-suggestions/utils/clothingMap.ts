@@ -277,4 +277,4 @@ export const clothingMap: { [index: string]: ClothingSuggestion } = {
   },
 };
 
-export type ClothingId = string;
+export type ClothingId = keyof typeof clothingMap;

@@ -56,14 +56,14 @@ const FlexClothingItem = ({
             textTransform="uppercase"
             fontWeight="thin"
           >
-            {t(item.id)}
+            {t(item.id as string)}
           </Text>
         </Checkbox>
         <Box mt={4} borderRadius={5} overflow="hidden">
           <AspectRatio maxW="300px" ratio={1 / 1}>
             <Image
               src={item.imageUrl}
-              alt={t(item.id)}
+              alt={t(item.id as string)}
               width={300}
               height={300}
               style={{ objectFit: "cover" }}

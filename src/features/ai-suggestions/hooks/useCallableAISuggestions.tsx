@@ -31,6 +31,8 @@ export function useCallableAiSuggestions() {
           locationName: selectedLocation.name,
           countryName: selectedLocation.country,
           lang: i18n.resolvedLanguage,
+          model:
+            process.env.NODE_ENV === "production" ? "gpt-4" : "gpt-3.5-turbo",
         });
       }
     },

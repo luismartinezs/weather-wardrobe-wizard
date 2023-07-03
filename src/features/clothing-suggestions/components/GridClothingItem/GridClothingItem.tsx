@@ -59,7 +59,7 @@ const GridClothingItem = ({
               textOverflow="ellipsis"
               overflow="hidden"
             >
-              {t(item.id)}
+              {t(item.id as string)}
             </Text>
           </Checkbox>
           <Box
@@ -73,7 +73,7 @@ const GridClothingItem = ({
             <AspectRatio ratio={1 / 1}>
               <Image
                 src={item.imageUrl}
-                alt={t(item.id)}
+                alt={t(item.id as string)}
                 width={300}
                 height={300}
                 style={{ objectFit: "cover" }}

@@ -201,7 +201,13 @@ const langMap: Record<string, string> = {
   en: "",
 };
 
-export const aiSuggestions = onCall(
+export const aiSuggestions = onCall<{
+  forecast: string;
+  locationName: string;
+  countryName?: string;
+  lang?: string;
+  model?: string;
+}>(
   {
     enforceAppCheck: true,
     cors: [
@@ -213,7 +219,7 @@ export const aiSuggestions = onCall(
     authGuard(request);
     await roleGuard(request, "premium");
 
-    const { forecast, locationName, countryName, lang } = request.data;
+    const { forecast, locationName, countryName, lang, model } = request.data;
 
     if (!forecast) {
       throw new HttpsError("invalid-argument", "No forecast provided.");
@@ -243,7 +249,7 @@ export const aiSuggestions = onCall(
 
     try {
       const completion = await openai.createChatCompletion({
-        model: "gpt-4",
+        model: model || "gpt-4",
         messages: [
           {
             role: "system",
