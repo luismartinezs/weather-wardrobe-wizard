@@ -29,6 +29,7 @@ import { Subscription } from "@stripe/firestore-stripe-payments";
 import SubscriptionPill from "@/features/plans/components/SubscriptionPill";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useTranslation } from "next-i18next";
+import ThemeButton from "@/components/ThemeButton";
 
 const getLinks = (options: {
   subscription?: Subscription | null;
@@ -124,6 +125,7 @@ const ResponsiveNav = (): JSX.Element => {
           {loading ? <Spinner /> : user && <ProfileLink user={user} />}
           <SubscriptionPill />
           <LanguageSwitcher />
+          <ThemeButton />
         </Flex>
       </Box>
       <Drawer
@@ -160,13 +162,22 @@ const ResponsiveNav = (): JSX.Element => {
               px={6}
             >
               <Links />
-              {loading ? (
-                <Spinner />
-              ) : (
-                user && <ProfileLink user={user} label={t("profile")} />
-              )}
-              <SubscriptionPill />
-              <LanguageSwitcher />
+              <Flex align="center" gap={2}>
+                {loading ? (
+                  <Spinner />
+                ) : (
+                  user && <ProfileLink user={user} label={t("profile")} />
+                )}
+                <SubscriptionPill />
+              </Flex>
+              <Flex align="center" gap={4}>
+                <LanguageSwitcher />
+                <ThemeButton
+                  buttonProps={{
+                    size: "lg",
+                  }}
+                />
+              </Flex>
             </Flex>
           </DrawerBody>
 
