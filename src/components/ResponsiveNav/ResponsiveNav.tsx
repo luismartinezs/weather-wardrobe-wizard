@@ -100,6 +100,7 @@ const Links = () => {
 };
 
 const ResponsiveNav = (): JSX.Element => {
+  const { t } = useTranslation();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { user, loading } = useUser();
   useRouteChange(() => isOpen && onClose(), [isOpen, onClose]);
@@ -145,7 +146,7 @@ const ResponsiveNav = (): JSX.Element => {
             </Flex>
             {user && (
               <Text fontWeight="normal" fontSize="md" align="center">
-                Welcome {user.displayName || user.email}!
+                {t("welcome")} {user.displayName || user.email}!
               </Text>
             )}
           </DrawerHeader>

@@ -3,6 +3,8 @@ import { format, isToday, isTomorrow } from "date-fns";
 
 import WeatherIcon from "@/features/weather-forecast/components/WeatherIcon";
 import { WeatherForecast } from "@/features/weather-forecast/types";
+import { useTranslation } from "next-i18next";
+import { i18nMap } from "@/features/weather-forecast/utils/i18nMap";
 
 function getWeekDay(dateString: string) {
   const _date = new Date(dateString);
@@ -26,6 +28,9 @@ const ForecastListItem = ({
   dayForecast: WeatherForecast;
   width: number;
 }): JSX.Element => {
+  const { i18n } = useTranslation();
+  const locale = i18n.resolvedLanguage;
+
   return (
     <ListItem
       key={dayForecast.date}
@@ -49,7 +54,11 @@ const ForecastListItem = ({
           iconCode={dayForecast.weatherIcon}
         />
       </Flex>
-      <Text color="gray.400">{dayForecast.weatherType}</Text>
+      <Text color="gray.400">
+        {locale && locale !== "en"
+          ? i18nMap[locale][dayForecast.weatherType]
+          : dayForecast.weatherType}
+      </Text>
     </ListItem>
   );
 };
