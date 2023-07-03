@@ -2,8 +2,11 @@ import { Flex, Heading, Link } from "@chakra-ui/react";
 import Image from "next/image";
 import ResponsiveNav from "@/components/ResponsiveNav";
 import NextLink from "next/link";
+import { useTranslation } from "next-i18next";
 
 const Header = () => {
+  const { t } = useTranslation();
+
   return (
     <>
       <Flex
@@ -40,7 +43,7 @@ const Header = () => {
                 width="fit-content"
                 fontSize={{ base: "2xl", md: "5xl" }}
               >
-                Weather Wardrobe Wizard
+                {t("app_title")}
               </Heading>
             </Link>
           </Flex>

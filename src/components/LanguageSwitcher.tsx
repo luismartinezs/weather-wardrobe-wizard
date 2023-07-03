@@ -1,12 +1,14 @@
 import { Select } from "@chakra-ui/react";
+import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 
 export default function LanguageSwitcher() {
+  const { t } = useTranslation();
   const router = useRouter();
   return (
     <div>
       <Select
-        placeholder="Select language"
+        placeholder={t("select_lang")}
         onChange={(e) =>
           router.push(
             {

@@ -21,6 +21,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { deleteAccount } from "@/firebase/auth";
 import { getAuthError } from "@/firebase/util";
 import { useUser } from "@/features/auth/context/User";
+import { useTranslation } from "next-i18next";
 
 type FormData = {
   password: string | undefined;
@@ -33,6 +34,7 @@ const DeleteAccountModal = ({
   isOpen: boolean;
   onClose: () => void;
 }): JSX.Element => {
+  const { t } = useTranslation();
   const toast = useToast();
   const { user } = useUser();
   const isPasswordProvider = user?.providerData[0]?.providerId === "password";
@@ -74,25 +76,21 @@ const DeleteAccountModal = ({
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent as="form" onSubmit={handleDeleteAccount}>
-        <ModalHeader>Delete acccount</ModalHeader>
+        <ModalHeader>{t("delete_account")}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Text>
-            After your account is deleted, all your data will be lost.
-          </Text>
+          <Text>{t("delete_warning")}</Text>
           {isPasswordProvider && (
             <Box>
-              <Text mt={1}>
-                Enter your password to confirm you want to delete.
-              </Text>
+              <Text mt={1}>{t("enter_password_confirm")}</Text>
               <FormControl mt={2} isInvalid={!!errors.password}>
                 <FormLabel srOnly={true} htmlFor="password">
-                  Password
+                  {t("password")}
                 </FormLabel>
                 <Input
                   id="password"
                   type="password"
-                  placeholder="Your password"
+                  placeholder={t("your_password")}
                   {...register("password")}
                 />
                 <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
@@ -103,10 +101,10 @@ const DeleteAccountModal = ({
 
         <ModalFooter>
           <Button colorScheme="red" variant="ghost" mr={3} onClick={onClose}>
-            Keep account
+            {t("keep_account")}
           </Button>
           <Button type="submit" colorScheme="red" isLoading={isSubmitting}>
-            Delete account forever
+            {t("del_acc_forever")}
           </Button>
         </ModalFooter>
       </ModalContent>

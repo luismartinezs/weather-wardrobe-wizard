@@ -49,6 +49,7 @@ const GridClothingItem = ({
               ".chakra-checkbox__label": {
                 width: "100%",
                 margin: "0 2em",
+                overflow: "hidden",
               },
             }}
           >

@@ -31,7 +31,7 @@ const SubscriptionPlanInfo = ({ plan }: { plan?: Product }): JSX.Element => {
     <Box textAlign="left">
       <Text mt={4} color="gray.400">
         {t("currently_subscribed_to_plan", {
-          plan: subscription.role,
+          role: subscription.role,
         })}
         {subscription.cancel_at_period_end && subscription.cancel_at && (
           <>

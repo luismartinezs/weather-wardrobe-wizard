@@ -163,7 +163,7 @@ const ResponsiveNav = (): JSX.Element => {
               {loading ? (
                 <Spinner />
               ) : (
-                user && <ProfileLink user={user} label="Profile" />
+                user && <ProfileLink user={user} label={t("profile")} />
               )}
               <SubscriptionPill />
               <LanguageSwitcher />

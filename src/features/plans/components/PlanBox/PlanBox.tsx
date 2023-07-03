@@ -7,8 +7,10 @@ import StripeCheckoutButton from "@/features/plans/components/StripeCheckoutButt
 import useSubscription from "@/features/plans/hooks/useSubscription";
 import { useUser } from "@/features/auth/context/User";
 import SubscriptionPlanInfo from "../SubscriptionPlanInfo";
+import { useTranslation } from "next-i18next";
 
 const PlanBox = ({ plan }: { plan: Product }): JSX.Element => {
+  const { t } = useTranslation();
   const features =
     plan.metadata.firebaseRole && featuresMap[plan.metadata.firebaseRole];
   const { user } = useUser();
@@ -32,9 +34,11 @@ const PlanBox = ({ plan }: { plan: Product }): JSX.Element => {
           <Text as="span" fontSize="5xl" fontWeight="bold">
             {getCurrency(price.unit_amount / 100, "EUR")}{" "}
           </Text>
-          <Text as="span" color="gray.300" fontSize="lg">
-            / {price.interval}
-          </Text>
+          {price.interval && (
+            <Text as="span" color="gray.300" fontSize="lg">
+              / {t(price.interval)}
+            </Text>
+          )}
         </Text>
       )}
       {price && (

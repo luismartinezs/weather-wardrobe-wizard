@@ -5,21 +5,7 @@ import WeatherIcon from "@/features/weather-forecast/components/WeatherIcon";
 import { WeatherForecast } from "@/features/weather-forecast/types";
 import { useTranslation } from "next-i18next";
 import { i18nMap } from "@/features/weather-forecast/utils/i18nMap";
-
-function getWeekDay(dateString: string) {
-  const _date = new Date(dateString);
-
-  if (isTomorrow(_date)) return "Tomorrow";
-  if (isToday(_date)) return "Today";
-
-  return format(_date, "iiii");
-}
-
-function getMonthDay(dateString: string) {
-  const _date = new Date(dateString);
-
-  return format(_date, "MMM d");
-}
+import { useDateFnsLocale } from "@/hooks/useDateFnsLocale";
 
 const ForecastListItem = ({
   dayForecast,
@@ -28,8 +14,28 @@ const ForecastListItem = ({
   dayForecast: WeatherForecast;
   width: number;
 }): JSX.Element => {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const locale = i18n.resolvedLanguage;
+  const dateFnsLocale = useDateFnsLocale();
+
+  function getWeekDay(dateString: string) {
+    const _date = new Date(dateString);
+
+    if (isTomorrow(_date)) return t("tomorrow");
+    if (isToday(_date)) return t("today");
+
+    return format(_date, "iiii", {
+      locale: dateFnsLocale,
+    });
+  }
+
+  function getMonthDay(dateString: string) {
+    const _date = new Date(dateString);
+
+    return format(_date, "MMM d", {
+      locale: dateFnsLocale,
+    });
+  }
 
   return (
     <ListItem
@@ -44,7 +50,7 @@ const ForecastListItem = ({
       minW={`${width}px`}
       data-testid="forecast-day"
     >
-      <Text>{getWeekDay(dayForecast.date)}</Text>
+      <Text textTransform="capitalize">{getWeekDay(dayForecast.date)}</Text>
       <Text color="gray.400" fontWeight="thin">
         {getMonthDay(dayForecast.date)}
       </Text>
@@ -54,7 +60,7 @@ const ForecastListItem = ({
           iconCode={dayForecast.weatherIcon}
         />
       </Flex>
-      <Text color="gray.400">
+      <Text color="gray.400" textTransform="capitalize">
         {locale && locale !== "en"
           ? i18nMap[locale][dayForecast.weatherType]
           : dayForecast.weatherType}
