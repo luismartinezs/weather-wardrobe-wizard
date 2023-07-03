@@ -1,4 +1,11 @@
-import { Box, Container, Flex, Spinner, useToast } from "@chakra-ui/react";
+import {
+  Box,
+  Container,
+  Flex,
+  Spinner,
+  useColorModeValue,
+  useToast,
+} from "@chakra-ui/react";
 import { SkipNavContent } from "@chakra-ui/skip-nav";
 
 import Footer from "@/components/Footer";
@@ -9,6 +16,8 @@ import { useFirebaseMessaging } from "@/firebase/hooks/useFirebaseMessaging";
 
 const Layout = ({ children }: { children: React.ReactNode }): JSX.Element => {
   const { loading, error } = useUser();
+  const bg = useColorModeValue("gray.100", "gray.900");
+  const footerBg = useColorModeValue("gray.50", "gray.900");
   const toast = useToast();
   useFirebaseMessaging((payload) => {
     toast({
@@ -21,7 +30,7 @@ const Layout = ({ children }: { children: React.ReactNode }): JSX.Element => {
   });
 
   return (
-    <Flex minH="100vh" direction="column">
+    <Flex minH="100vh" direction="column" bg={bg}>
       <Header />
       <Container
         as="main"
@@ -47,7 +56,7 @@ const Layout = ({ children }: { children: React.ReactNode }): JSX.Element => {
           children
         )}
       </Container>
-      <Box bg="gray.900" position="absolute" bottom={0} w="100%" as="footer">
+      <Box bg={footerBg} position="absolute" bottom={0} w="100%" as="footer">
         <Footer />
       </Box>
     </Flex>

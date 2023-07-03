@@ -16,6 +16,7 @@ import {
   Text,
   Spinner,
   Icon,
+  useColorMode,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import Image from "next/image";
@@ -34,6 +35,7 @@ import ThemeButton from "@/components/ThemeButton";
 const getLinks = (options: {
   subscription?: Subscription | null;
   t: (key: string) => string;
+  colorMode?: string;
 }): Array<{
   label: string;
   href: string;
@@ -45,7 +47,8 @@ const getLinks = (options: {
   const isSubscribed = ["active", "trialing"].includes(
     options?.subscription?.status || ""
   );
-  const { t } = options;
+  const { t, colorMode } = options;
+  const isLight = colorMode === "light";
 
   return [
     {
@@ -56,7 +59,7 @@ const getLinks = (options: {
       label: t("plans"),
       href: "/plans",
       icon: !isSubscribed ? BsStars : undefined,
-      iconColor: "gold",
+      iconColor: isLight ? "gray.500" : "gold",
     },
     {
       label: t("sign_in"),
@@ -68,6 +71,7 @@ const getLinks = (options: {
 };
 
 const Links = () => {
+  const { colorMode } = useColorMode();
   const { t } = useTranslation();
   const { user } = useUser();
   const { subscription } = useSubscription(user);
@@ -75,7 +79,7 @@ const Links = () => {
 
   return (
     <>
-      {getLinks({ subscription, t })
+      {getLinks({ subscription, t, colorMode })
         .filter(({ requireGuest }) => {
           if (requireGuest && user) {
             return false;

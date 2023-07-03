@@ -1,4 +1,4 @@
-import { Flex, Heading, Link } from "@chakra-ui/react";
+import { Flex, Heading, Link, useColorModeValue } from "@chakra-ui/react";
 import Image from "next/image";
 import ResponsiveNav from "@/components/ResponsiveNav";
 import NextLink from "next/link";
@@ -6,6 +6,7 @@ import { useTranslation } from "next-i18next";
 
 const Header = () => {
   const { t } = useTranslation();
+  const header = useColorModeValue("gray.800", "white");
 
   return (
     <>
@@ -15,7 +16,7 @@ const Header = () => {
         justify="space-between"
         wrap="nowrap"
         padding="1rem"
-        color="white"
+        color={header}
       >
         <Flex align="center">
           <Link as={NextLink} href="/" display={{ base: "none", lg: "block" }}>

@@ -1,4 +1,4 @@
-import { Text, Link } from "@chakra-ui/react";
+import { Text, Link, useColorModeValue } from "@chakra-ui/react";
 import { signUp } from "@/firebase/auth";
 import NextLink from "next/link";
 import SigninRegister from "@/features/auth/components/SigninRegister";
@@ -9,6 +9,7 @@ import { useTranslation } from "next-i18next";
 export { commonGetServerSideProps as getServerSideProps } from "@/utils/commonGetServerSideProps";
 
 function Register() {
+  const link = useColorModeValue("gray.600", "gray.400");
   const { t } = useTranslation();
   const { query } = useRouter();
   const redirect = Array.isArray(query.redirect)
@@ -32,7 +33,7 @@ function Register() {
       }
       afterFormLink={
         <Link as={NextLink} mt="4" href="/signin">
-          <Text align="center" color="gray.400" fontSize="sm" mt={2}>
+          <Text align="center" color={link} fontSize="sm" mt={2}>
             {t("or_sign_in")}
           </Text>
         </Link>

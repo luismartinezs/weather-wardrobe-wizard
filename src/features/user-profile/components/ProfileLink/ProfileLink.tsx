@@ -1,4 +1,4 @@
-import { Flex, Icon, Link, Text } from "@chakra-ui/react";
+import { Flex, Icon, Link, Text, useColorModeValue } from "@chakra-ui/react";
 import { type User } from "firebase/auth";
 import NextLink from "next/link";
 import { useEffect, useState } from "react";
@@ -12,6 +12,7 @@ const ProfileLink = ({
   label?: string;
 }): JSX.Element => {
   const [displayLabel, setDisplayLabel] = useState("");
+  const icon = useColorModeValue("gray.500", "gray.400");
 
   // NOTE attempt to fix hydration error
   useEffect(() => {
@@ -21,7 +22,7 @@ const ProfileLink = ({
   return (
     <Link as={NextLink} href="/profile">
       <Flex align="center" gap="2">
-        <Icon as={BiUserCircle} boxSize={6} color="gray.400" />
+        <Icon as={BiUserCircle} boxSize={6} color={icon} />
         <Text as="span">{displayLabel}</Text>
       </Flex>
     </Link>

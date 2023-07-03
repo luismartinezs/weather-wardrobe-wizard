@@ -1,10 +1,18 @@
 import { useOneCall } from "@/features/weather-forecast/hooks/useOneCall";
 import WeatherAlert from "../WeatherAlert/WeatherAlert";
-import { Flex, List, ListItem, Text } from "@chakra-ui/react";
+import {
+  Flex,
+  List,
+  ListItem,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import useStore from "@/store";
 import { useTranslation } from "next-i18next";
 
 const WeatherAlerts = (): JSX.Element => {
+  const text = useColorModeValue("gray.700", "gray.300");
+  const location = useColorModeValue("primary.500", "primary.200");
   const { t } = useTranslation();
   const { alerts } = useOneCall();
   const selectedLocation = useStore((state) => state.selectedLocation);
@@ -17,10 +25,10 @@ const WeatherAlerts = (): JSX.Element => {
     <>
       <Flex align="baseline" gap={2}>
         <Text>
-          <Text as="span" color="gray.300">
+          <Text as="span" color={text}>
             {t("alerts_for")}&nbsp;
           </Text>
-          <Text as="span" color="primary.200">
+          <Text as="span" color={location}>
             {selectedLocation?.name}
           </Text>
         </Text>

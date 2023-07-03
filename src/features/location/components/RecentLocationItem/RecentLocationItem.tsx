@@ -1,6 +1,13 @@
 import { LocationSuggestion } from "@/features/location/types";
 import { CloseIcon } from "@chakra-ui/icons";
-import { Badge, Button, Flex, IconButton, Text } from "@chakra-ui/react";
+import {
+  Badge,
+  Button,
+  Flex,
+  IconButton,
+  Text,
+  useColorMode,
+} from "@chakra-ui/react";
 
 const RecentLocationItem = ({
   location,
@@ -11,6 +18,9 @@ const RecentLocationItem = ({
   onClick: () => void;
   onClose: () => void;
 }): JSX.Element => {
+  const { colorMode } = useColorMode();
+  const isLight = colorMode === "light";
+
   return (
     <Badge
       variant="outline"
@@ -18,7 +28,7 @@ const RecentLocationItem = ({
       borderRadius="md"
       sx={{
         "&:hover": {
-          backgroundColor: "primary.900",
+          backgroundColor: isLight ? "primary.100" : "primary.900",
         },
       }}
     >

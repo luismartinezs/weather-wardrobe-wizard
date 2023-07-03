@@ -1,4 +1,4 @@
-import { Select } from "@chakra-ui/react";
+import { Select, useColorModeValue } from "@chakra-ui/react";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 
@@ -8,6 +8,7 @@ const options = [
 ];
 
 export default function LanguageSwitcher() {
+  const selectBorderColor = useColorModeValue("gray.400", "gray.600");
   const { t, i18n } = useTranslation();
   const router = useRouter();
   const lang = i18n.language || i18n.resolvedLanguage;
@@ -15,6 +16,7 @@ export default function LanguageSwitcher() {
   return (
     <div>
       <Select
+        borderColor={selectBorderColor}
         value={lang}
         onChange={(e) =>
           router.push(

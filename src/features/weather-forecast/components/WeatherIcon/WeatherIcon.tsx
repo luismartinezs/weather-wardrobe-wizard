@@ -1,3 +1,4 @@
+import { useColorMode } from "@chakra-ui/react";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -8,7 +9,8 @@ const WeatherIcon = ({
   weatherCondition: string;
   iconCode: string;
 }): JSX.Element => {
-  const iconSrc = `/weather-icons/dark/${iconCode}.png`;
+  const { colorMode } = useColorMode();
+  const iconSrc = `/weather-icons/${colorMode}/${iconCode}.png`;
   const fallbackIconSrc = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
 
   const [imgSrc, setImgSrc] = useState(iconSrc);

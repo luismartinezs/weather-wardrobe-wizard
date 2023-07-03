@@ -1,4 +1,12 @@
-import { Box, Flex, Heading, Text, Link } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Heading,
+  Text,
+  Link,
+  useColorModeValue,
+  useColorMode,
+} from "@chakra-ui/react";
 import { Product, getProducts } from "@stripe/firestore-stripe-payments";
 import { payments } from "@/firebase/payments";
 import PlanBox from "@/features/plans/components/PlanBox";
@@ -15,25 +23,27 @@ export const getServerSideProps = async ({
   locale: string;
   req: IncomingMessage;
 }) => {
-  const products = await getProducts(payments, {
-    includePrices: true,
-    activeOnly: true,
-    where: [["metadata.app", "==", "weatherwardrobewizard"]],
-  })
-    .then((res) => res)
-    .catch((error) => console.log(error.message));
+  const products =
+    (await getProducts(payments, {
+      includePrices: true,
+      activeOnly: true,
+      where: [["metadata.app", "==", "weatherwardrobewizard"]],
+    }).catch((error) => console.log(error.message))) || [];
 
   return {
     props: {
       products,
-      ...(await commonGetServerSideProps({ locale, req })),
+      ...(await commonGetServerSideProps({ locale, req })).props,
     },
   };
 };
 
 export default function Plans({ products }: { products: Product[] }) {
   const { t } = useTranslation();
+  const { colorMode } = useColorMode();
   const { user } = useUser();
+  const text = useColorModeValue("gray.600", "gray.300");
+  const isLight = colorMode === "light";
 
   return (
     <>
@@ -42,13 +52,13 @@ export default function Plans({ products }: { products: Product[] }) {
           {t("purchase_subscription")}
         </Heading>
         {!user && (
-          <Text mt={2} color="gray.300">
+          <Text mt={2} color={text}>
             <Link
               as={NextLink}
               href="/signin?redirect=/plans"
               textDecoration="underline"
               _hover={{
-                color: "white",
+                color: isLight ? "black" : "white",
               }}
             >
               {t("sign_in")}
@@ -61,7 +71,7 @@ export default function Plans({ products }: { products: Product[] }) {
         {products.length ? (
           products.map((product) => <PlanBox plan={product} key={product.id} />)
         ) : (
-          <Text fontSize="xl" color="gray.400">
+          <Text fontSize="xl" color={text}>
             {t("no_plans_available")}
           </Text>
         )}
