@@ -196,6 +196,11 @@ export const sendWeatherAlertsHttp = onRequest(async (req, res) => {
   }
 });
 
+const langMap: Record<string, string> = {
+  es: "Spanish",
+  en: "",
+};
+
 export const aiSuggestions = onCall(
   {
     enforceAppCheck: true,
@@ -208,7 +213,7 @@ export const aiSuggestions = onCall(
     authGuard(request);
     await roleGuard(request, "premium");
 
-    const { forecast, locationName, countryName } = request.data;
+    const { forecast, locationName, countryName, lang } = request.data;
 
     if (!forecast) {
       throw new HttpsError("invalid-argument", "No forecast provided.");
@@ -227,6 +232,15 @@ export const aiSuggestions = onCall(
     });
 
     const openai = new OpenAIApi(configuration);
+
+    let prompt = `I am going on a trip to ${fullLocation}. Suggest appropriate clothing and offer useful information relative to what items to pack, based on the location, the period of the year, and the weather forecast:\n\nLocation: ${fullLocation}\n\nSummarized weather forecast data:\n\n${JSON.stringify(
+      forecast
+    )}\n\n(temperature is in Celsius, humidity is in %, wind speed is in meters per second)`;
+
+    if (typeof lang === "string" && langMap[lang]) {
+      prompt += `\n\nWrite your answer in ${langMap[lang]}`;
+    }
+
     try {
       const completion = await openai.createChatCompletion({
         model: "gpt-4",
@@ -237,9 +251,7 @@ export const aiSuggestions = onCall(
           },
           {
             role: "user",
-            content: `I am going on a trip to ${fullLocation}. Suggest appropriate clothing and offer useful information relative to what items to pack, based on the location, the period of the year, and the weather forecast:\n\nLocation: ${fullLocation}\n\nSummarized weather forecast data:\n\n${JSON.stringify(
-              forecast
-            )}\n\n(temperature is in Celsius, humidity is in %, wind speed is in meters per second)`,
+            content: prompt,
           },
         ],
       });

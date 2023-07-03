@@ -35,7 +35,7 @@ const AiSuggestions = (): JSX.Element => {
 
   const heading = (
     <>
-      <Flex gap={2} align="center" wrap="wrap">
+      <Flex gap={2} align="center" wrap="wrap" mb={4}>
         <Flex gap={2} align="center">
           <Heading
             as="h2"
@@ -100,9 +100,9 @@ const AiSuggestions = (): JSX.Element => {
         isLoading={isLoading}
         data={suggestion}
         error={error}
-        loadingComponent={<Skeleton mt={4} height={20} borderRadius="8px" />}
+        loadingComponent={<Skeleton height={20} borderRadius="8px" />}
       >
-        <Card mt={4} overflow="hidden">
+        <Card overflow="hidden">
           <CardBody>
             <Text whiteSpace="pre-line" color="gray.300">
               {suggestion?.content}

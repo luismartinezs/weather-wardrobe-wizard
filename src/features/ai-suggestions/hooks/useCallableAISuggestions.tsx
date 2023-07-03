@@ -7,10 +7,12 @@ import useStore from "@/store";
 import { useForecastAdapter } from "@/features/weather-forecast/hooks/useForecastAdapter";
 import { getForecastSummary } from "@/features/weather-forecast/utils/getForecastSummary";
 import { functions } from "@/firebase/app";
+import { useTranslation } from "next-i18next";
 
 const aiSuggestions = httpsCallable(functions, "aiSuggestions");
 
 export function useCallableAiSuggestions() {
+  const { i18n } = useTranslation();
   const { user } = useUser();
   const { isSubscribed, isPremium } = useSubscription(user);
   const selectedLocation = useStore((state) => state.selectedLocation);
@@ -28,6 +30,7 @@ export function useCallableAiSuggestions() {
           forecast: forecastSummary,
           locationName: selectedLocation.name,
           countryName: selectedLocation.country,
+          lang: i18n.resolvedLanguage,
         });
       }
     },
