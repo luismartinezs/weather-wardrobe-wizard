@@ -4,16 +4,9 @@ import NextLink from "next/link";
 import SigninRegister from "@/features/auth/components/SigninRegister";
 import AuthForm, { type FormData } from "@/features/auth/components/AuthForm";
 import { useRouter } from "next/router";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 
-export async function getStaticProps({ locale }: { locale: string }) {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["common"])),
-    },
-  };
-}
+export { commonGetServerSideProps as getServerSideProps } from "@/utils/commonGetServerSideProps";
 
 function Register() {
   const { t } = useTranslation();

@@ -1,15 +1,8 @@
 import { Heading, Link } from "@chakra-ui/react";
 import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import NextLink from "next/link";
 
-export async function getStaticProps({ locale }: { locale: string }) {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["common"])),
-    },
-  };
-}
+export { commonGetServerSideProps as getServerSideProps } from "@/utils/commonGetServerSideProps";
 
 export default function Custom404() {
   const { t } = useTranslation();

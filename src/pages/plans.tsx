@@ -4,10 +4,17 @@ import { payments } from "@/firebase/payments";
 import PlanBox from "@/features/plans/components/PlanBox";
 import { useUser } from "@/features/auth/context/User";
 import NextLink from "next/link";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
+import { IncomingMessage } from "http";
+import { commonGetServerSideProps } from "@/utils/commonGetServerSideProps";
 
-export const getServerSideProps = async ({ locale }: { locale: string }) => {
+export const getServerSideProps = async ({
+  locale,
+  req,
+}: {
+  locale: string;
+  req: IncomingMessage;
+}) => {
   const products = await getProducts(payments, {
     includePrices: true,
     activeOnly: true,
@@ -19,7 +26,7 @@ export const getServerSideProps = async ({ locale }: { locale: string }) => {
   return {
     props: {
       products,
-      ...(await serverSideTranslations(locale, ["common"])),
+      ...(await commonGetServerSideProps({ locale, req })),
     },
   };
 };

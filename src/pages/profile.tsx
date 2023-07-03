@@ -15,16 +15,9 @@ import {
   Text,
 } from "@chakra-ui/react";
 import SubscriptionPlanInfo from "@/features/plans/components/SubscriptionPlanInfo";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 
-export async function getStaticProps({ locale }: { locale: string }) {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["common"])),
-    },
-  };
-}
+export { commonGetServerSideProps as getServerSideProps } from "@/utils/commonGetServerSideProps";
 
 export default function Profile() {
   const { t } = useTranslation();

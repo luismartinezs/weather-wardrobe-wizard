@@ -1,6 +1,5 @@
 import Head from "next/head";
 import { Box, Container, Text } from "@chakra-ui/react";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 
 import SelectLocation from "@/features/location/components/SelectLocation";
@@ -11,13 +10,7 @@ import RecentLocations from "@/features/location/components/RecentLocations";
 import WeatherAlerts from "@/features/weather-forecast/components/WeatherAlerts";
 import AiSuggestions from "@/features/ai-suggestions/components/AiSuggestions";
 
-export async function getStaticProps({ locale }: { locale: string }) {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["common"])),
-    },
-  };
-}
+export { commonGetServerSideProps as getServerSideProps } from "@/utils/commonGetServerSideProps";
 
 export default function Home() {
   const { t } = useTranslation();
