@@ -2,13 +2,20 @@ import { Select } from "@chakra-ui/react";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 
+const options = [
+  { value: "en", label: "EN" },
+  { value: "es", label: "ES" },
+];
+
 export default function LanguageSwitcher() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const router = useRouter();
+  const lang = i18n.language || i18n.resolvedLanguage;
+
   return (
     <div>
       <Select
-        // placeholder={t("select_lang")}
+        value={lang}
         onChange={(e) =>
           router.push(
             {
@@ -20,8 +27,11 @@ export default function LanguageSwitcher() {
           )
         }
       >
-        <option value="en">EN</option>
-        <option value="es">ES</option>
+        {options.map(({ value, label }) => (
+          <option key={value} value={value}>
+            {label}
+          </option>
+        ))}
       </Select>
     </div>
   );
