@@ -18,11 +18,12 @@ export function useCallableAiSuggestions() {
   const selectedLocation = useStore((state) => state.selectedLocation);
   const { forecast } = useForecastAdapter();
   const forecastSummary = forecast && getForecastSummary(forecast);
+  const lang = i18n.resolvedLanguage;
 
   const query = useQuery<any, Error>(
     [
       "getCallableAiSuggestions",
-      `${forecast}${selectedLocation?.name}${selectedLocation?.country}`,
+      `${forecast}${selectedLocation?.name}${selectedLocation?.country}${lang}`,
     ],
     () => {
       if (isSubscribed && isPremium && selectedLocation && forecastSummary) {
@@ -30,7 +31,7 @@ export function useCallableAiSuggestions() {
           forecast: forecastSummary,
           locationName: selectedLocation.name,
           countryName: selectedLocation.country,
-          lang: i18n.resolvedLanguage,
+          lang,
           model:
             process.env.NODE_ENV === "production" ? "gpt-4" : "gpt-3.5-turbo",
         });
