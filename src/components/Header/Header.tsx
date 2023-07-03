@@ -44,7 +44,8 @@ const Header = () => {
                 width="fit-content"
                 fontSize={{ base: "2xl", md: "5xl", xl: "4xl" }}
               >
-                {t("app_title")}
+                {/* {t("app_title")} */}
+                Weather Wardrobe Wizard
               </Heading>
             </Link>
           </Flex>
