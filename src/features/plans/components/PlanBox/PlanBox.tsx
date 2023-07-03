@@ -1,5 +1,11 @@
 import { getCurrency } from "@/utils/currency";
-import { Card, Divider, Heading, Text } from "@chakra-ui/react";
+import {
+  Card,
+  Divider,
+  Heading,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { Product } from "@stripe/firestore-stripe-payments";
 import PlanFeatures from "@/features/plans/components/PlanFeatures";
 import { featuresMap } from "@/features/plans/constants";
@@ -11,6 +17,8 @@ import { useTranslation } from "next-i18next";
 
 const PlanBox = ({ plan }: { plan: Product }): JSX.Element => {
   const { t } = useTranslation();
+  const heading = useColorModeValue("secondary.500", "secondary.200");
+  const mutedText = useColorModeValue("gray.500", "gray.300");
   const features =
     plan.metadata.firebaseRole && featuresMap[plan.metadata.firebaseRole];
   const { user } = useUser();
@@ -25,7 +33,7 @@ const PlanBox = ({ plan }: { plan: Product }): JSX.Element => {
         fontSize="2xl"
         fontWeight="normal"
         mb={4}
-        color="secondary.200"
+        color={heading}
       >
         {plan.name}
       </Heading>
@@ -35,7 +43,7 @@ const PlanBox = ({ plan }: { plan: Product }): JSX.Element => {
             {getCurrency(price.unit_amount / 100, "EUR")}{" "}
           </Text>
           {price.interval && (
-            <Text as="span" color="gray.300" fontSize="lg">
+            <Text as="span" color={mutedText} fontSize="lg">
               / {t(price.interval)}
             </Text>
           )}

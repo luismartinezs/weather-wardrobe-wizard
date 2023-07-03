@@ -1,4 +1,4 @@
-import { Flex, ListItem, Text } from "@chakra-ui/react";
+import { Flex, ListItem, Text, useColorModeValue } from "@chakra-ui/react";
 import { format, isToday, isTomorrow } from "date-fns";
 
 import WeatherIcon from "@/features/weather-forecast/components/WeatherIcon";
@@ -17,6 +17,7 @@ const ForecastListItem = ({
   const { i18n, t } = useTranslation();
   const locale = i18n.resolvedLanguage;
   const dateFnsLocale = useDateFnsLocale();
+  const text = useColorModeValue("gray.600", "gray.400");
 
   function getWeekDay(dateString: string) {
     const _date = new Date(dateString);
@@ -51,7 +52,7 @@ const ForecastListItem = ({
       data-testid="forecast-day"
     >
       <Text textTransform="capitalize">{getWeekDay(dayForecast.date)}</Text>
-      <Text color="gray.400" fontWeight="thin">
+      <Text color={text} fontWeight="thin">
         {getMonthDay(dayForecast.date)}
       </Text>
       <Flex justify="center" align="center" h={20}>
@@ -60,7 +61,7 @@ const ForecastListItem = ({
           iconCode={dayForecast.weatherIcon}
         />
       </Flex>
-      <Text color="gray.400" textTransform="capitalize">
+      <Text color={text} textTransform="capitalize">
         {locale && locale !== "en"
           ? i18nMap[locale][dayForecast.weatherType]
           : dayForecast.weatherType}

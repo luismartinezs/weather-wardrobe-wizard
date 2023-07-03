@@ -12,6 +12,7 @@ import {
   VStack,
   IconButton,
   useId,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
 
@@ -22,6 +23,13 @@ import { useSelectLocation } from "@/features/location/hooks/useSelectLocation";
 import { useTranslation } from "next-i18next";
 
 const SelectLocation = (): JSX.Element => {
+  const label = useColorModeValue("gray.600", "gray.300");
+  const dropdownBg = useColorModeValue("gray.200", "gray.700");
+  const suggestionsBorderColor = useColorModeValue("gray.300", "gray.600");
+  const button = useColorModeValue("gray.600", "gray.300");
+  const buttonName = useColorModeValue("gray.800", "gray.400");
+  const buttonState = useColorModeValue("gray.600", "gray.500");
+  const inputBorder = useColorModeValue("gray.300", "gray.600");
   const { t } = useTranslation();
   const {
     locationQuery,
@@ -47,7 +55,7 @@ const SelectLocation = (): JSX.Element => {
   return (
     <FormControl>
       <FormLabel>
-        <Text fontSize="lg" as="span" color="gray.300">
+        <Text fontSize="lg" as="span" color={label}>
           {t("where_are_you_going")}
         </Text>
       </FormLabel>
@@ -61,6 +69,7 @@ const SelectLocation = (): JSX.Element => {
               onChange={(event) => handleLocationChange(event.target.value)}
               list="location-suggestions"
               aria-describedby={errorId}
+              borderColor={inputBorder}
             />
             <InputRightElement m={1}>
               <IconButton
@@ -74,7 +83,7 @@ const SelectLocation = (): JSX.Element => {
           </InputGroup>
           <VStack
             pos="absolute"
-            bg="gray.700"
+            bg={dropdownBg}
             width="100%"
             boxShadow="xl"
             spacing={0}
@@ -96,7 +105,7 @@ const SelectLocation = (): JSX.Element => {
                     borderBottom={
                       idx < locationSuggestions.length - 1 ? "1px" : 0
                     }
-                    borderColor="gray.600"
+                    borderColor={suggestionsBorderColor}
                   >
                     <Button
                       onClick={createLocationSuggestionHandler(item)}
@@ -106,12 +115,12 @@ const SelectLocation = (): JSX.Element => {
                       justifyContent="flex-start"
                       py={6}
                       px={6}
-                      color="gray.300"
+                      color={button}
                       role="option"
                       fontWeight="light"
                     >
-                      <Text color="gray.400">{item.name}&nbsp;</Text>
-                      <Text color="gray.500" fontSize="sm" as="span">
+                      <Text color={buttonName}>{item.name}&nbsp;</Text>
+                      <Text color={buttonState} fontSize="sm" as="span">
                         ({[item.state, item.country].filter(Boolean).join(", ")}
                         )
                       </Text>

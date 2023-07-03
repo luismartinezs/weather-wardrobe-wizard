@@ -7,13 +7,13 @@ import {
 import { app } from "@/firebase/app";
 import { useEffect, useState } from "react";
 
-// declare global {
-//   interface Window {
-//     FIREBASE_APPCHECK_DEBUG_TOKEN?: boolean;
-//   }
-// }
+declare global {
+  interface Window {
+    FIREBASE_APPCHECK_DEBUG_TOKEN?: boolean;
+  }
+}
 
-// const isProd = process.env.NODE_ENV === "production";
+const isProd = process.env.NODE_ENV === "production";
 
 export function useAppCheck() {
   const [appCheck, setAppCheck] = useState<AppCheck | null>(null);
@@ -23,9 +23,9 @@ export function useAppCheck() {
       return;
     }
 
-    // if (!isProd) {
-    //   window.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
-    // }
+    if (!isProd) {
+      window.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
+    }
 
     setAppCheck(
       initializeAppCheck(app, {

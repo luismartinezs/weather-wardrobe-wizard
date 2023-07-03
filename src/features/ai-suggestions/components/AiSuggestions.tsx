@@ -13,6 +13,7 @@ import {
   Heading,
   Skeleton,
   Text,
+  useColorModeValue,
   useMediaQuery,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
@@ -26,6 +27,7 @@ const shortLorem =
   "Culpa ullamco Lorem tempor proident. Nostrud sunt consequat commodo dolor sit excepteur do eiusmod do nostrud consectetur exercitation voluptate. Enim nostrud enim reprehenderit culpa elit sit in dolore nisi non tempor.";
 
 const AiSuggestions = (): JSX.Element => {
+  const text = useColorModeValue("gray.700", "gray.400");
   const { t } = useTranslation();
   const { user } = useUser();
   const { isSubscribed, isPremium } = useSubscription(user);
@@ -49,7 +51,7 @@ const AiSuggestions = (): JSX.Element => {
           <PlanPill>{t("premium_plan")}</PlanPill>
         </Flex>
         {isSubscribed && isPremium && isLoading && (
-          <Text display="block" fontSize={14} color="gray.400">
+          <Text display="block" fontSize={14} color={text}>
             ({t("ai_thinking")})
           </Text>
         )}
@@ -83,7 +85,7 @@ const AiSuggestions = (): JSX.Element => {
               </Flex>
               <OpaqueText
                 whiteSpace="pre-line"
-                color="gray.300"
+                color={text}
                 text={isMobile ? shortLorem : lorem}
               />
             </Box>
@@ -104,7 +106,7 @@ const AiSuggestions = (): JSX.Element => {
       >
         <Card overflow="hidden">
           <CardBody>
-            <Text whiteSpace="pre-line" color="gray.300">
+            <Text whiteSpace="pre-line" color={text}>
               {suggestion?.content}
             </Text>
           </CardBody>

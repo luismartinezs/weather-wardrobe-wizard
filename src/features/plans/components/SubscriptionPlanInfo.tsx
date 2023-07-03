@@ -1,7 +1,13 @@
 import { useUser } from "@/features/auth/context/User";
 import useSubscription from "../hooks/useSubscription";
 import { Product } from "@stripe/firestore-stripe-payments";
-import { Box, Button, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Text,
+  useColorMode,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { formatTimestamp } from "@/utils/time";
 import { useState } from "react";
 import { goToBillingPortal } from "@/firebase/payments";
@@ -15,6 +21,9 @@ const SubscriptionPlanInfo = ({ plan }: { plan?: Product }): JSX.Element => {
   const _isSubscribed =
     !!subscription && (plan ? subscription.role === plan.role : isSubscribed);
   const _trialEndDate = subscription?.trial_end;
+  const mutedText = useColorModeValue("gray.500", "gray.400");
+  const { colorMode } = useColorMode();
+  const isLight = colorMode === "light";
 
   const manageSubscription = () => {
     if (subscription) {
@@ -29,7 +38,7 @@ const SubscriptionPlanInfo = ({ plan }: { plan?: Product }): JSX.Element => {
 
   return (
     <Box textAlign="left">
-      <Text mt={4} color="gray.400">
+      <Text mt={4} color={mutedText}>
         {t("currently_subscribed_to_plan", {
           role: subscription.role,
         })}
@@ -40,20 +49,20 @@ const SubscriptionPlanInfo = ({ plan }: { plan?: Product }): JSX.Element => {
         )}
       </Text>
       {isTrial && _trialEndDate && (
-        <Text color="gray.400">
+        <Text color={mutedText}>
           {t("currently_on_trial")} {formatTimestamp(_trialEndDate)}
         </Text>
       )}
       <Button
         fontWeight="normal"
-        color="gray.400"
+        color={mutedText}
         textDecoration="underline"
         onClick={manageSubscription}
         variant="link"
         display="inline"
         isLoading={isBillingLoading}
         _hover={{
-          color: "white",
+          color: isLight ? "black" : "white",
         }}
       >
         {t("click_here_to_mod_subs")}

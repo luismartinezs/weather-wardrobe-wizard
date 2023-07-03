@@ -8,6 +8,8 @@ import {
   Text,
   baseTheme,
   Flex,
+  useColorModeValue,
+  useColorMode,
 } from "@chakra-ui/react";
 import UnitSwitch from "@/features/units/components/UnitSwitch";
 import ForecastListItem from "@/features/weather-forecast/components/ForecastListItem";
@@ -19,6 +21,9 @@ import { useTranslation } from "next-i18next";
 const itemWidth = 150;
 
 const ForecastCard = (): JSX.Element => {
+  const locationName = useColorModeValue("primary.500", "primary.200");
+  const { colorMode } = useColorMode();
+  const isLight = colorMode === "light";
   const { t } = useTranslation();
   const { forecast } = useForecastAdapter("onecall");
   const selectedLocation = useStore((state) => state.selectedLocation);
@@ -44,7 +49,7 @@ const ForecastCard = (): JSX.Element => {
             letterSpacing={1.2}
           >
             {t("daily_forecast_for")}{" "}
-            <Text as="span" color="primary.200">
+            <Text as="span" color={locationName}>
               {selectedLocation.name}
             </Text>
           </Heading>
@@ -63,7 +68,9 @@ const ForecastCard = (): JSX.Element => {
           left: 0,
           bottom: 0,
           pointerEvents: "none",
-          backgroundImage: `linear-gradient(to left, rgba(255, 255, 255, 0), ${baseTheme.colors.gray[700]})`,
+          backgroundImage: isLight
+            ? `linear-gradient(to left, rgba(0, 0, 0, 0), white)`
+            : `linear-gradient(to left, rgba(255, 255, 255, 0), ${baseTheme.colors.gray[700]})`,
           height: "100%",
           width: "2em",
           borderRadius: "0 0 0 0.5em",
@@ -75,7 +82,9 @@ const ForecastCard = (): JSX.Element => {
           right: 0,
           bottom: 0,
           pointerEvents: "none",
-          backgroundImage: `linear-gradient(to right, rgba(255, 255, 255, 0), ${baseTheme.colors.gray[700]})`,
+          backgroundImage: isLight
+            ? `linear-gradient(to right, rgba(0, 0, 0, 0), white)`
+            : `linear-gradient(to right, rgba(255, 255, 255, 0), ${baseTheme.colors.gray[700]})`,
           height: "100%",
           width: "2em",
           borderRadius: "0 0 0.5em 0",
@@ -88,14 +97,18 @@ const ForecastCard = (): JSX.Element => {
             "::-webkit-scrollbar": {
               height: "8px",
               borderRadius: "8px",
-              backgroundColor: baseTheme.colors.gray[700],
+              backgroundColor: isLight
+                ? baseTheme.colors.gray[300]
+                : baseTheme.colors.gray[700],
             },
             "::-webkit-scrollbar-track": {
               height: "8px",
               borderRadius: "8px",
             },
             "::-webkit-scrollbar-thumb": {
-              backgroundColor: baseTheme.colors.gray[600],
+              backgroundColor: isLight
+                ? baseTheme.colors.gray[400]
+                : baseTheme.colors.gray[600],
               height: "8px",
               borderRadius: "8px",
             },
@@ -103,10 +116,14 @@ const ForecastCard = (): JSX.Element => {
               backgroundColor: baseTheme.colors.gray[500],
             },
             "::-webkit-scrollbar-thumb:active": {
-              backgroundColor: baseTheme.colors.gray[400],
+              backgroundColor: isLight
+                ? baseTheme.colors.gray[600]
+                : baseTheme.colors.gray[400],
             },
             scrollbarWidth: "auto",
-            scrollbarColor: `${baseTheme.colors.gray[600]} ${baseTheme.colors.gray[700]}`,
+            scrollbarColor: isLight
+              ? `${baseTheme.colors.gray[400]} ${baseTheme.colors.gray[300]}`
+              : `${baseTheme.colors.gray[600]} ${baseTheme.colors.gray[700]}`,
           }}
         >
           <OrderedList

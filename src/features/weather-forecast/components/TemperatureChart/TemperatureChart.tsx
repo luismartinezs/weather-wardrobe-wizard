@@ -1,7 +1,22 @@
 import { Line, LineChart, ReferenceLine, YAxis } from "recharts";
-import { baseTheme, Box } from "@chakra-ui/react";
+import {
+  baseTheme,
+  Box,
+  useColorMode,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { useUnits } from "@/features/units/hooks/useUnits";
 import { getTStr } from "@/utils/temperature";
+
+const blue = {
+  light: "#1a93e4",
+  dark: "#61a4d1",
+};
+
+const orange = {
+  light: "#f48d19",
+  dark: "#dfaa6e",
+};
 
 const TemperatureChart = ({
   data,
@@ -11,9 +26,12 @@ const TemperatureChart = ({
   pointWidth: number;
 }): JSX.Element => {
   const { units } = useUnits();
+  const { colorMode } = useColorMode();
+  const isLight = colorMode === "light";
+  const label = useColorModeValue("gray.800", "white");
 
   return (
-    <Box mx="auto">
+    <Box mx="auto" color={label}>
       <LineChart
         // I had to add a magic factor here because I don't understand how the size of the LineChart is calculated
         width={data.length * pointWidth * 1.09}
@@ -35,7 +53,11 @@ const TemperatureChart = ({
                 { x: i, y: d.minTemp },
                 { x: i, y: d.maxTemp },
               ]}
-              stroke={baseTheme.colors.gray[600]}
+              stroke={
+                isLight
+                  ? baseTheme.colors.gray[300]
+                  : baseTheme.colors.gray[600]
+              }
             />
           );
         })}
@@ -44,9 +66,9 @@ const TemperatureChart = ({
           animationDuration={300}
           type="monotone"
           dataKey="maxTemp"
-          stroke="#dfaa6e"
+          stroke={orange[colorMode]}
           dot={false}
-          label={({ value, x, y, stroke = "white" }) => {
+          label={({ value, x, y, stroke = isLight ? "black" : "white" }) => {
             return (
               <text
                 x={x}
@@ -67,9 +89,9 @@ const TemperatureChart = ({
           animationDuration={300}
           type="monotone"
           dataKey="minTemp"
-          stroke="#61a4d1"
+          stroke={blue[colorMode]}
           dot={false}
-          label={({ value, x, y, stroke = "white" }) => {
+          label={({ value, x, y, stroke = isLight ? "black" : "white" }) => {
             return (
               <text
                 x={x}

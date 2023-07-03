@@ -16,6 +16,7 @@ import {
   Text,
   Spinner,
   Icon,
+  useColorMode,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import Image from "next/image";
@@ -29,10 +30,12 @@ import { Subscription } from "@stripe/firestore-stripe-payments";
 import SubscriptionPill from "@/features/plans/components/SubscriptionPill";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useTranslation } from "next-i18next";
+import ThemeButton from "@/components/ThemeButton";
 
 const getLinks = (options: {
   subscription?: Subscription | null;
   t: (key: string) => string;
+  colorMode?: string;
 }): Array<{
   label: string;
   href: string;
@@ -44,7 +47,8 @@ const getLinks = (options: {
   const isSubscribed = ["active", "trialing"].includes(
     options?.subscription?.status || ""
   );
-  const { t } = options;
+  const { t, colorMode } = options;
+  const isLight = colorMode === "light";
 
   return [
     {
@@ -55,7 +59,7 @@ const getLinks = (options: {
       label: t("plans"),
       href: "/plans",
       icon: !isSubscribed ? BsStars : undefined,
-      iconColor: "gold",
+      iconColor: isLight ? "gray.500" : "gold",
     },
     {
       label: t("sign_in"),
@@ -67,6 +71,7 @@ const getLinks = (options: {
 };
 
 const Links = () => {
+  const { colorMode } = useColorMode();
   const { t } = useTranslation();
   const { user } = useUser();
   const { subscription } = useSubscription(user);
@@ -74,7 +79,7 @@ const Links = () => {
 
   return (
     <>
-      {getLinks({ subscription, t })
+      {getLinks({ subscription, t, colorMode })
         .filter(({ requireGuest }) => {
           if (requireGuest && user) {
             return false;
@@ -124,6 +129,7 @@ const ResponsiveNav = (): JSX.Element => {
           {loading ? <Spinner /> : user && <ProfileLink user={user} />}
           <SubscriptionPill />
           <LanguageSwitcher />
+          <ThemeButton />
         </Flex>
       </Box>
       <Drawer
@@ -160,13 +166,22 @@ const ResponsiveNav = (): JSX.Element => {
               px={6}
             >
               <Links />
-              {loading ? (
-                <Spinner />
-              ) : (
-                user && <ProfileLink user={user} label={t("profile")} />
-              )}
-              <SubscriptionPill />
-              <LanguageSwitcher />
+              <Flex align="center" gap={2}>
+                {loading ? (
+                  <Spinner />
+                ) : (
+                  user && <ProfileLink user={user} label={t("profile")} />
+                )}
+                <SubscriptionPill />
+              </Flex>
+              <Flex align="center" gap={4}>
+                <LanguageSwitcher />
+                <ThemeButton
+                  buttonProps={{
+                    size: "lg",
+                  }}
+                />
+              </Flex>
             </Flex>
           </DrawerBody>
 

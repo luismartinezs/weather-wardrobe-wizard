@@ -1,6 +1,5 @@
 import Head from "next/head";
-import { Box, Container, Text } from "@chakra-ui/react";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { Box, Container, Text, useColorModeValue } from "@chakra-ui/react";
 import { useTranslation } from "next-i18next";
 
 import SelectLocation from "@/features/location/components/SelectLocation";
@@ -11,16 +10,11 @@ import RecentLocations from "@/features/location/components/RecentLocations";
 import WeatherAlerts from "@/features/weather-forecast/components/WeatherAlerts";
 import AiSuggestions from "@/features/ai-suggestions/components/AiSuggestions";
 
-export async function getStaticProps({ locale }: { locale: string }) {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["common"])),
-    },
-  };
-}
+export { commonGetServerSideProps as getServerSideProps } from "@/utils/commonGetServerSideProps";
 
 export default function Home() {
   const { t } = useTranslation();
+  const description = useColorModeValue("gray.600", "gray.400");
 
   return (
     <>
@@ -29,7 +23,7 @@ export default function Home() {
         <meta name="description" content={t("app_description")} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <Text mb={4} fontSize="xl" color="gray.400">
+      <Text mb={4} fontSize="xl" color={description}>
         {t("home_help_text")}
       </Text>
       <Container px={0}>
