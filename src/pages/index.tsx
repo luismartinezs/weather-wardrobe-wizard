@@ -1,5 +1,7 @@
 import Head from "next/head";
 import { Box, Container, Text } from "@chakra-ui/react";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
 
 import SelectLocation from "@/features/location/components/SelectLocation";
 import WeatherForecast from "@/features/weather-forecast/components/WeatherForecast";
@@ -9,20 +11,26 @@ import RecentLocations from "@/features/location/components/RecentLocations";
 import WeatherAlerts from "@/features/weather-forecast/components/WeatherAlerts";
 import AiSuggestions from "@/features/ai-suggestions/components/AiSuggestions";
 
+export async function getStaticProps({ locale }: { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
+  };
+}
+
 export default function Home() {
+  const { t } = useTranslation();
+
   return (
     <>
       <Head>
-        <title>Weather Wardrobe Wizard</title>
-        <meta
-          name="description"
-          content="Get suggestions of clothes to pack based on the weather forecast for the next 5 days"
-        />
+        <title>{t("app_title")}</title>
+        <meta name="description" content={t("app_description")} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Text mb={4} fontSize="xl" color="gray.400">
-        I will help you decide what clothes to pack for your trip, based on the
-        weather forecast
+        {t("home_help_text")}
       </Text>
       <Container px={0}>
         <SelectLocation />

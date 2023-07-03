@@ -1,5 +1,6 @@
 const { withSentryConfig } = require("@sentry/nextjs");
 const nextPwa = require('next-pwa')
+const { i18n } = require('./next-i18next.config')
 
 const SentryWebpackPluginOptions = {
   silent: true,
@@ -40,6 +41,7 @@ const nextConfig = {
     ],
   },
   transpilePackages: ["@stripe/firestore-stripe-payments"],
+  i18n
 };
 
 if (process.env.NODE_ENV === 'production') {

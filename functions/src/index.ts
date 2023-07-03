@@ -196,7 +196,18 @@ export const sendWeatherAlertsHttp = onRequest(async (req, res) => {
   }
 });
 
-export const aiSuggestions = onCall(
+const langMap: Record<string, string> = {
+  es: "Spanish",
+  en: "",
+};
+
+export const aiSuggestions = onCall<{
+  forecast: string;
+  locationName: string;
+  countryName?: string;
+  lang?: string;
+  model?: string;
+}>(
   {
     enforceAppCheck: true,
     cors: [
@@ -208,7 +219,7 @@ export const aiSuggestions = onCall(
     authGuard(request);
     await roleGuard(request, "premium");
 
-    const { forecast, locationName, countryName } = request.data;
+    const { forecast, locationName, countryName, lang, model } = request.data;
 
     if (!forecast) {
       throw new HttpsError("invalid-argument", "No forecast provided.");
@@ -227,9 +238,18 @@ export const aiSuggestions = onCall(
     });
 
     const openai = new OpenAIApi(configuration);
+
+    let prompt = `I am going on a trip to ${fullLocation}. Suggest appropriate clothing and offer useful information relative to what items to pack, based on the location, the period of the year, and the weather forecast:\n\nLocation: ${fullLocation}\n\nSummarized weather forecast data:\n\n${JSON.stringify(
+      forecast
+    )}\n\n(temperature is in Celsius, humidity is in %, wind speed is in meters per second)`;
+
+    if (typeof lang === "string" && langMap[lang]) {
+      prompt += `\n\nWrite your answer in ${langMap[lang]}`;
+    }
+
     try {
       const completion = await openai.createChatCompletion({
-        model: "gpt-4",
+        model: model || "gpt-4",
         messages: [
           {
             role: "system",
@@ -237,9 +257,7 @@ export const aiSuggestions = onCall(
           },
           {
             role: "user",
-            content: `I am going on a trip to ${fullLocation}. Suggest appropriate clothing and offer useful information relative to what items to pack, based on the location, the period of the year, and the weather forecast:\n\nLocation: ${fullLocation}\n\nSummarized weather forecast data:\n\n${JSON.stringify(
-              forecast
-            )}\n\n(temperature is in Celsius, humidity is in %, wind speed is in meters per second)`,
+            content: prompt,
           },
         ],
       });

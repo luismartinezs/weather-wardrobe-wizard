@@ -15,8 +15,19 @@ import {
   Text,
 } from "@chakra-ui/react";
 import SubscriptionPlanInfo from "@/features/plans/components/SubscriptionPlanInfo";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
+
+export async function getStaticProps({ locale }: { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
+  };
+}
 
 export default function Profile() {
+  const { t } = useTranslation();
   const { user } = useUser();
 
   const providerId = user?.providerData[0]?.providerId;
@@ -25,10 +36,10 @@ export default function Profile() {
     <Container maxW="container.sm">
       <AuthRoute>
         <Heading as="h1" size="lg">
-          Profile
+          {t("profile")}
         </Heading>
         <Text fontSize="xl" mt={4}>
-          Hello {user?.displayName || user?.email}!
+          {t("hello")} {user?.displayName || user?.email}!
         </Text>
         <SubscriptionPlanInfo />
         {providerId === "password" ? (
@@ -39,7 +50,9 @@ export default function Profile() {
             <EditPassword />
           </>
         ) : (
-          <Text mt={4}>You are signed in with {providerId}</Text>
+          <Text mt={4}>
+            {t("signed_in_with")} {providerId}
+          </Text>
         )}
         <Box mt={4}>
           <SignoutButton />
@@ -48,7 +61,7 @@ export default function Profile() {
         <Card color="red" borderColor="red" border="1px">
           <CardHeader pb={2}>
             <Heading as="h2" size="md">
-              Danger zone
+              {t("danger_zone")}
             </Heading>
           </CardHeader>
           <CardBody>

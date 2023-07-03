@@ -4,10 +4,12 @@ import ButtonWithIcon, {
   type ButtonWithIconProps,
 } from "@/components/ButtonWithIcon";
 import useStore from "@/store";
+import { useTranslation } from "next-i18next";
 
 const SignoutButton = ({
   size = "md",
 }: Pick<ButtonWithIconProps, "size">): JSX.Element => {
+  const { t } = useTranslation();
   const resetLocation = useStore((state) => state.resetLocation);
 
   const handleSignOut = () => {
@@ -17,7 +19,7 @@ const SignoutButton = ({
 
   return (
     <ButtonWithIcon size={size} onClick={handleSignOut} icon={BiLogOut}>
-      Sign out
+      {t("sign_out")}
     </ButtonWithIcon>
   );
 };

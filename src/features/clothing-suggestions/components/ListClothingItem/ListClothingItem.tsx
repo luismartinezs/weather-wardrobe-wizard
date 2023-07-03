@@ -1,5 +1,6 @@
 import type { ClothingItem as TClothingItem } from "@/features/clothing-suggestions/types";
 import { Checkbox, ListItem, useId, Text } from "@chakra-ui/react";
+import { useTranslation } from "next-i18next";
 
 type ClothingItemProps = {
   item: TClothingItem;
@@ -12,6 +13,7 @@ const ListClothingItem = ({
   checked,
   onChange,
 }: ClothingItemProps): JSX.Element => {
+  const { t } = useTranslation();
   const labelId = useId();
 
   return (
@@ -31,7 +33,7 @@ const ListClothingItem = ({
         w="100%"
       >
         <Text ml={2} id={labelId} color={checked ? "gray.500" : "gray.100"}>
-          {item.label}
+          {t(item.id as string)}
         </Text>
       </Checkbox>
     </ListItem>

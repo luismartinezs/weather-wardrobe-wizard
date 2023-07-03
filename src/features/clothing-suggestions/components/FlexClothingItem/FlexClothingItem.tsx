@@ -10,6 +10,7 @@ import {
 import Image from "next/image";
 // import AmazonLink from "@/components/AmazonLink";
 import type { ClothingItem as TClothingItem } from "@/features/clothing-suggestions/types";
+import { useTranslation } from "next-i18next";
 
 const size = {
   w: "340px",
@@ -26,6 +27,7 @@ const FlexClothingItem = ({
   checked,
   onChange,
 }: ClothingItemProps): JSX.Element => {
+  const { t } = useTranslation();
   const labelId = useId();
 
   return (
@@ -54,14 +56,14 @@ const FlexClothingItem = ({
             textTransform="uppercase"
             fontWeight="thin"
           >
-            {item.label}
+            {t(item.id as string)}
           </Text>
         </Checkbox>
         <Box mt={4} borderRadius={5} overflow="hidden">
           <AspectRatio maxW="300px" ratio={1 / 1}>
             <Image
               src={item.imageUrl}
-              alt={item.label}
+              alt={t(item.id as string)}
               width={300}
               height={300}
               style={{ objectFit: "cover" }}

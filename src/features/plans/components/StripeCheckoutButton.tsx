@@ -2,6 +2,7 @@ import { Box, Button } from "@chakra-ui/react";
 import { Price } from "@stripe/firestore-stripe-payments";
 import { useCheckout } from "@/features/plans/hooks/useCheckout";
 import ErrorMessage from "@/components/ErrorMessage";
+import { useTranslation } from "next-i18next";
 
 const StripeCheckoutButton = ({
   children,
@@ -12,6 +13,7 @@ const StripeCheckoutButton = ({
   children?: React.ReactNode;
   isDisabled?: boolean;
 }): JSX.Element => {
+  const { t } = useTranslation();
   const { checkout, loading, error } = useCheckout({
     price: price.id,
     payment_method_types: ["card"],
@@ -26,7 +28,7 @@ const StripeCheckoutButton = ({
         onClick={checkout}
         isLoading={loading}
       >
-        {children || "Subscribe"}
+        {children || t("subscribe")}
       </Button>
 
       {error && (

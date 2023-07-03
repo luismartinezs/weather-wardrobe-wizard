@@ -4,22 +4,23 @@ import { useForecastAdapter } from "@/features/weather-forecast/hooks/useForecas
 import useStore, { type StoreState } from "@/store";
 import { Button } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { useTranslation } from "next-i18next";
 
 function useButtonLabel(selectedLocation: StoreState["selectedLocation"]) {
-  const [buttonLabel, setButtonLabel] = useState(
-    "You didn't select a location"
-  );
+  const { t } = useTranslation();
+  const [buttonLabel, setButtonLabel] = useState(t("did_not_select_location"));
 
   useEffect(() => {
     if (selectedLocation) {
-      setButtonLabel(`Get weather in ${selectedLocation.name}`);
+      setButtonLabel(`${t("get_weather_in")} ${selectedLocation.name}`);
     }
-  }, [selectedLocation]);
+  }, [selectedLocation, t]);
 
   return buttonLabel;
 }
 
 const LocationButton = (): JSX.Element => {
+  const { t } = useTranslation();
   const selectedLocation = useStore((state) => state.selectedLocation);
   const buttonLabel = useButtonLabel(selectedLocation);
   const { isLoading, refetch } = useForecastAdapter();
@@ -38,7 +39,7 @@ const LocationButton = (): JSX.Element => {
       onClick={handleClick}
       w="100%"
       isLoading={isLoading}
-      loadingText="Fetching weather..."
+      loadingText={t("fetching_weather")}
       bgGradient="linear(160deg, secondary.500, primary.500)"
       _hover={{
         bgGradient: "linear(160deg, secondary.600, primary.600)",

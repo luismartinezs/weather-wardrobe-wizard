@@ -5,8 +5,10 @@ import { Box, Button, Text } from "@chakra-ui/react";
 import { formatTimestamp } from "@/utils/time";
 import { useState } from "react";
 import { goToBillingPortal } from "@/firebase/payments";
+import { useTranslation } from "next-i18next";
 
 const SubscriptionPlanInfo = ({ plan }: { plan?: Product }): JSX.Element => {
+  const { t } = useTranslation();
   const [isBillingLoading, setBillingLoading] = useState(false);
   const { user } = useUser();
   const { subscription, isSubscribed, isTrial } = useSubscription(user);
@@ -28,15 +30,18 @@ const SubscriptionPlanInfo = ({ plan }: { plan?: Product }): JSX.Element => {
   return (
     <Box textAlign="left">
       <Text mt={4} color="gray.400">
-        You are currently subscribed to the {subscription.role} plan{" "}
+        {t("currently_subscribed_to_plan", {
+          role: subscription.role,
+        })}
         {subscription.cancel_at_period_end && subscription.cancel_at && (
-          <>until {formatTimestamp(subscription.cancel_at)}</>
+          <>
+            {t("until")} {formatTimestamp(subscription.cancel_at)}
+          </>
         )}
       </Text>
       {isTrial && _trialEndDate && (
         <Text color="gray.400">
-          🎉 You are currently on FREE trial! 🎉 Your trial period will end on{" "}
-          {formatTimestamp(_trialEndDate)}
+          {t("currently_on_trial")} {formatTimestamp(_trialEndDate)}
         </Text>
       )}
       <Button
@@ -51,7 +56,7 @@ const SubscriptionPlanInfo = ({ plan }: { plan?: Product }): JSX.Element => {
           color: "white",
         }}
       >
-        Click here to modify this subscription
+        {t("click_here_to_mod_subs")}
       </Button>
     </Box>
   );

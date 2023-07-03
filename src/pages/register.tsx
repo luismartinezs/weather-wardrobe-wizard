@@ -4,8 +4,19 @@ import NextLink from "next/link";
 import SigninRegister from "@/features/auth/components/SigninRegister";
 import AuthForm, { type FormData } from "@/features/auth/components/AuthForm";
 import { useRouter } from "next/router";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
+
+export async function getStaticProps({ locale }: { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
+  };
+}
 
 function Register() {
+  const { t } = useTranslation();
   const { query } = useRouter();
   const redirect = Array.isArray(query.redirect)
     ? query.redirect[0]
@@ -20,8 +31,8 @@ function Register() {
       form={
         <AuthForm
           onSubmit={onSubmit}
-          buttonText="Create new user"
-          title="Register"
+          buttonText={t("create_new_user")}
+          title={t("register")}
           type="register"
           redirectOnAuth={redirect || "/"}
         />
@@ -29,7 +40,7 @@ function Register() {
       afterFormLink={
         <Link as={NextLink} mt="4" href="/signin">
           <Text align="center" color="gray.400" fontSize="sm" mt={2}>
-            Or sign in as an existing user
+            {t("or_sign_in")}
           </Text>
         </Link>
       }

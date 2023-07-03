@@ -4,11 +4,14 @@ import ButtonWithIcon, {
 } from "@/components/ButtonWithIcon";
 
 import { useGithubSignin } from "@/features/auth/hooks/useGithubSignin";
+import { useTranslation } from "next-i18next";
 
 const GoogleSigninButton = ({
   size = "md",
 }: Pick<ButtonWithIconProps, "size">): JSX.Element => {
+  const { t } = useTranslation();
   const { handleGithubSignUp, loading } = useGithubSignin();
+
   return (
     <ButtonWithIcon
       size={size}
@@ -16,7 +19,7 @@ const GoogleSigninButton = ({
       icon={AiOutlineGithub}
       isLoading={loading}
     >
-      Sign in with Github
+      {t("sign_in_with")} Github
     </ButtonWithIcon>
   );
 };

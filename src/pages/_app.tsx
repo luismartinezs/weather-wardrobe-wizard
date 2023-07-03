@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { ChakraProvider } from "@chakra-ui/react";
 import { SkipNavLink } from "@chakra-ui/skip-nav";
+import { appWithTranslation } from "next-i18next";
 
 import MetaTags from "@/components/MetaTags";
 import Layout from "@/components/Layout";
@@ -15,7 +16,7 @@ import { useSW } from "@/hooks/useSW";
 
 const queryClient = new QueryClient();
 
-export default function App({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps }: AppProps) {
   useSW();
 
   return (
@@ -39,3 +40,5 @@ export default function App({ Component, pageProps }: AppProps) {
     </>
   );
 }
+
+export default appWithTranslation(App);

@@ -4,11 +4,14 @@ import ButtonWithIcon, {
 } from "@/components/ButtonWithIcon";
 
 import { useGoogleSignin } from "@/features/auth/hooks/useGoogleSignin";
+import { useTranslation } from "next-i18next";
 
 const GoogleSigninButton = ({
   size = "md",
 }: Pick<ButtonWithIconProps, "size">): JSX.Element => {
+  const { t } = useTranslation();
   const { handleGoogleSignUp, loading } = useGoogleSignin();
+
   return (
     <ButtonWithIcon
       size={size}
@@ -16,7 +19,7 @@ const GoogleSigninButton = ({
       icon={AiOutlineGoogle}
       isLoading={loading}
     >
-      Sign in with Google
+      {t("sign_in_with")} Google
     </ButtonWithIcon>
   );
 };

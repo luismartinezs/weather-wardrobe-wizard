@@ -8,8 +8,10 @@ import ClothingSuggestionsItemsWrapper from "@/features/clothing-suggestions/com
 import { ViewMode } from "@/features/clothing-suggestions/types";
 import ClothingItemAdapter from "@/features/clothing-suggestions/components/ClothingItemAdapter";
 import { viewMode } from "@/features/clothing-suggestions/constants";
+import { useTranslation } from "next-i18next";
 
 const ClothingSuggestions = (): JSX.Element => {
+  const { t } = useTranslation();
   const { filteredClothingItems, isLoading } = useFilteredClothingItems();
   const [_viewMode, _setViewMode] = useState<ViewMode>(viewMode.list);
   const toggleView = () => {
@@ -30,7 +32,7 @@ const ClothingSuggestions = (): JSX.Element => {
         textTransform="uppercase"
         letterSpacing={1.2}
       >
-        Suggested clothing
+        {t("suggested_clothing")}
       </Heading>
       <Flex justify="space-between" w="100%">
         <CheckControls />

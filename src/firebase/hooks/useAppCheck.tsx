@@ -7,6 +7,12 @@ import {
 import { app } from "@/firebase/app";
 import { useEffect, useState } from "react";
 
+// declare global {
+//   interface Window {
+//     FIREBASE_APPCHECK_DEBUG_TOKEN?: boolean;
+//   }
+// }
+
 // const isProd = process.env.NODE_ENV === "production";
 
 export function useAppCheck() {
@@ -29,7 +35,7 @@ export function useAppCheck() {
         isTokenAutoRefreshEnabled: true,
       })
     );
-  }, []);
+  }, [appCheck]);
 
   return appCheck;
 }
