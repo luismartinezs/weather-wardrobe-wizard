@@ -41,7 +41,7 @@ const Header = () => {
                 bgGradient="linear(160deg, tertiary.500, secondary.500)"
                 bgClip="text"
                 width="fit-content"
-                fontSize={{ base: "2xl", md: "5xl" }}
+                fontSize={{ base: "2xl", md: "5xl", xl: "4xl" }}
               >
                 {t("app_title")}
               </Heading>

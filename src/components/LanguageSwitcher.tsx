@@ -8,7 +8,7 @@ export default function LanguageSwitcher() {
   return (
     <div>
       <Select
-        placeholder={t("select_lang")}
+        // placeholder={t("select_lang")}
         onChange={(e) =>
           router.push(
             {
@@ -20,8 +20,8 @@ export default function LanguageSwitcher() {
           )
         }
       >
-        <option value="en">English</option>
-        <option value="es">Español</option>
+        <option value="en">EN</option>
+        <option value="es">ES</option>
       </Select>
     </div>
   );
