@@ -20,7 +20,7 @@
   "show_all": "Mostrar todo",
   "show_checked": "Mostrar seleccionado",
   "show_unchecked": "Mostrar no seleccionado",
-  "uncheck_all": "Desmarcar todo",
+  "uncheck_all": "Deseleccionar todo",
   "ai_powered_suggestions": "Sugerencias potenciadas por IA",
   "premium_plan": "Premium",
   "ai_thinking": "La IA está pensando, dale un minuto...",
@@ -115,5 +115,6 @@
   "month": "mes",
   "week": "semana",
   "day": "día",
-  "year": "año"
+  "year": "año",
+  "fromTo": "desde {{from}} hasta {{to}}"
 }

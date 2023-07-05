@@ -5,12 +5,15 @@ import {
   Show,
   Switch,
   Text,
+  useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useTranslation } from "next-i18next";
 
 const UnitSwitch = (): JSX.Element => {
   const { t } = useTranslation();
+  const { colorMode } = useColorMode();
+  const isLight = colorMode === "light";
   const { units, setUnits } = useUnits();
   const labelMetricLg = useColorModeValue(
     units === METRIC ? "gray.800" : "gray.400",
@@ -47,7 +50,7 @@ const UnitSwitch = (): JSX.Element => {
         onChange={() => setUnits(units === METRIC ? IMPERIAL : METRIC)}
         sx={{
           ".chakra-switch__track": {
-            bg: "gray.500",
+            bg: isLight ? "primary.300" : "gray.500",
           },
         }}
         isChecked={units === IMPERIAL}
