@@ -1,5 +1,9 @@
 # Weather Wardrobe Wizard
 
+## Features
+
+Weather forecasts and clothing suggestions based on user selected location. Built with NextJS/React, this PWA features a mobile-friendly UI and real-time data from the Open Weather API. The app supports multi-language, Stripe payments and Firebase for real-time updates, AI-enriched user experience and real-time error tracking with Sentry.
+
 ## Quick start
 
 Run the development server:
