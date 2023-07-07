@@ -12,10 +12,13 @@ import { UserProvider } from "@/features/auth/context/User";
 import { FirebaseProvider } from "@/firebase/context/Firebase";
 import { useSW } from "@/hooks/useSW";
 import { Chakra } from "@/providers/Chakra";
+import Loader from "@/components/Loader";
+import { useRouteLoading } from "@/hooks/useRouteLoading";
 
 const queryClient = new QueryClient();
 
 function App({ Component, pageProps }: AppProps) {
+  const isLoading = useRouteLoading();
   useSW();
 
   return (
@@ -27,6 +30,7 @@ function App({ Component, pageProps }: AppProps) {
         <UserProvider>
           <QueryClientProvider client={queryClient}>
             <Chakra cookies={pageProps.cookies}>
+              {isLoading && <Loader />}
               <SkipNavLink>Skip to content</SkipNavLink>
               <Layout>
                 <Component {...pageProps} />
