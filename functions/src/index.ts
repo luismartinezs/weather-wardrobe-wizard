@@ -173,14 +173,15 @@ async function handleWeatherAlerts() {
   });
 }
 
-export const sendWeatherAlerts = onSchedule(
-  {
-    schedule: `every ${jobTimerMinutes} minutes`,
-  },
-  async (event) => {
-    return handleWeatherAlerts();
-  }
-);
+// this function handles pub/sub events. I want to stop it so I comment this code, and the corresponding function from firebase will be deleted
+// export const sendWeatherAlerts = onSchedule(
+//   {
+//     schedule: `every ${jobTimerMinutes} minutes`,
+//   },
+//   async (event) => {
+//     return handleWeatherAlerts();
+//   }
+// );
 
 export const sendWeatherAlertsHttp = onRequest(async (req, res) => {
   if (isEmulator) {
